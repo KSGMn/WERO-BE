@@ -1,30 +1,32 @@
 package com.wero.finalProject.User.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import net.minidev.json.annotate.JsonIgnore;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.Collections;
 
 /**
- * @작성자:오현암
+ * @작성자:오현암,김선규
  * @작성날짜:2024/4/24
- * @파일명:User.java
+ * @파일명:User.class
  **/
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "User")
-@Builder
 @AllArgsConstructor
-public class User {
+@Builder
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,14 +36,11 @@ public class User {
     @Column(name = "email", length = 320, nullable = false)
     private String email;
 
-    @Column(name = "passWord", length = 30, nullable = false)
-    private String passWord;
+    @Column(name = "password", length = 30, nullable = false)
+    private String password;
 
     @Column(name = "userName", length = 8, nullable = false)
     private String userName;
-
-    @Column(name = "access_token", length = 500, nullable = false)
-    private String access_token;
 
     @Column(name = "profile_image", length = 500, nullable = false)
     private String profile_image;
@@ -49,10 +48,53 @@ public class User {
     @Column(name = "bio", length = 500, nullable = true)
     private String bio;
 
-    @Column(name = "platform_type", length = 10, nullable = false)
-    private String platform_type;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "UserRolse", nullable = false)
+    private UserRole userRole;
 
-    @Column(name = "roles", nullable = false)
-    private String rolse;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "userProvider", nullable = false)
+    private UserProvider UserProvider;
 
+
+    @Override
+    @JsonIgnore
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singleton(new SimpleGrantedAuthority(this.userRole.getAuthority()));
+    }
+
+    @Override
+    @JsonIgnore
+    public String getPassword(){
+        return password;
+    }
+    @Override
+    @JsonIgnore
+    public String getUsername() {
+        return user_id;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isEnabled() {
+        return true;
+    }
 }
