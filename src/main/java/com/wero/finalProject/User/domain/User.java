@@ -29,12 +29,12 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id", nullable = false)
-    private String user_id;
+    private Long user_id;
 
     @Column(name = "email", length = 320, nullable = false)
     private String email;
 
-    @Column(name = "passWord", length = 30, nullable = false)
+    @Column(name = "passWord", nullable = false)
     private String passWord;
 
     @Column(name = "userName", length = 8, nullable = false)
@@ -53,6 +53,6 @@ public class User {
     private String platform_type;
 
     @Column(name = "roles", nullable = false)
-    private String rolse;
+    private String roles;
 
 }

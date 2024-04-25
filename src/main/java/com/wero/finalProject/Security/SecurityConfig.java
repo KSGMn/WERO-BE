@@ -42,7 +42,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/authenticate", "/signup", "/error", "/token/refresh", "/logout").permitAll()
+                .requestMatchers("/login", "/signup", "/error", "/token/refresh", "/logout").permitAll()
                 .requestMatchers(HttpMethod.OPTIONS, "/**", "/").permitAll() // CORS 사전 요청 Preflight request)접근 허용
                 .anyRequest()
                 .authenticated())
