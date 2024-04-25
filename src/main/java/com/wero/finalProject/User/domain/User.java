@@ -1,7 +1,16 @@
 package com.wero.finalProject.User.domain;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * @작성자:오현암
@@ -12,7 +21,7 @@ import lombok.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name="User")
+@Table(name = "User")
 @Builder
 @AllArgsConstructor
 public class User {
@@ -20,10 +29,13 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id", nullable = false)
-    private Long user_id;
+    private String user_id;
 
     @Column(name = "email", length = 320, nullable = false)
     private String email;
+
+    @Column(name = "passWord", length = 30, nullable = false)
+    private String passWord;
 
     @Column(name = "userName", length = 8, nullable = false)
     private String userName;
@@ -39,5 +51,8 @@ public class User {
 
     @Column(name = "platform_type", length = 10, nullable = false)
     private String platform_type;
+
+    @Column(name = "roles", nullable = false)
+    private String rolse;
 
 }
