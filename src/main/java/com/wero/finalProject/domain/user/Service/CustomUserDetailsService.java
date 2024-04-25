@@ -1,28 +1,31 @@
-package com.wero.finalProject.User.Service;
+package com.wero.finalProject.domain.user.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.wero.finalProject.User.Repository.UserRepository;
-import com.wero.finalProject.User.domain.User;
+import com.wero.finalProject.domain.user.Repository.UserRepository;
+import com.wero.finalProject.domain.user.User;
 
+@RequiredArgsConstructor
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
-
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtIssuer jwtIssuer;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUserName(username);
+        Optional<User> user = userRepository.findByUserName(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found with username: " +
                     username);

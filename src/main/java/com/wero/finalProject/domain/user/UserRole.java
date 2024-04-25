@@ -1,4 +1,4 @@
-package com.wero.finalProject.User.domain;
+package com.wero.finalProject.domain.user;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.wero.finalProject.Security;
+package com.wero.finalProject.config;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -6,6 +6,7 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.UUID;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -31,13 +32,14 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import com.wero.finalProject.User.Service.CustomUserDetailsService;
+import com.wero.finalProject.domain.user.Service.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity // Spring Security를 활성화하기 위해 추가
 @EnableMethodSecurity(securedEnabled = true) // 메서드 수준의 보안을 활성화하기 위해 추가
+@RequiredArgsConstructor
 public class SecurityConfig {
-
+        private final JwtFilter jwtFilter;
     // Spring Security의 필터 체인을 구성하는 메서드
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
