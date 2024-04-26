@@ -12,6 +12,7 @@ import com.wero.finalProject.service.AuthService;
 import com.wero.finalProject.provider.EmailProvider;
 import com.wero.finalProject.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,14 +24,17 @@ import org.springframework.stereotype.Service;
  * @파일명:AuthServiceImpl
  * @기능:AuthService상세구현
  **/
-@Service
+@Service("AuthServiceImpl")
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
     private final EmailProvider emailProvider;
-    private final JwtProvider jwtProvider;
     private final CertificationRepository certificationRepository;
+
+    @Autowired
+    private JwtProvider jwtProvider;
+
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     @Override

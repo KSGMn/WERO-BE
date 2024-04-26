@@ -18,8 +18,9 @@ import lombok.NoArgsConstructor;
 @Entity(name="user")
 @Table(name="user")
 public class UserEntity {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String userId;
 
     @Column(name ="email", updatable = false)
