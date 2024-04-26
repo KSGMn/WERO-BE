@@ -26,11 +26,16 @@ public class RegisterRequestDto {
     @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z][0-9]{8,15}$")
     private String password;
 
+    @NotBlank
+    private String nickName;
+
+    @NotBlank
+    private String gender;
+
     @Email
     @NotBlank
     private String email;
 
-    //TODO: 회원가입 항목 더 만들어야함....
 
     @NotBlank
     private String certificationNumber;

@@ -18,7 +18,7 @@ import java.util.Map;
  * @파일명:OAuth2UserServiceImpl
  * @기능:유저_OAuth인증_서비스_로직
  **/
-@Service
+@Service("OAuth2UserServiceImpl")
 @RequiredArgsConstructor
 public class OAuth2UserServiceImpl extends DefaultOAuth2UserService {
 
@@ -47,6 +47,11 @@ public class OAuth2UserServiceImpl extends DefaultOAuth2UserService {
             userId = "naver_"+responseMap.get("id").substring(0, 14);
             email = responseMap.get("email");
             userEntity = new UserEntity(userId, email, "naver");
+        }
+
+        if(oauth2ClientName.equals("google")){
+            userId = "google_"+oAuth2User.getAttributes().get("id");
+            userEntity = new UserEntity(userId, "email@email.com", "google");
         }
         userRepository.save(userEntity);
 

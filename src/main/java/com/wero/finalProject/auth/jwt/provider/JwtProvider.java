@@ -4,8 +4,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.time.Instant;
@@ -15,14 +15,16 @@ import java.util.Date;
 /**
  * @작성자:오현암
  * @작성날짜:2024/04/25
- * @파일명:JwtProivder.class
+ * @파일명:JwtProvider.class
  * @기능:Jwt토큰_발급
  **/
-
 @Component
 public class JwtProvider {
-    @Value("${secret-key}")
+
+    @Value("${jwt.secret}")
     private String secretKey;
+
+    @Bean
     public String create(String userId){
 
         Date expiredDate = Date.from(Instant.now().plus(1, ChronoUnit.HOURS)); // 현재시간 기준 먼저
@@ -38,7 +40,6 @@ public class JwtProvider {
 
     //TODO: jwt 검증
     public String validate(String jwt) {
-
         String subject = null;
         Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
 
@@ -46,7 +47,7 @@ public class JwtProvider {
             subject = Jwts.parserBuilder()
                     .setSigningKey(key)
                     .build()
-                    .parseClaimsJwt(jwt)
+                    .parseClaimsJws(jwt)
                     .getBody()
                     .getSubject();
 
