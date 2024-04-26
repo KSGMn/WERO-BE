@@ -1,10 +1,11 @@
-package com.wero.finalProject.domain.user.Service;
+package com.wero.finalProject.service;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.wero.finalProject.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,8 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.wero.finalProject.domain.user.Repository.UserRepository;
-import com.wero.finalProject.domain.user.User;
+import com.wero.finalProject.Repository.UserRepository;
 
 @RequiredArgsConstructor
 @Service
@@ -25,7 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final JwtIssuer jwtIssuer;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByUserName(username);
+        Optional<UserEntity> user = userRepository.findByUserName(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found with username: " +
                     username);
