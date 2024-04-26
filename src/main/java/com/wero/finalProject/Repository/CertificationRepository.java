@@ -1,6 +1,6 @@
 package com.wero.finalProject.Repository;
 
-import com.wero.finalProject.auth.certification.Certification;
+import com.wero.finalProject.domain.Certification;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

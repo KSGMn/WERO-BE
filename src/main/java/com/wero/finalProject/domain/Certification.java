@@ -1,4 +1,4 @@
-package com.wero.finalProject.auth.certification;
+package com.wero.finalProject.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class Certification {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String userId;
 
     @Column(name ="email", updatable = false)
