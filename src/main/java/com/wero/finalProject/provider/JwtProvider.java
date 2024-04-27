@@ -1,4 +1,4 @@
-package com.wero.finalProject.auth.jwt.provider;
+package com.wero.finalProject.provider;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -24,7 +24,6 @@ public class JwtProvider {
     @Value("${jwt.secret}")
     private String secretKey;
 
-    @Bean
     public String create(String userId){
 
         Date expiredDate = Date.from(Instant.now().plus(1, ChronoUnit.HOURS)); // 현재시간 기준 먼저

@@ -1,11 +1,10 @@
-package com.wero.finalProject.auth.jwt.handler;
+package com.wero.finalProject.handler;
 
-import com.wero.finalProject.auth.jwt.provider.JwtProvider;
-import com.wero.finalProject.auth.oAuth2User.CustomOauth2User;
+import com.wero.finalProject.provider.JwtProvider;
+import com.wero.finalProject.domain.CustomOauth2User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;

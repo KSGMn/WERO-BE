@@ -1,6 +1,6 @@
 package com.wero.finalProject.service.implement;
 
-import com.wero.finalProject.auth.oAuth2User.CustomOauth2User;
+import com.wero.finalProject.domain.CustomOauth2User;
 import com.wero.finalProject.Repository.UserRepository;
 import com.wero.finalProject.domain.UserEntity;
 import lombok.RequiredArgsConstructor;

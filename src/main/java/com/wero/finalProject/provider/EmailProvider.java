@@ -2,6 +2,7 @@ package com.wero.finalProject.provider;
 
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.mail.javamail.*;
 
@@ -15,7 +16,7 @@ import org.springframework.mail.javamail.*;
 @Component
 @RequiredArgsConstructor
 public class EmailProvider {
-
+    @Autowired
     private final JavaMailSender javaMailSender;
     private final String SUBJECT ="[WE-RO] 인증 메일 입니다.";
 

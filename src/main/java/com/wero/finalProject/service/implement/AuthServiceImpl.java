@@ -2,8 +2,8 @@ package com.wero.finalProject.service.implement;
 
 import com.wero.finalProject.Repository.CertificationRepository;
 import com.wero.finalProject.domain.Certification;
-import com.wero.finalProject.auth.common.CertificationNumber;
-import com.wero.finalProject.auth.jwt.provider.JwtProvider;
+import com.wero.finalProject.common.CertificationNumber;
+import com.wero.finalProject.provider.JwtProvider;
 import com.wero.finalProject.domain.UserEntity;
 import com.wero.finalProject.dto.request.auth.*;
 import com.wero.finalProject.dto.response.ResponseDto;
