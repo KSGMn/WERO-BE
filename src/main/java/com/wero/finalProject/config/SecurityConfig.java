@@ -6,7 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -60,6 +60,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .anyRequest()
                         .authenticated());
+
+//TODO: Oauth2 소셜 로그인 yml 설정 추가후 주석 해제
 
 //                .oauth2Login(oauth2 -> oauth2
 //                        .authorizationEndpoint(endpoint -> endpoint.baseUri("/api/v1/auth/oauth2")) //원하는 형태로 api 잡아도됨
