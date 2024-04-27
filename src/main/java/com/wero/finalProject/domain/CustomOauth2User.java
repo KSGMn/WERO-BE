@@ -1,4 +1,4 @@
-package com.wero.finalProject.auth.oAuth2User;
+package com.wero.finalProject.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

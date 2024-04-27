@@ -1,4 +1,4 @@
-package com.wero.finalProject.auth.common;
+package com.wero.finalProject.common;
 
 /**
  * @작성자:오현암

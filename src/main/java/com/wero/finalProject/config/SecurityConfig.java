@@ -1,11 +1,12 @@
 package com.wero.finalProject.config;
 
-import com.wero.finalProject.auth.jwt.filter.JwtAuthenticationFilter;
-import com.wero.finalProject.auth.jwt.handler.OAuth2SuccessHandler;
+import com.wero.finalProject.filter.JwtAuthenticationFilter;
+import com.wero.finalProject.handler.OAuth2SuccessHandler;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,13 +41,12 @@ import java.io.IOException;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final DefaultOAuth2UserService oAuth2UserService;
-    private final OAuth2SuccessHandler oAuth2SuccessHandler;
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
+    private DefaultOAuth2UserService oAuth2UserService;
+    private OAuth2SuccessHandler oAuth2SuccessHandler;
 
     @Bean
-    protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception{
+    protected SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)throws Exception{
         httpSecurity
                 .cors(cors -> cors
                         .configurationSource(corsConfigurationSource()))
@@ -59,17 +59,16 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/user/**").hasRole("USER")
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .anyRequest()
-                        .authenticated())
+                        .authenticated());
 
-                .oauth2Login(oauth2 -> oauth2
-                        .authorizationEndpoint(endpoint -> endpoint.baseUri("/api/v1/auth/oauth2")) //원하는 형태로 api 잡아도됨
-                        .redirectionEndpoint(endpoint -> endpoint.baseUri("/oauth2/callback/*"))
-                        .userInfoEndpoint(endpoint -> endpoint.userService(oAuth2UserService))
-                        .successHandler(oAuth2SuccessHandler)
-                )
-                .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(new FailedAuthenticationEntryPoint()))
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-        ;
+//                .oauth2Login(oauth2 -> oauth2
+//                        .authorizationEndpoint(endpoint -> endpoint.baseUri("/api/v1/auth/oauth2")) //원하는 형태로 api 잡아도됨
+//                        .redirectionEndpoint(endpoint -> endpoint.baseUri("/oauth2/callback/*"))
+//                        .userInfoEndpoint(endpoint -> endpoint.userService(oAuth2UserService))
+//                        .successHandler(oAuth2SuccessHandler)
+//                )
+//                .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(new FailedAuthenticationEntryPoint()))
+//                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }
@@ -87,16 +86,14 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
     }
+    class FailedAuthenticationEntryPoint implements AuthenticationEntryPoint {
+        @Override
+        public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+            response.setContentType("application/json");
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            //{"code": "NP", "message": "No Permission."}
+            response.getWriter().write("{\"code\": \"NP\", \"message\": \"No Permission.\"}");
 
-}
-
-class FailedAuthenticationEntryPoint implements AuthenticationEntryPoint {
-    @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        response.setContentType("application/json");
-        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        //{"code": "NP", "message": "No Permission."}
-        response.getWriter().write("{\"code\": \"NP\", \"message\": \"No Permission.\"}");
-
+        }
     }
 }

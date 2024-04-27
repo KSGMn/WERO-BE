@@ -1,7 +1,7 @@
 package com.wero.finalProject.dto.response.auth;
 
-import com.wero.finalProject.auth.common.ResponseCode;
-import com.wero.finalProject.auth.common.ResponseMessage;
+import com.wero.finalProject.common.ResponseCode;
+import com.wero.finalProject.common.ResponseMessage;
 import com.wero.finalProject.dto.response.ResponseDto;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

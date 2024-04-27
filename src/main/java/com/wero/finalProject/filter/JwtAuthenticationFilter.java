@@ -1,6 +1,6 @@
-package com.wero.finalProject.auth.jwt.filter;
+package com.wero.finalProject.filter;
 
-import com.wero.finalProject.auth.jwt.provider.JwtProvider;
+import com.wero.finalProject.provider.JwtProvider;
 import com.wero.finalProject.Repository.UserRepository;
 import com.wero.finalProject.domain.UserEntity;
 import jakarta.servlet.FilterChain;

@@ -1,4 +1,4 @@
-package com.wero.finalProject.auth.jwt.handler;
+package com.wero.finalProject.handler;
 
 import com.wero.finalProject.dto.response.ResponseDto;
 import org.springframework.http.ResponseEntity;
