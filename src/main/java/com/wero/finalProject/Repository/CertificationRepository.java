@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
  * @기능:CertificationRepository<->JPA
  **/
 @Repository
-public interface CertificationRepository extends JpaRepository<Certification, Long> {
+public interface CertificationRepository extends JpaRepository<Certification, String> {
     Certification findByUserId(String userId);
 
     @Transactional

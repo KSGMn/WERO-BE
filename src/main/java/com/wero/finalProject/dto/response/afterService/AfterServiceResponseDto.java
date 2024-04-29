@@ -16,16 +16,12 @@ import org.springframework.http.ResponseEntity;
 @Getter
 public class AfterServiceResponseDto extends ResponseDto {
     private AfterServiceResponseDto(){
-        super(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
+        super();
     }
 
     public static ResponseEntity<AfterServiceResponseDto> success(){
         AfterServiceResponseDto result = new AfterServiceResponseDto();
         return ResponseEntity.status(HttpStatus.OK).body(result);
-    }
-
-    public static ResponseEntity<AfterServiceResponseDto> notExistUser(){
-
     }
 
 }

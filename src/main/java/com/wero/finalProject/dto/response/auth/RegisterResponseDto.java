@@ -18,7 +18,7 @@ import org.springframework.http.ResponseEntity;
 public class RegisterResponseDto extends ResponseDto {
 
     private RegisterResponseDto(){
-        super(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
+        super();
     }
     public static ResponseEntity<RegisterResponseDto> success(){
         RegisterResponseDto responseBody = new RegisterResponseDto();
