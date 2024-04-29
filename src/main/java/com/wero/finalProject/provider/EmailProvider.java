@@ -16,8 +16,8 @@ import org.springframework.mail.javamail.*;
 @Component
 @RequiredArgsConstructor
 public class EmailProvider {
-    @Autowired
-    private final JavaMailSender javaMailSender;
+
+    private JavaMailSender javaMailSender;
     private final String SUBJECT ="[WE-RO] 인증 메일 입니다.";
 
     public boolean sendCertificationMail(String email, String certificationNumber) {
