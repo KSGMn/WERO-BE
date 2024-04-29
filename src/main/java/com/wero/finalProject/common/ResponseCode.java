@@ -17,6 +17,8 @@ public interface ResponseCode {
     String NOT_EXIST_USER = "NU"; // HTTP STATUS: 400 존재하지 않는 유저
     String NOT_EXIST_BOARD = "NB"; // HTTP STATUS: 400 존재하지 않는 게시글
     String MAIL_FAIL = "MF"; //이메일 오류
+    String DUPLICATE_EMAIL = "DE";
+    String DUPLICATE_NICKNAME = "DN";
 
     //TODO: 401
     String SIGN_IN_FAIL = "SF"; //HTTP STATUS: 400 로그인 실패

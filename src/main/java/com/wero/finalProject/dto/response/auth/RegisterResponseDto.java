@@ -3,6 +3,7 @@ package com.wero.finalProject.dto.response.auth;
 import com.wero.finalProject.common.ResponseCode;
 import com.wero.finalProject.common.ResponseMessage;
 import com.wero.finalProject.dto.response.ResponseDto;
+import io.swagger.models.Response;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ import org.springframework.http.ResponseEntity;
 public class RegisterResponseDto extends ResponseDto {
 
     private RegisterResponseDto(){
-        super();
+        super(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
     }
     public static ResponseEntity<RegisterResponseDto> success(){
         RegisterResponseDto responseBody = new RegisterResponseDto();
@@ -33,5 +34,11 @@ public class RegisterResponseDto extends ResponseDto {
         ResponseDto responseBody = new ResponseDto(ResponseCode.CERTIFICATION_FAIL, ResponseMessage.CERTIFICATION_FAIL);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
     }
+
+    public static ResponseEntity<ResponseDto> duplicatedEmail(){
+        ResponseDto responseBody = new ResponseDto(ResponseCode.DUPLICATE_EMAIL, ResponseMessage.DUPLICATE_EMAIL);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+    }
+
 
 }

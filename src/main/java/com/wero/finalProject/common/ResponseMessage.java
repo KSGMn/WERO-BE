@@ -30,6 +30,8 @@ public interface ResponseMessage {
     String NOT_EXIST_USER = "Not Exist User";
     String NOT_EXIST_BOARD = "Not Exist Board";
     String MAIL_FAIL = "Mail Send Failed";
+    String DUPLICATE_EMAIL = "Duplicate Email";
+    String DUPLICATE_NICKNAME = "Duplicate NickName";
 
     //TODO: HTTP401
     String SIGN_IN_FAIL = "sing in fail";
