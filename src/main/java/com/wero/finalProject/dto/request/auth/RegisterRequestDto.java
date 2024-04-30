@@ -36,7 +36,6 @@ public class RegisterRequestDto {
     @NotBlank
     private String email;
 
-
     @NotBlank
     private String certificationNumber;
 }

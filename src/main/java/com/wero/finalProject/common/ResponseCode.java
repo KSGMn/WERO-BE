@@ -21,8 +21,8 @@ public interface ResponseCode {
     String DUPLICATE_NICKNAME = "DN";
 
     //TODO: 401
-    String SIGN_IN_FAIL = "SF"; //HTTP STATUS: 400 로그인 실패
-    String CERTIFICATION_FAIL = "CF"; //HTTP STATUS: 400 검증 실패
+    String SIGN_IN_FAIL = "SF"; //HTTP STATUS: 401 로그인 실패
+    String CERTIFICATION_FAIL = "CF"; //HTTP STATUS: 401 검증 실패
 
     //TODO:403
     String NO_PERMISSION = "NP";//HTTP STATUS: 403 권한 없음
