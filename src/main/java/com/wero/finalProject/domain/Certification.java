@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class Certification {
 
     @Id //인증 테이블 기본키
-    @GeneratedValue(strategy = GenerationType.UUID) //기본키 생성 전략 -> Int 일떄 IDENTITY
+    // /기본키 생성 전략 -> Int 일떄 IDENTITY
     private String userId;
 
     @Column(name ="email", updatable = false) //인증시 사용할 이메일

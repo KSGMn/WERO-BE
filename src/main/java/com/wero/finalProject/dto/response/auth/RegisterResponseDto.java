@@ -35,10 +35,4 @@ public class RegisterResponseDto extends ResponseDto {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
     }
 
-    public static ResponseEntity<ResponseDto> duplicatedEmail(){
-        ResponseDto responseBody = new ResponseDto(ResponseCode.DUPLICATE_EMAIL, ResponseMessage.DUPLICATE_EMAIL);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
-    }
-
-
 }
