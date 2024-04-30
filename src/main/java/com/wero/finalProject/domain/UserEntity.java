@@ -20,7 +20,6 @@ import lombok.NoArgsConstructor;
 public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String userId;
 
     @Column(name ="email", updatable = false)
@@ -31,6 +30,9 @@ public class UserEntity {
 
     @Column(name="type", updatable = false)
     private String type;
+
+    @Column(name="nickName")
+    private String nickName;
 
     @Column(name="gender", updatable = true)
     private String gender;
@@ -44,6 +46,7 @@ public class UserEntity {
         this.password = dto.getPassword();
         this.email = dto.getEmail();
         this.gender = dto.getGender();
+        this.nickName = dto.getNickName();
         this.type = "app";
         this.role = "ROLE_USER";
     }
