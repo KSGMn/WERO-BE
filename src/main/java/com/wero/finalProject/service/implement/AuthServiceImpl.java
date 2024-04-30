@@ -37,6 +37,8 @@ public class AuthServiceImpl implements AuthService {
 
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    //아이디 중복 확인
     @Override
     public ResponseEntity<? super IdCheckResponseDto> idCheck(IdCheckRequestDto dto) {
         try{
@@ -50,6 +52,8 @@ public class AuthServiceImpl implements AuthService {
         }
         return IdCheckResponseDto.success();
     }
+
+    //이메일 중복 확인
 
     @Override
     public ResponseEntity<? super EmailCertificationResponseDto> emailCertification(EmailCertificationRequestDto dto) {
@@ -145,5 +149,7 @@ public class AuthServiceImpl implements AuthService {
         }
         return SignInResponseDto.success(token);
     }
+
+
 
 }

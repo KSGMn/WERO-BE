@@ -6,7 +6,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,25 +40,31 @@ import java.io.IOException;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private JwtAuthenticationFilter jwtAuthenticationFilter;
-    private DefaultOAuth2UserService oAuth2UserService;
-    private OAuth2SuccessHandler oAuth2SuccessHandler;
+
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final DefaultOAuth2UserService oAuth2UserService;
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
     @Bean
-    protected SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)throws Exception{
+    protected SecurityFilterChain configure(HttpSecurity httpSecurity)throws Exception{ //FilterChain
         httpSecurity
                 .cors(cors -> cors
-                        .configurationSource(corsConfigurationSource()))
+                        .configurationSource(corsConfigurationSource())
+                )
                 .csrf(CsrfConfigurer::disable)
                 .httpBasic(HttpBasicConfigurer::disable)
-                .sessionManagement(sessionManagement -> sessionManagement .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionManagement(sessionManagement -> sessionManagement
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .authorizeHttpRequests(request -> request.requestMatchers("/", "/api/v1/auth/**", "/ouath2/**")
-                        .permitAll()
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers("/", "/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/v1/user/**").hasRole("USER")
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .anyRequest()
-                        .authenticated());
+                        .authenticated()
+                ).exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint(new FailedAuthenticationEntryPoint())
+                ).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
 //TODO: Oauth2 소셜 로그인 yml 설정 추가후 주석 해제
 
@@ -69,8 +74,8 @@ public class SecurityConfig {
 //                        .userInfoEndpoint(endpoint -> endpoint.userService(oAuth2UserService))
 //                        .successHandler(oAuth2SuccessHandler)
 //                )
-//                .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(new FailedAuthenticationEntryPoint()))
-//                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
+
 
         return httpSecurity.build();
     }
