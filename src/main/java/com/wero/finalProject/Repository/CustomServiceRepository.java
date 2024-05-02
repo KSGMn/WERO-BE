@@ -1,6 +1,7 @@
 package com.wero.finalProject.Repository;
 
-import com.wero.finalProject.domain.AfterServiceEntity;
+
+import com.wero.finalProject.domain.CustomServiceEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,5 +12,7 @@ import org.springframework.stereotype.Repository;
  **/
 
 @Repository
-public interface AfterServiceRepository extends JpaRepository<AfterServiceEntity, Long> {
+public interface CustomServiceRepository extends JpaRepository<CustomServiceEntity, Long> {
+
 }
+

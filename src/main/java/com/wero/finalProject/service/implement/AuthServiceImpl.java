@@ -31,9 +31,7 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final EmailProvider emailProvider;
     private final CertificationRepository certificationRepository;
-
-    @Autowired
-    private JwtProvider jwtProvider;
+    private final JwtProvider jwtProvider;
 
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

@@ -8,5 +8,16 @@ spring:
       ddl-auto: create
     driver-class-name: com.mysql.cj.jdbc.Driver
     dialect: org.hibernate.dialect.MySQLDialect
-  jwt:
-    secretKey: 21df42sk421a42d14g5342n6jkd757ds8a658fnvk796cdsd769sa57k4f532j5d23s7a73k5w84erj4kaf23l52d152srt
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: werothesnsmc21th@gmail.com
+    password: fzjf dvdk xgjs wglb
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
+jwt:
+  secret: 7cb557e20f15ebac9442a240481c50e45118909be31f7a6c553b09a189034eeb53c862aaf55e2fef762972390ec43c7162cd941238a986c5ea1e55a887e67d9e
+  token-validity-in-seconds: 86400
