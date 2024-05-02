@@ -6,6 +6,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @작성자:오현암
  * @작성날짜:2024/04/25
@@ -15,7 +18,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity(name="user")
+@Entity
 @Table(name="user")
 public class UserEntity {
 
@@ -40,6 +43,10 @@ public class UserEntity {
     //TODO: Enum화 시키기
     @Column(name="role", updatable = false)
     private String role;
+
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name ="userId")
+    private List<CustomServiceEntity> customServiceEntityList = new ArrayList<>();
 
     public UserEntity(RegisterRequestDto dto){
         this.userId = dto.getId();

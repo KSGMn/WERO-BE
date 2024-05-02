@@ -14,14 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AfterServiceRequestDto {
-
+public class CustomService_requestDto {
     @NotBlank
-    private String title;
 
-    @NotBlank
-    private String content;
-
-    @NotBlank
-    private String writer;
 }
