@@ -14,7 +14,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CustomService_requestDto {
+public class CustomService_C_requestDto {
+
     @NotBlank
+    private String inquiryTitle;
+
+    @NotBlank
+    private String inquiryContent;
 
 }

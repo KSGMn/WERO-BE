@@ -34,7 +34,7 @@ public class UserEntity {
     @Column(name="type", updatable = false)
     private String type;
 
-    @Column(name="nickName")
+    @Column(name="nickname")
     private String nickName;
 
     @Column(name="gender", updatable = true)
@@ -43,11 +43,6 @@ public class UserEntity {
     //TODO: Enum화 시키기
     @Column(name="role", updatable = false)
     private String role;
-
-    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name ="userId")
-    private List<CustomServiceEntity> customServiceEntityList = new ArrayList<>();
-
     public UserEntity(RegisterRequestDto dto){
         this.userId = dto.getId();
         this.password = dto.getPassword();

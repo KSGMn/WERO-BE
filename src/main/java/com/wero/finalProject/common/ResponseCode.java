@@ -19,6 +19,7 @@ public interface ResponseCode {
     String MAIL_FAIL = "MF"; //이메일 오류
     String DUPLICATE_EMAIL = "DE";
     String DUPLICATE_NICKNAME = "DN";
+    String NO_EXIST_REPORT= "NER";
 
     //TODO: 401
     String SIGN_IN_FAIL = "SF"; //HTTP STATUS: 401 로그인 실패
