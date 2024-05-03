@@ -2,20 +2,19 @@ package com.wero.finalProject.domain;
 
 import com.wero.finalProject.dto.request.afterService.CustomService_C_requestDto;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.apache.catalina.User;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
 
 /**
- * @작성자:
- * @작성날짜:
- * @파일명:
+ * @작성자:오현암
+ * @작성날짜:2024/05/02
+ * @파일명:CustomServiceEntity.class
+ * @기능:고객센터Entity
  **/
 @Getter
 @Entity(name = "customerservice")
