@@ -1,13 +1,11 @@
 package com.wero.finalProject.domain;
 
 import com.wero.finalProject.dto.request.auth.RegisterRequestDto;
+import com.wero.finalProject.dto.request.user.UserUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @작성자:오현암
@@ -23,12 +21,13 @@ import java.util.List;
 public class UserEntity {
 
     @Id
+    @Column(name ="userId", updatable = false)
     private String userId;
 
     @Column(name ="email", updatable = false)
     private String email;
 
-    @Column(name="password", updatable = false)
+    @Column(name="password", updatable = true)
     private String password;
 
     @Column(name="type", updatable = false)
@@ -59,6 +58,14 @@ public class UserEntity {
         this.email = email;
         this.type = type;
         this.role = "ROLE_USER";
+    }
+
+    public void patchUserEntity(UserUpdateRequestDto dto, String userId) {
+        this.userId = userId;
+        this.email = dto.getEmail();
+        this.password = dto.getPassword();
+        this.gender = dto.getGender();
+        this.nickName = dto.getNickName();
     }
 
 }
