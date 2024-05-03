@@ -12,12 +12,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 /**
- * @작성자:
- * @작성날짜:
- * @파일명:
+ * @작성자:오현암
+ * @작성날짜:2024/05/02
+ * @파일명:CustomService_ServiceImpl.class
+ * @기능:고객센터서비스상세구현
  **/
 
 @Service
