@@ -10,9 +10,11 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * @작성자:
- * @작성날짜:
- * @파일명:
+ * @작성자:오현암
+ * @작성날짜:2024/05/03
+ * @파일명:UserController.class
+ * @기능:유저_수정_삭제API
+ *
  **/
 
 @RestController
