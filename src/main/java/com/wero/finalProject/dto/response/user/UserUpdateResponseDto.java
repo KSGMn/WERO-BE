@@ -7,9 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 /**
- * @작성자:
- * @작성날짜:
- * @파일명:
+ * @작성자:오현암
+ * @작성날짜:2024/05/03
+ * @파일명:UserUpdateResponseDto.class
+ * @기능:유저_수정_응답dto생성
  **/
 
 @Getter
