@@ -3,7 +3,6 @@ package com.wero.finalProject.dto.response.auth;
 import com.wero.finalProject.common.ResponseCode;
 import com.wero.finalProject.common.ResponseMessage;
 import com.wero.finalProject.dto.response.ResponseDto;
-import io.swagger.models.Response;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

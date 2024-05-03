@@ -12,7 +12,6 @@ import com.wero.finalProject.service.AuthService;
 import com.wero.finalProject.provider.EmailProvider;
 import com.wero.finalProject.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;

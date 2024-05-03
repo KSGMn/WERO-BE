@@ -25,9 +25,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @작성자:
- * @작성날짜:
- * @파일명:
+ * @작성자:오현암
+ * @작성날짜:2024/04/25
+ * @파일명:JwtAuthenticationFilter.class
+ * @기능:user_role,유저ID를통한Bearertoken생성
  **/
 
 @Component
