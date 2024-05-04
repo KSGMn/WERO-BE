@@ -7,6 +7,8 @@ build/
 #properties 제외하기
 src/main/resources/application.properties 
 
+appication.yml
+
 ### STS ###
 .apt_generated
 .classpath
