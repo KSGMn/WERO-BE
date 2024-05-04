@@ -1,16 +1,19 @@
 package com.wero.finalProject.provider;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import lombok.Setter;
 
 /**
  * @작성자:오현암
@@ -19,12 +22,14 @@ import java.util.Date;
  * @기능:Jwt토큰_발급
  **/
 @Component
+@ConfigurationProperties(prefix = "jwt")
+@Setter
 public class JwtProvider {
 
-    @Value("${jwt.secret}")
+    // @Value("${jwt.secret}")
     private String secretKey;
 
-    public String create(String userId){
+    public String create(String userId) {
 
         Date expiredDate = Date.from(Instant.now().plus(1, ChronoUnit.HOURS)); // 현재시간 기준 먼저
         Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
@@ -36,8 +41,7 @@ public class JwtProvider {
         return jwt;
     }
 
-
-    //TODO: jwt 검증
+    // TODO: jwt 검증
     public String validate(String jwt) {
         Claims claims = null;
         Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
