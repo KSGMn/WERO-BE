@@ -6,22 +6,21 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * @작성자:
- * @작성날짜:
- * @파일명:
+ * @작성자:오현암
+ * @작성날짜:2024/05/02
+ * @파일명:CustomService_C_requestDto.class
+ * @기능:고객센터_글쓰기_요청_dto
  **/
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class AfterServiceRequestDto {
+public class CustomService_C_requestDto {
 
     @NotBlank
-    private String title;
+    private String inquiryTitle;
 
     @NotBlank
-    private String content;
+    private String inquiryContent;
 
-    @NotBlank
-    private String writer;
 }

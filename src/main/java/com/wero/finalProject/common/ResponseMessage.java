@@ -32,6 +32,7 @@ public interface ResponseMessage {
     String MAIL_FAIL = "Mail Send Failed";
     String DUPLICATE_EMAIL = "Duplicate Email";
     String DUPLICATE_NICKNAME = "Duplicate NickName";
+    String UPDATE_FAIL = "Update Fail";
 
     //TODO: HTTP401
     String SIGN_IN_FAIL = "sing in fail";

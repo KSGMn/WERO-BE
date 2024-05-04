@@ -8,16 +8,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 /**
- * @작성자:
- * @작성날짜:
- * @파일명:
+ * @작성자:오현암
+ * @작성날짜:2024/04/25
+ * @파일명:ResponseDto.class
+ * @기능:공통_응답_데이터_생성
  **/
 @Getter
 @AllArgsConstructor
 public class ResponseDto {
+
     private String code;
     private String msg;
-
 
     public ResponseDto(){
         this.code = ResponseCode.SUCCESS;

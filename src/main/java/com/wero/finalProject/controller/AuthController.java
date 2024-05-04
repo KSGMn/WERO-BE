@@ -24,9 +24,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 /**
- * @작성자:
- * @작성날짜:
- * @파일명:
+ * @작성자:오현암
+ * @작성날짜:2024/04/25
+ * @파일명:AuthController.class
+ * @기능:로그인,회원가입,이메일인증,아이디중복체크_API
  **/
 @RestController
 @RequestMapping("/api/v1/auth")

@@ -1,6 +1,7 @@
 package com.wero.finalProject.domain;
 
 import com.wero.finalProject.dto.request.auth.RegisterRequestDto;
+import com.wero.finalProject.dto.request.user.UserUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -15,23 +16,24 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity(name="user")
+@Entity
 @Table(name="user")
 public class UserEntity {
 
     @Id
+    @Column(name ="userId", updatable = false)
     private String userId;
 
     @Column(name ="email", updatable = false)
     private String email;
 
-    @Column(name="password", updatable = false)
+    @Column(name="password", updatable = true)
     private String password;
 
     @Column(name="type", updatable = false)
     private String type;
 
-    @Column(name="nickName")
+    @Column(name="nickname")
     private String nickName;
 
     @Column(name="gender", updatable = true)
@@ -40,7 +42,6 @@ public class UserEntity {
     //TODO: Enum화 시키기
     @Column(name="role", updatable = false)
     private String role;
-
     public UserEntity(RegisterRequestDto dto){
         this.userId = dto.getId();
         this.password = dto.getPassword();
@@ -57,6 +58,14 @@ public class UserEntity {
         this.email = email;
         this.type = type;
         this.role = "ROLE_USER";
+    }
+
+    public void patchUserEntity(UserUpdateRequestDto dto, String userId) {
+        this.userId = userId;
+        this.email = dto.getEmail();
+        this.password = dto.getPassword();
+        this.gender = dto.getGender();
+        this.nickName = dto.getNickName();
     }
 
 }

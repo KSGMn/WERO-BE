@@ -1,10 +1,10 @@
 package com.wero.finalProject.provider;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -39,21 +39,20 @@ public class JwtProvider {
 
     //TODO: jwt 검증
     public String validate(String jwt) {
-        String subject = null;
+        Claims claims = null;
         Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
 
         try {
-            subject = Jwts.parserBuilder()
+            claims = Jwts.parserBuilder()
                     .setSigningKey(key)
                     .build()
                     .parseClaimsJws(jwt)
-                    .getBody()
-                    .getSubject();
+                    .getBody();
 
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-        return subject;
+        return claims.getSubject();
     }
 }

@@ -1,8 +1,9 @@
 package com.wero.finalProject.filter;
 
-import com.wero.finalProject.provider.JwtProvider;
+
 import com.wero.finalProject.Repository.UserRepository;
 import com.wero.finalProject.domain.UserEntity;
+import com.wero.finalProject.provider.JwtProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,15 +27,17 @@ import java.util.List;
 /**
  * @작성자:오현암
  * @작성날짜:2024/04/25
- * @파일명:JwtAuthenticationFilter
- * @기능:Jwt인증필터
+ * @파일명:JwtAuthenticationFilter.class
+ * @기능:user_role,유저ID를통한Bearertoken생성
  **/
+
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final UserRepository userRepository;
     private final JwtProvider jwtProvider;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -60,10 +63,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             List<GrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority(role));
 
-            SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+
             AbstractAuthenticationToken authenticationToken =
                     new UsernamePasswordAuthenticationToken(userId, null, authorities);
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+            SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
 
             securityContext.setAuthentication(authenticationToken);
             SecurityContextHolder.setContext(securityContext);
