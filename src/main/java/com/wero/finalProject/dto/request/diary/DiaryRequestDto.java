@@ -17,10 +17,13 @@ import org.springframework.stereotype.Service;
 @NoArgsConstructor
 public class DiaryRequestDto {
     @NotBlank
-    private String content;
+    private String diaryContent;
 
     @NotBlank
-    private String category;
+    private String emotion;
+
+    @NotBlank
+    private String song;
 
 //    @NotNull
 //    private List<String> postImageList;
