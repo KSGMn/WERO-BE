@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Scanner;
-
 /**
  * @작성자:오현암
  * @작성날짜:2024/05/04
