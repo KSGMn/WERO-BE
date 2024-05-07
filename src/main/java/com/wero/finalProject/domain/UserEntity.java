@@ -1,6 +1,7 @@
 package com.wero.finalProject.domain;
 
 import com.wero.finalProject.dto.request.auth.RegisterRequestDto;
+import com.wero.finalProject.dto.request.user.UserUpdateEmailRequestDto;
 import com.wero.finalProject.dto.request.user.UserUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -24,7 +25,7 @@ public class UserEntity {
     @Column(name ="userId", updatable = false)
     private String userId;
 
-    @Column(name ="email", updatable = false)
+    @Column(name ="email")
     private String email;
 
     @Column(name="password", updatable = true)
@@ -38,6 +39,9 @@ public class UserEntity {
 
     @Column(name="gender", updatable = true)
     private String gender;
+
+    @Column(name = "profile_Image")
+    private String image;
 
     //TODO: Enum화 시키기
     @Column(name="role", updatable = false)
@@ -68,4 +72,8 @@ public class UserEntity {
         this.nickName = dto.getNickName();
     }
 
+    public void patchUserEmail(UserUpdateEmailRequestDto dto, String userId){
+        this.userId = userId;
+        this.email = dto.getEmail();
+    }
 }

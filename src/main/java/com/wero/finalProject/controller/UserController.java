@@ -1,5 +1,6 @@
 package com.wero.finalProject.controller;
 
+import com.wero.finalProject.dto.request.user.UserUpdateEmailRequestDto;
 import com.wero.finalProject.dto.request.user.UserUpdateRequestDto;
 import com.wero.finalProject.dto.response.user.UserUpdateResponseDto;
 import com.wero.finalProject.service.UserService;
@@ -29,6 +30,14 @@ public class UserController {
             (@RequestBody @Valid UserUpdateRequestDto requestBody,
              @AuthenticationPrincipal String userId){
         ResponseEntity<? super UserUpdateResponseDto> response = userService.userUpdate(requestBody, userId);
+        return response;
+    }
+
+    @PatchMapping("/update/email")
+    public ResponseEntity<? super UserUpdateResponseDto> updateEmail(
+            @RequestBody @Valid UserUpdateEmailRequestDto requestBody,
+            @AuthenticationPrincipal String userId) {
+        ResponseEntity<? super UserUpdateResponseDto> response = userService.userUpdateEmail(requestBody, userId);
         return response;
     }
 }
