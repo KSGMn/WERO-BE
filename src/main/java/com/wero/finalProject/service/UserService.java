@@ -1,5 +1,6 @@
 package com.wero.finalProject.service;
 
+import com.wero.finalProject.dto.request.user.UserUpdateEmailRequestDto;
 import com.wero.finalProject.dto.request.user.UserUpdateRequestDto;
 import com.wero.finalProject.dto.response.user.UserUpdateResponseDto;
 import org.springframework.http.ResponseEntity;
@@ -12,4 +13,5 @@ import org.springframework.http.ResponseEntity;
  **/
 public interface UserService {
     ResponseEntity<? super UserUpdateResponseDto> userUpdate(UserUpdateRequestDto dto, String userId);
+    ResponseEntity<? super UserUpdateResponseDto> userUpdateEmail(UserUpdateEmailRequestDto dto, String userId);
 }
