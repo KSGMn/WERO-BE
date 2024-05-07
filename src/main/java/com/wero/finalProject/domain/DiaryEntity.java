@@ -2,10 +2,18 @@ package com.wero.finalProject.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.wero.finalProject.dto.request.diary.DiaryRequestDto;
+import com.wero.finalProject.dto.request.diary.PatchDiaryRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+/**
+ * @작성자:최기원
+ * @작성날짜:2024/05/04
+ * @파일명:DiaryEntity.class
+ * @기능:일기 엔티티
+ **/
 
 @Getter
 @NoArgsConstructor
@@ -27,6 +35,8 @@ public class DiaryEntity {
     @Column(name = "category", nullable = false)
     private String category;
 
+    //like, songTitle
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonManagedReference
@@ -41,5 +51,10 @@ public class DiaryEntity {
         this.category="category";
         this.writer=user;
 
+    }
+
+    public void patchDiary(PatchDiaryRequestDto dto) {
+        this.content = dto.getContent();
+        this.category=dto.getCategory();
     }
 }

@@ -20,6 +20,7 @@ public interface ResponseCode {
     String DUPLICATE_EMAIL = "DE";
     String NO_EXIST_REPORT= "NER";
     String UPDATE_FAIL = "UF";
+    String NOT_EXIST_DIARY = "ND";
 
 
     //TODO: 401

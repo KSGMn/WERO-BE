@@ -2,10 +2,10 @@ spring:
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/test
     username: root
-    password: 76065633
+    password: 1234
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     driver-class-name: com.mysql.cj.jdbc.Driver
     dialect: org.hibernate.dialect.MySQLDialect
   mail:
@@ -18,6 +18,15 @@ spring:
         smtp:
           auth: true
           starttls.enable: true
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 110MB
+  file:
+    upload:
+      path: C:/fileUpload/
+      url: http://localhost:8080/file/
 jwt:
   secret: 7cb557e20f15ebac9442a240481c50e45118909be31f7a6c553b09a189034eeb53c862aaf55e2fef762972390ec43c7162cd941238a986c5ea1e55a887e67d9e
   token-validity-in-seconds: 86400
+
