@@ -50,22 +50,6 @@ public class DiaryServiceImplement implements DiaryService {
         return  DiaryResponseDto.success();
     }
 
-//    @Override
-//    public ResponseEntity<? super GetPostResponseDto> getPostAll() {
-//
-//       try {
-//           List<PostEntity> postEntities = postRepository.findAll();
-//         if(postEntities == null)return GetPostResponseDto.notExistBoard();
-//
-//
-//       }catch (Exception exception){
-//           exception.printStackTrace();
-//           return ResponseDto.dataBaseError();
-//       }
-//        return  GetPostResponseDto.successAll(postEntities);
-//    }
-
-
     @Override
     public ResponseEntity<? super GetDiaryResponseDto> getDiary(Integer diaryId) {
         DiaryEntity diaryEntity;//일기 엔티티 생성한다
