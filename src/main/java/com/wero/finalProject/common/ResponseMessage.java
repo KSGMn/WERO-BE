@@ -6,7 +6,7 @@ package com.wero.finalProject.common;
  * @파일명:ResponseMessage.interface
  * @기능:에러,성공메세지_생성
  **/
-//TODO: # 100: 데이터의 일부를 서버가 받은 상태(처리중인 상태)
+// TODO: # 100: 데이터의 일부를 서버가 받은 상태(처리중인 상태)
 // # 200: OK 에러없이 정상처리
 // # 204: 정상처리 되었으나, 서버에 보낼 데이터가 없음
 // # 301: 요청한 URL이 새로 변경되었음.
@@ -21,10 +21,13 @@ package com.wero.finalProject.common;
 // # 504: 지정된 처리시간이 지나서 처리되지 못하는 경우
 public interface ResponseMessage {
 
-    //TODO: HTTP200
+    // TODO: HTTP200
     String SUCCESS = "success";
 
-    //TODO: HTTP400
+    // TODO : HTTP201
+    String CREATED = "Created";
+
+    // TODO: HTTP400
     String VALIDATION_FAIL = "validation failed";
     String DUPLICATE_ID = "duplicate id";
     String NOT_EXIST_USER = "Not Exist User";
@@ -34,16 +37,18 @@ public interface ResponseMessage {
     String DUPLICATE_NICKNAME = "Duplicate NickName";
     String UPDATE_FAIL = "Update Fail";
 
-    //TODO: HTTP401
+    // TODO: HTTP400 추가
+    String CREATE_FAIL = "Create Fail";
+    String DELET_FAIL = "Delete Fail";
+
+    // TODO: HTTP401
     String SIGN_IN_FAIL = "sing in fail";
     String CERTIFICATION_FAIL = "certification fail";
 
-    //TODO:403
+    // TODO:403
     String NO_PERMISSION = "No Permission";
 
-    //TODO: HTTP500
+    // TODO: HTTP500
     String DATABASE_ERROR = "database_error";
-
-
 
 }

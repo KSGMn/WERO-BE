@@ -1,11 +1,7 @@
 package com.wero.finalProject.controller;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +12,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wero.finalProject.domain.MainFeedEntity;
-import com.wero.finalProject.domain.UserEntity;
 import com.wero.finalProject.dto.request.feeds.CreateFeedsRequestDto;
+import com.wero.finalProject.dto.request.feeds.UpdateFeedsRequestDto;
+import com.wero.finalProject.dto.response.ResponseDto;
 import com.wero.finalProject.dto.response.feeds.CreateFeedsResponseDto;
+import com.wero.finalProject.dto.response.feeds.DeleteFeedsResponseDto;
+import com.wero.finalProject.dto.response.feeds.FeedsResponseDto;
+import com.wero.finalProject.dto.response.feeds.UpdateFeedsResponseDto;
 import com.wero.finalProject.service.MainFeedService;
-import com.wero.finalProject.service.UserService;
 
 /**
  * @작성자:김선규
@@ -35,58 +33,77 @@ import com.wero.finalProject.service.UserService;
 public class MainFeedController {
 
     private final MainFeedService mainFeedService;
-    private final UserService userService;
 
-    @Autowired
-    public MainFeedController(MainFeedService mainFeedService, UserService userService) {
+    public MainFeedController(MainFeedService mainFeedService) {
         this.mainFeedService = mainFeedService;
-        this.userService = userService;
+
     }
 
-    @GetMapping
-    public List<MainFeedEntity> getAllFeeds() {
-        return mainFeedService.getAllFeeds();
+    // 모든 피드 조회
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<FeedsResponseDto>> getAllFeeds(@PathVariable String userId) {
+
+        try {
+            List<FeedsResponseDto> feeds = mainFeedService.getAllFeeds(userId);
+            return ResponseEntity.ok().body(feeds);
+
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @GetMapping("/{id}")
-    public MainFeedEntity getFeedById(@PathVariable Integer id) {
-        return mainFeedService.getFeedById(id);
+    // 유저 피드 userId로 찾기
+    @GetMapping("/{userId}/history")
+    public ResponseEntity<List<FeedsResponseDto>> getFeedByUserId(@PathVariable String userId) {
+
+        try {
+            List<FeedsResponseDto> feeds = mainFeedService.getFeedByUserId(userId);
+            return ResponseEntity.ok().body(feeds);
+
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @PostMapping("/{userId}/create")
-    public ResponseEntity<CreateFeedsResponseDto> createFeed(@RequestBody CreateFeedsRequestDto requestDto,
+    // 메인 피드 생성
+    @PostMapping("/{userId}/feed")
+    public ResponseEntity<?> createFeed(@RequestBody CreateFeedsRequestDto requestDto,
             @PathVariable String userId) {
-
-        System.out.println("Received 카테고리: " + requestDto.getCategory() + requestDto.getContent() +
-                requestDto.getTrackName());
-
-        UserEntity user = userService.findUserById(userId);
-
-        MainFeedEntity feed = MainFeedEntity.builder()
-                .content(requestDto.getContent())
-                .trackName(requestDto.getTrackName())
-                .category(requestDto.getCategory())
-                .create_date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
-                .writer(user)
-                .build();
-        System.out.println("Received 카테고리 후 : " + requestDto.getCategory() + requestDto.getContent() +
-                requestDto.getTrackName());
-        MainFeedEntity createFeed = mainFeedService.createFeed(feed);
-        CreateFeedsResponseDto responseDto = new CreateFeedsResponseDto(
-                createFeed.getMainfeed_id(),
-                "Feed created successfully!");
-
-        return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
+        try {
+            mainFeedService.createFeed(userId, requestDto.toEntity());
+            return CreateFeedsResponseDto.created();
+        } catch (IllegalArgumentException e) {
+            return CreateFeedsResponseDto.createFail();
+        } catch (Exception e) {
+            return ResponseDto.dataBaseError();
+        }
     }
 
-    @PutMapping("/{id}")
-    public MainFeedEntity updateFeed(@PathVariable Integer id, @RequestBody MainFeedEntity feed) {
-        return mainFeedService.updateFeed(id, feed);
+    // 메인 피드 수정
+    @PutMapping("/{userId}/{id}/feed")
+    public ResponseEntity<?> updateFeed(@RequestBody UpdateFeedsRequestDto requestDto, @PathVariable String userId,
+            @PathVariable Integer id) {
+        try {
+            mainFeedService.updateFeed(id, requestDto.toEntity());
+            return UpdateFeedsResponseDto.update();
+        } catch (IllegalArgumentException e) {
+            return UpdateFeedsResponseDto.updateFail();
+        } catch (Exception e) {
+            return ResponseDto.dataBaseError();
+        }
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteFeed(@PathVariable Integer id) {
-        mainFeedService.deleteFeed(id);
+    // 메인 피드 삭제
+    @DeleteMapping("/{userId}/{id}")
+    public ResponseEntity<?> deleteFeed(@PathVariable String userId, @PathVariable Integer id) {
+        try {
+            mainFeedService.deleteFeed(id);
+            return DeleteFeedsResponseDto.delete();
+        } catch (IllegalArgumentException e) {
+            return DeleteFeedsResponseDto.deleteFail();
+        } catch (Exception e) {
+            return ResponseDto.dataBaseError();
+        }
     }
 
 }

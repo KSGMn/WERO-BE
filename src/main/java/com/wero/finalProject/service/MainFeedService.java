@@ -3,6 +3,7 @@ package com.wero.finalProject.service;
 import java.util.List;
 
 import com.wero.finalProject.domain.MainFeedEntity;
+import com.wero.finalProject.dto.response.feeds.FeedsResponseDto;
 
 /**
  * @작성자:김선규
@@ -13,11 +14,11 @@ import com.wero.finalProject.domain.MainFeedEntity;
 
 public interface MainFeedService {
 
-    List<MainFeedEntity> getAllFeeds();
+    List<FeedsResponseDto> getAllFeeds(String userId);
 
-    MainFeedEntity getFeedById(Integer id);
+    List<FeedsResponseDto> getFeedByUserId(String userId);
 
-    MainFeedEntity createFeed(MainFeedEntity mainFeed);
+    MainFeedEntity createFeed(String userId, MainFeedEntity mainFeed);
 
     MainFeedEntity updateFeed(Integer id, MainFeedEntity mainFeed);
 

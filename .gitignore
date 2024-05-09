@@ -11,6 +11,7 @@ src/main/resources/application.yml
 # src/main/resources 폴더는 무시하지 않음
 !src/main/resources/
 
+src/query.sql
 
 ### STS ###
 .apt_generated

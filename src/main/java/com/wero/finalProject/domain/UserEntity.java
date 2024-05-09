@@ -1,8 +1,16 @@
 package com.wero.finalProject.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.wero.finalProject.dto.request.auth.RegisterRequestDto;
 import com.wero.finalProject.dto.request.user.UserUpdateRequestDto;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,32 +25,36 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name="user")
+@Table(name = "user")
 public class UserEntity {
 
     @Id
-    @Column(name ="userId", updatable = false)
+    @Column(name = "userId", updatable = false)
     private String userId;
 
-    @Column(name ="email", updatable = false)
+    @Column(name = "email", updatable = false)
     private String email;
 
-    @Column(name="password", updatable = true)
+    @Column(name = "password", updatable = true)
     private String password;
 
-    @Column(name="type", updatable = false)
+    @Column(name = "type", updatable = false)
     private String type;
 
-    @Column(name="nickname")
+    @Column(name = "nickname")
     private String nickName;
 
-    @Column(name="gender", updatable = true)
+    @Column(name = "gender", updatable = true)
     private String gender;
 
-    //TODO: Enum화 시키기
-    @Column(name="role", updatable = false)
+    @OneToMany(mappedBy = "userId")
+    private Set<LikeEntity> likes = new HashSet<>();
+
+    // TODO: Enum화 시키기
+    @Column(name = "role", updatable = false)
     private String role;
-    public UserEntity(RegisterRequestDto dto){
+
+    public UserEntity(RegisterRequestDto dto) {
         this.userId = dto.getId();
         this.password = dto.getPassword();
         this.email = dto.getEmail();
@@ -52,7 +64,7 @@ public class UserEntity {
         this.role = "ROLE_USER";
     }
 
-    public UserEntity(String userId, String email, String type){
+    public UserEntity(String userId, String email, String type) {
         this.userId = userId;
         this.password = "password";
         this.email = email;

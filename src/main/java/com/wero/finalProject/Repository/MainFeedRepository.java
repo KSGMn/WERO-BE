@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.wero.finalProject.domain.MainFeedEntity;
-import com.wero.finalProject.domain.UserEntity;
 
 /**
  * @작성자:김선규
@@ -17,5 +16,5 @@ import com.wero.finalProject.domain.UserEntity;
 
 @Repository
 public interface MainFeedRepository extends JpaRepository<MainFeedEntity, Integer> {
-    List<MainFeedEntity> findByWriter(UserEntity writer);
+    List<MainFeedEntity> findByWriter_UserId(String userId);
 }

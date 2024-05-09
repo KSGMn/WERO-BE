@@ -10,14 +10,14 @@ import lombok.Setter;
  **/
 @Getter
 @Setter
-public class DiarySearchRequestDto {
+public class SearchRequestDto {
 
     private Integer diary_id;
     private String content;
     private String category;
     private String nickName;
 
-    public DiarySearchRequestDto(Integer diary_id, String content, String category, String nickName) {
+    public SearchRequestDto(Integer diary_id, String content, String category, String nickName) {
         this.diary_id = diary_id;
         this.content = content;
         this.category = category;
