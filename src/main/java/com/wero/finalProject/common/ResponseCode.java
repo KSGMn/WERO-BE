@@ -22,6 +22,7 @@ public interface ResponseCode {
     String UPDATE_FAIL = "UF";
     String NOT_EXIST_DIARY = "ND";
 
+    String DUPLICATE_NICKNAME = "DN";
 
     //TODO: 401
     String SIGN_IN_FAIL = "SF"; //HTTP STATUS: 401 로그인 실패
