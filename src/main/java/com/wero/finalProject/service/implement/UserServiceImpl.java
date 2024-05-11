@@ -4,6 +4,7 @@ import com.wero.finalProject.Repository.ImageRepository;
 import com.wero.finalProject.Repository.UserRepository;
 import com.wero.finalProject.domain.ImageEntity;
 import com.wero.finalProject.domain.UserEntity;
+import com.wero.finalProject.dto.request.user.UserPostPictureRequestDto;
 import com.wero.finalProject.dto.request.user.UserUpdateEmailRequestDto;
 import com.wero.finalProject.dto.request.user.UserUpdateRequestDto;
 import com.wero.finalProject.dto.response.ResponseDto;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,16 +45,6 @@ public class UserServiceImpl implements UserService {
             String encodedPassword = passwordEncoder.encode(password);
             dto.setPassword(encodedPassword);
 
-            List<String> profImage = dto.getProfImage();
-            List<ImageEntity> imageEntities = new ArrayList<>();
-
-            for(String image : profImage){
-                ImageEntity imageEntity = new ImageEntity(user, image);
-                imageEntities.add(imageEntity);
-            }
-
-            imageRepository.saveAll(imageEntities);
-
             user.patchUserEntity(dto, userId);
 
             userRepository.save(user);
@@ -61,7 +53,6 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
             return ResponseDto.dataBaseError();
         }
-
     }
 
     @Override
@@ -82,5 +73,27 @@ public class UserServiceImpl implements UserService {
            e.printStackTrace();
            return ResponseDto.dataBaseError();
        }
+    }
+
+    @Override
+    public ResponseEntity<? super UserUpdateResponseDto> userPicture(UserPostPictureRequestDto dto, String userId) {
+        try{
+            UserEntity user = userRepository.findByUserId(userId);
+            if(user==null) return UserUpdateResponseDto.notExistUser();
+
+            List<MultipartFile> profImage = dto.getImage();
+            List<ImageEntity> profilePic = new ArrayList<>();
+
+            for(MultipartFile image : profImage){
+                ImageEntity imageEntity =  new ImageEntity(user, image.getName());
+                profilePic.add(imageEntity);
+            }
+
+            imageRepository.saveAll(profilePic);
+            return UserUpdateResponseDto.success();
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseDto.dataBaseError();
+        }
     }
 }
