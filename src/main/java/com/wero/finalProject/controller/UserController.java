@@ -1,5 +1,6 @@
 package com.wero.finalProject.controller;
 
+import com.wero.finalProject.dto.request.user.UserPostPictureRequestDto;
 import com.wero.finalProject.dto.request.user.UserUpdateEmailRequestDto;
 import com.wero.finalProject.dto.request.user.UserUpdateRequestDto;
 import com.wero.finalProject.dto.response.user.UserUpdateResponseDto;
@@ -38,6 +39,14 @@ public class UserController {
             @RequestBody @Valid UserUpdateEmailRequestDto requestBody,
             @AuthenticationPrincipal String userId) {
         ResponseEntity<? super UserUpdateResponseDto> response = userService.userUpdateEmail(requestBody, userId);
+        return response;
+    }
+
+    @PostMapping(value = "/update/prof")
+    public ResponseEntity<? super UserUpdateResponseDto> registerPic
+            (@ModelAttribute UserPostPictureRequestDto requestBody,
+             @AuthenticationPrincipal String userId){
+        ResponseEntity<? super UserUpdateResponseDto> response = userService.userPicture(requestBody,userId);
         return response;
     }
 }
