@@ -2,6 +2,7 @@ package com.wero.finalProject.service;
 
 import java.util.List;
 
+import com.wero.finalProject.domain.LikeEntity;
 import com.wero.finalProject.domain.MainFeedEntity;
 import com.wero.finalProject.dto.response.feeds.FeedsResponseDto;
 
@@ -18,10 +19,16 @@ public interface MainFeedService {
 
     List<FeedsResponseDto> getFeedByUserId(String userId);
 
+    List<FeedsResponseDto> getFeedByUserIdAndIsLiked(String userId);
+
     MainFeedEntity createFeed(String userId, MainFeedEntity mainFeed);
 
     MainFeedEntity updateFeed(Integer id, MainFeedEntity mainFeed);
 
     void deleteFeed(Integer id);
+
+    LikeEntity addLikeFeed(String userId, Integer Id);
+
+    void deleteLikeFeed(String userId, Integer id);
 
 }

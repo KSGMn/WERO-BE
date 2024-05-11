@@ -2,11 +2,14 @@ package com.wero.finalProject.service.implement;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.wero.finalProject.Repository.LikeRepository;
@@ -18,7 +21,9 @@ import com.wero.finalProject.dto.response.feeds.FeedsResponseDto;
 import com.wero.finalProject.service.MainFeedService;
 import com.wero.finalProject.service.UserService;
 
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.PersistenceContext;
 
 /**
  * @작성자:김선규
@@ -38,6 +43,9 @@ public class MainFeedServiceImpl implements MainFeedService {
 
     @Autowired
     private LikeRepository likeRepository;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     // 메인 피드 전체 조회
     @Override
@@ -62,7 +70,8 @@ public class MainFeedServiceImpl implements MainFeedService {
                                 feed.getCreateDate(),
                                 feed.getModificateDate(),
                                 feed.getCategory(),
-                                isLiked);
+                                isLiked,
+                                feed.getWriter().getUserId());
                     })
                     .collect(Collectors.toList());
             return responseDtos;
@@ -94,7 +103,52 @@ public class MainFeedServiceImpl implements MainFeedService {
                                 feed.getCreateDate(),
                                 feed.getModificateDate(),
                                 feed.getCategory(),
-                                isLiked);
+                                isLiked,
+                                feed.getWriter().getUserId());
+                    })
+                    .collect(Collectors.toList());
+            return responseDtos;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    // 유저가 좋아요한 피드 목록 조회
+    @Override
+    public List<FeedsResponseDto> getFeedByUserIdAndIsLiked(String userId) {
+
+        // 사용자 ID로 Like엔티티 가져오기
+        List<LikeEntity> likeEntities = likeRepository.findMainfeedIdByUserId_UserId(userId);
+
+        try {
+            if (likeEntities.isEmpty()) {
+                throw new RuntimeException("Not found feeds");
+            }
+
+            // 좋아요 한 피드 아이디를 담기 위해 빈 배열 생성
+            List<Integer> mainfeedIds = new ArrayList<>();
+
+            // 좋아요 한 피드 아이디 리스트 생성
+            likeEntities.forEach(like -> mainfeedIds.add(like.getMainfeedId().getMainfeedId()));
+
+            List<MainFeedEntity> feeds = mainFeedRepository.findByMainfeedIdIn(mainfeedIds);
+
+            List<FeedsResponseDto> responseDtos = feeds.stream()
+                    .map(feed -> {
+                        Optional<LikeEntity> like = likeRepository
+                                .findIsLikedByUserId_UserIdAndMainfeedId_MainfeedId(userId, feed.getMainfeedId());
+                        boolean isLiked = like.map(LikeEntity::isLiked).orElse(false);
+                        return new FeedsResponseDto(
+                                feed.getMainfeedId(),
+                                feed.getContent(),
+                                feed.getTrackName(),
+                                feed.getImage(),
+                                feed.getCreateDate(),
+                                feed.getModificateDate(),
+                                feed.getCategory(),
+                                isLiked,
+                                feed.getWriter().getUserId());
                     })
                     .collect(Collectors.toList());
             return responseDtos;
@@ -163,6 +217,52 @@ public class MainFeedServiceImpl implements MainFeedService {
             throw new RuntimeException("Failed to delete feed", e);
         }
 
+    }
+
+    // 인증된 사용자가 있는 경우 userId값 받아오기
+    public String getCurrentUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            UserEntity user = (UserEntity) authentication.getPrincipal();
+
+            return user.getUserId();
+        }
+        return null;
+    }
+
+    // 좋아요 추가
+    @Override
+    public LikeEntity addLikeFeed(String userId, Integer id) {
+
+        try {
+            UserEntity userReference = entityManager.getReference(UserEntity.class, userId);
+            MainFeedEntity feedReference = entityManager.getReference(MainFeedEntity.class, id);
+            LikeEntity likeFeed = LikeEntity.builder()
+                    .userId(userReference)
+                    .mainfeedId(feedReference)
+                    .isLiked(true)
+                    .build();
+            return likeRepository.save(likeFeed);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to delete feed", e);
+        }
+    }
+
+    // 좋아요 삭제
+    @Override
+    public void deleteLikeFeed(String userId, Integer id) {
+
+        Optional<LikeEntity> like = likeRepository.findLikeIdByUserId_UserIdAndMainfeedId_MainfeedId(userId, id);
+
+        if (like == null || id == null) {
+            throw new EntityNotFoundException();
+        }
+        try {
+            System.out.println(like);
+            likeRepository.deleteById(like.get().getLikeId());
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to delete feed", e);
+        }
     }
 
 }

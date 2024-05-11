@@ -1,5 +1,6 @@
 package com.wero.finalProject.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +19,7 @@ import com.wero.finalProject.domain.LikeEntity;
 public interface LikeRepository extends JpaRepository<LikeEntity, Integer> {
     Optional<LikeEntity> findIsLikedByUserId_UserIdAndMainfeedId_MainfeedId(String userId, Integer mainfeedId);
 
+    Optional<LikeEntity> findLikeIdByUserId_UserIdAndMainfeedId_MainfeedId(String userId, Integer mainfeedId);
+
+    List<LikeEntity> findMainfeedIdByUserId_UserId(String userId);
 }

@@ -22,5 +22,6 @@ public class FeedsResponseDto {
     private String modificate_date;
     private String category;
     private boolean isLiked;
+    private String user_id;
 
 }

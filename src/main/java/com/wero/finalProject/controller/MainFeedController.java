@@ -50,6 +50,7 @@ public class MainFeedController {
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
+
     }
 
     // 유저 피드 userId로 찾기
@@ -63,6 +64,21 @@ public class MainFeedController {
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    // 유저가 좋아요한 피드 목록 조회
+    @GetMapping("/{userId}/likes")
+    public ResponseEntity<List<FeedsResponseDto>> getFeedByUserIdAndIsLiked(@PathVariable String userId) {
+        // try {
+        // List<FeedsResponseDto> feeds =
+        // mainFeedService.getFeedByUserIdAndIsLiked(userId);
+        // return ResponseEntity.ok().body(feeds);
+
+        // } catch (Exception e) {
+        // return ResponseEntity.notFound().build();
+        // }
+        List<FeedsResponseDto> feeds = mainFeedService.getFeedByUserIdAndIsLiked(userId);
+        return ResponseEntity.ok().body(feeds);
     }
 
     // 메인 피드 생성
@@ -98,6 +114,33 @@ public class MainFeedController {
     public ResponseEntity<?> deleteFeed(@PathVariable String userId, @PathVariable Integer id) {
         try {
             mainFeedService.deleteFeed(id);
+            return DeleteFeedsResponseDto.delete();
+        } catch (IllegalArgumentException e) {
+            return DeleteFeedsResponseDto.deleteFail();
+        } catch (Exception e) {
+            return ResponseDto.dataBaseError();
+        }
+    }
+
+    // 메인 피드 좋아요 추가
+    @PostMapping("/{userId}/{id}/like")
+    public ResponseEntity<?> addLikeFeed(@PathVariable String userId, @PathVariable Integer id) {
+        try {
+            System.out.println("유저아이디: " + userId);
+            mainFeedService.addLikeFeed(userId, id);
+            return DeleteFeedsResponseDto.delete();
+        } catch (IllegalArgumentException e) {
+            return DeleteFeedsResponseDto.deleteFail();
+        } catch (Exception e) {
+            return ResponseDto.dataBaseError();
+        }
+    }
+
+    // 메인 피드 좋아요 삭제
+    @DeleteMapping("/{userId}/{id}/like")
+    public ResponseEntity<?> deleteLikeFeed(@PathVariable String userId, @PathVariable Integer id) {
+        try {
+            mainFeedService.deleteLikeFeed(userId, id);
             return DeleteFeedsResponseDto.delete();
         } catch (IllegalArgumentException e) {
             return DeleteFeedsResponseDto.deleteFail();

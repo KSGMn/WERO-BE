@@ -1,14 +1,9 @@
 package com.wero.finalProject.filter;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.wero.finalProject.Repository.UserRepository;
-import com.wero.finalProject.domain.UserEntity;
-import com.wero.finalProject.provider.JwtProvider;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,9 +15,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import com.wero.finalProject.Repository.UserRepository;
+import com.wero.finalProject.domain.UserEntity;
+import com.wero.finalProject.provider.JwtProvider;
+
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 
 /**
  * @작성자:오현암
@@ -40,32 +41,31 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
-        try{
+            HttpServletResponse response,
+            FilterChain filterChain) throws ServletException, IOException {
+        try {
 
             String token = parseBearerToken(request);
-            if(token==null){
-                filterChain.doFilter(request,response);
+            if (token == null) {
+                filterChain.doFilter(request, response);
                 return;
             }
 
             String userId = jwtProvider.validate(token);
-            if(userId == null){
-                filterChain.doFilter(request,response);
+            if (userId == null) {
+                filterChain.doFilter(request, response);
                 return;
             }
 
             UserEntity userEntity = userRepository.findByUserId(userId);
-            String role = userEntity.getRole(); //role = ROLE_USER, ROLE_ADMIN ENUM?
+            String role = userEntity.getRole(); // role = ROLE_USER, ROLE_ADMIN ENUM?
 
-            //ROLE_DEVELOPER, ROLE_BOSS
+            // ROLE_DEVELOPER, ROLE_BOSS
             List<GrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority(role));
 
-
-            AbstractAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(userId, null, authorities);
+            AbstractAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userId, null,
+                    authorities);
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
             SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
@@ -73,22 +73,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             securityContext.setAuthentication(authenticationToken);
             SecurityContextHolder.setContext(securityContext);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         filterChain.doFilter(request, response);
 
-
     }
-    private String parseBearerToken(HttpServletRequest request){
+
+    private String parseBearerToken(HttpServletRequest request) {
         String authorization = request.getHeader("Authorization");
         boolean hasAuthorization = StringUtils.hasText(authorization);
 
-        if(!hasAuthorization) return null;
+        if (!hasAuthorization)
+            return null;
 
         boolean isBearer = authorization.startsWith("Bearer ");
-        if(!isBearer) return null;
+        if (!isBearer)
+            return null;
 
         String token = authorization.substring(7);
         return token;
