@@ -40,9 +40,6 @@ public class UserEntity {
     @Column(name="gender", updatable = true)
     private String gender;
 
-    @Column(name = "profile_Image")
-    private String image;
-
     //TODO: Enum화 시키기
     @Column(name="role", updatable = false)
     private String role;
@@ -76,4 +73,5 @@ public class UserEntity {
         this.userId = userId;
         this.email = dto.getEmail();
     }
+
 }
