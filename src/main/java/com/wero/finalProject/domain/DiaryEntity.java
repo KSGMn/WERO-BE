@@ -36,6 +36,9 @@ public class DiaryEntity {
     @Column(name = "song", nullable = false)
     private String song;
 
+    @Column(name="bookmark_count")
+    private int bookMarkCount;
+
     //like, songTitle
 
     @ManyToOne
@@ -49,14 +52,22 @@ public class DiaryEntity {
     public DiaryEntity(DiaryRequestDto dto, UserEntity user) {
 
         this.diaryContent = dto.getDiaryContent();
-        this.song="song";
+        this.song=dto.getSong();
+        this.emotion=dto.getEmotion();
         this.writer=user;
-
+        this.bookMarkCount=0;
     }
 
     public void patchDiary(PatchDiaryRequestDto dto) {
         this.diaryContent = dto.getDiaryContent();
         this.emotion=dto.getEmotion();
         this.song=dto.getSong();
+    }
+
+    public void increaseBookMarkCount() {
+        this.bookMarkCount++;
+    }
+    public void decreaseBookMarkCount() {
+        this.bookMarkCount--;
     }
 }
