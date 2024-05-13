@@ -2,7 +2,6 @@ package com.wero.finalProject.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,7 +14,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Table(name="cerification")
 public class Certification {
 
@@ -23,8 +21,6 @@ public class Certification {
     private String userId;
 
     private String email;
-
-    private String password;
 
     private String certificationNumber;
 
@@ -34,7 +30,6 @@ public class Certification {
         this.userId=userId;
         this.email = email;
         this.certificationNumber = certificationNumber;
-
     }
 
 }

@@ -1,7 +1,10 @@
 package com.wero.finalProject.controller;
 
+import com.wero.finalProject.dto.request.user.UserDeleteRequestDto;
+import com.wero.finalProject.dto.request.user.UserPostPictureRequestDto;
 import com.wero.finalProject.dto.request.user.UserUpdateEmailRequestDto;
 import com.wero.finalProject.dto.request.user.UserUpdateRequestDto;
+import com.wero.finalProject.dto.response.user.UserDeleteResponseDto;
 import com.wero.finalProject.dto.response.user.UserUpdateResponseDto;
 import com.wero.finalProject.service.UserService;
 import jakarta.validation.Valid;
@@ -40,4 +43,24 @@ public class UserController {
         ResponseEntity<? super UserUpdateResponseDto> response = userService.userUpdateEmail(requestBody, userId);
         return response;
     }
-}
+
+    @PostMapping(value = "/update/prof")
+    public ResponseEntity<? super UserUpdateResponseDto> registerPic
+            (@ModelAttribute UserPostPictureRequestDto requestBody,
+             @AuthenticationPrincipal String userId){
+        ResponseEntity<? super UserUpdateResponseDto> response = userService.userPicture(requestBody,userId);
+        return response;
+    }
+
+    @DeleteMapping(value ="/delete")
+    public ResponseEntity<? super UserDeleteResponseDto> delUser
+            (@RequestBody @Valid UserDeleteRequestDto requestBody,
+             @AuthenticationPrincipal String userId){
+        ResponseEntity<? super UserDeleteResponseDto> response = userService.userDelete(requestBody, userId);
+        return response;
+    }
+
+//    @PatchMapping(value ="/update/prof")
+//    public ResponseEntity<?super UserUpdateResponseDto> updatePic
+//            (@ModelAttribute UserPostPictureRequestDto requestBody)
+ }

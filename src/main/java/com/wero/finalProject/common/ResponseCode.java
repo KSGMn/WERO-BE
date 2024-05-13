@@ -21,7 +21,8 @@ public interface ResponseCode {
     String NO_EXIST_REPORT= "NER";
     String UPDATE_FAIL = "UF";
     String NOT_EXIST_DIARY = "ND";
-
+    String DUPLICATE_NICKNAME = "DN";
+    String DELETE_FAIL = "DF";
 
     //TODO: 401
     String SIGN_IN_FAIL = "SF"; //HTTP STATUS: 401 로그인 실패
@@ -32,4 +33,6 @@ public interface ResponseCode {
 
     //TODO: 500
     String DATABASE_ERROR = "DBE"; //HTTP STATUS: 500 디비 오류
+
+
 }
