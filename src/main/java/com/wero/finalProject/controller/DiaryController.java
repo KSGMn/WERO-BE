@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * @작성자:최기원
- * @작성날짜:2024/05/04
+ * @작성날짜:2024/05/05
  * @파일명:DiaryController.class
  * @기능:일기 작성, 조회(아이디로), 수정, 삭제
  **/
