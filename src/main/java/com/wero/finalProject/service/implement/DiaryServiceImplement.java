@@ -1,21 +1,22 @@
 package com.wero.finalProject.service.implement;
 
+import com.wero.finalProject.Repository.BookMarkRepository;
 import com.wero.finalProject.Repository.DiaryRepository;
 import com.wero.finalProject.Repository.UserRepository;
+import com.wero.finalProject.domain.BookMarkEntity;
 import com.wero.finalProject.domain.DiaryEntity;
 import com.wero.finalProject.domain.UserEntity;
 import com.wero.finalProject.dto.request.diary.DiaryRequestDto;
 import com.wero.finalProject.dto.request.diary.PatchDiaryRequestDto;
 import com.wero.finalProject.dto.response.ResponseDto;
-import com.wero.finalProject.dto.response.diary.DeleteDiaryResponseDto;
-import com.wero.finalProject.dto.response.diary.GetDiaryResponseDto;
-import com.wero.finalProject.dto.response.diary.DiaryResponseDto;
-import com.wero.finalProject.dto.response.diary.PatchDiaryResponseDto;
+import com.wero.finalProject.dto.response.diary.*;
 import com.wero.finalProject.service.DiaryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -31,6 +32,7 @@ public class DiaryServiceImplement implements DiaryService {
 
     private final UserRepository userRepository;
     private final DiaryRepository diaryRepository;
+    private final BookMarkRepository bookMarkRepository;
 
     @Override
     public ResponseEntity<? super DiaryResponseDto> createDiary(DiaryRequestDto dto, String userId) {
@@ -104,5 +106,51 @@ public class DiaryServiceImplement implements DiaryService {
         return  PatchDiaryResponseDto.success();//PatchDiaryResponseDto의 success함수를 호출한다
     }
 
+    @Override
+    public ResponseEntity<? super GetDiaryListResponseDto> getDiaryList() {
 
+        List<DiaryEntity> diaryListEntities =new ArrayList<>();//일기 엔티티를 받을 리스트 생성
+
+        try {
+
+            diaryListEntities=diaryRepository.findAll();//일기 레포지토리에서 모든 일기 가져와서 리스트에 담기
+
+        }catch (Exception exception){
+            exception.printStackTrace();
+            return ResponseDto.dataBaseError();
+        }
+        return GetDiaryListResponseDto.success(diaryListEntities);//일기 엔티티들이 담긴 리스트를 전달
+    }
+
+    @Override
+    public ResponseEntity<? super PutBookMarkResponseDto> putBookMark(Integer diaryId, String userId) {
+
+        try {
+
+            boolean existUser = userRepository.existsById(userId);
+            if(!existUser) return  PutBookMarkResponseDto.notExistUser();
+
+            Optional<DiaryEntity> existDiary = diaryRepository.findById(diaryId);
+            if(!existDiary.isPresent()) return  PutBookMarkResponseDto.notExistDiary();
+            DiaryEntity patchedDiary = existDiary.get();
+
+            BookMarkEntity bookMarkEntity=bookMarkRepository.findByDiaryIdAndUserId(diaryId,userId);
+            if(bookMarkEntity==null){
+                bookMarkEntity=new BookMarkEntity(userId,diaryId);
+                bookMarkRepository.save(bookMarkEntity);
+                patchedDiary.increaseBookMarkCount();
+            }
+            else{
+                bookMarkRepository.delete(bookMarkEntity);
+                patchedDiary.decreaseBookMarkCount();
+            }
+
+            diaryRepository.save(patchedDiary);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.dataBaseError();
+        }
+        return PutBookMarkResponseDto.success();
+    }
 }
