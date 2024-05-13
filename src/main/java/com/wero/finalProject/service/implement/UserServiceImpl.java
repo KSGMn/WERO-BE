@@ -1,5 +1,12 @@
 package com.wero.finalProject.service.implement;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,7 +99,24 @@ public class UserServiceImpl implements UserService {
             List<ImageEntity> profilePic = new ArrayList<>();
 
             for (MultipartFile image : profImage) {
-                ImageEntity imageEntity = new ImageEntity(user, image.getName());
+
+                // 파일이름 인코딩
+                String encodedFileName = URLEncoder.encode(image.getOriginalFilename(), StandardCharsets.UTF_8);
+                // 파일이름 디코딩
+                String decodedFileName = URLDecoder.decode(encodedFileName, StandardCharsets.UTF_8.toString());
+
+                // 파일 저장 경로 설정
+                Path targetLocation = Paths.get(System.getProperty("user.dir"), "uploads", decodedFileName);
+
+                // uploads 디렉토리가 존재하지 않는 경우 생성
+                if (!Files.exists(targetLocation.getParent())) {
+                    Files.createDirectories(targetLocation.getParent());
+                }
+
+                // 루트디렉토리 uploads폴더에 파일 저장
+                Files.copy(image.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+
+                ImageEntity imageEntity = new ImageEntity(user, encodedFileName);
                 profilePic.add(imageEntity);
             }
 

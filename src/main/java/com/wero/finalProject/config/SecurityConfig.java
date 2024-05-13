@@ -18,6 +18,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.wero.finalProject.filter.JwtAuthenticationFilter;
 import com.wero.finalProject.handler.OAuth2SuccessHandler;
@@ -56,7 +58,7 @@ public class SecurityConfig {
                                 .sessionManagement(sessionManagement -> sessionManagement
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                                 .authorizeHttpRequests(request -> request
-                                                .requestMatchers("/", "/api/v1/auth/**", "/api/v1/cs/**")
+                                                .requestMatchers("/", "/api/v1/auth/**", "/api/v1/cs/**", "/uploads/**")
                                                 .permitAll()
                                                 .requestMatchers("/api/v1/user/**").hasRole("USER")
                                                 .requestMatchers("/api/v1/admin/**")
@@ -94,6 +96,15 @@ public class SecurityConfig {
                 return source;
         }
 
+        @Configuration
+        public class WebConfig implements WebMvcConfigurer {
+                @Override
+                public void addResourceHandlers(ResourceHandlerRegistry registry) {
+                        registry.addResourceHandler("/uploads/**")
+                                        .addResourceLocations("file:uploads/"); // 디스크 상의 경로 지정
+                }
+        }
+
         class FailedAuthenticationEntryPoint implements AuthenticationEntryPoint {
                 @Override
                 public void commence(HttpServletRequest request, HttpServletResponse response,
@@ -105,4 +116,5 @@ public class SecurityConfig {
 
                 }
         }
+
 }

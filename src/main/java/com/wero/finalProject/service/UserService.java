@@ -2,6 +2,7 @@ package com.wero.finalProject.service;
 
 import org.springframework.http.ResponseEntity;
 
+import com.wero.finalProject.domain.UserEntity;
 import com.wero.finalProject.dto.request.user.UserDeleteRequestDto;
 import com.wero.finalProject.dto.request.user.UserPostPictureRequestDto;
 import com.wero.finalProject.dto.request.user.UserUpdateEmailRequestDto;
@@ -23,4 +24,6 @@ public interface UserService {
     ResponseEntity<? super UserUpdateResponseDto> userPicture(UserPostPictureRequestDto dto, String userId);
 
     ResponseEntity<? super UserDeleteResponseDto> userDelete(UserDeleteRequestDto dto, String userId);
+
+    UserEntity findUserById(String userId);
 }
