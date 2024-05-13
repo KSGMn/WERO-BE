@@ -23,16 +23,16 @@ public class ImageEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long i_id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="user_id")
     private UserEntity userId;
 
-    @Column(name = "imageTitle", length = 255, nullable = true)
-    private String imageTitle;
+    @Column(name = "image")
+    private String image;
 
-    public ImageEntity(UserEntity user, String imageTitle){
-        this.userId = user;
-        this.imageTitle = imageTitle;
+    public ImageEntity(UserEntity userId , String image){
+        this.userId = userId;
+        this.image = image;
     }
 
 }
