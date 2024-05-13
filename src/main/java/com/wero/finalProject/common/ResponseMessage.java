@@ -34,6 +34,7 @@ public interface ResponseMessage {
     String DUPLICATE_NICKNAME = "Duplicate NickName";
     String UPDATE_FAIL = "Update Fail";
     String NOT_EXIST_DIARY = "Not Exist Diary";
+    String DELETE_FAIL = "Delete Fail";
 
     //TODO: HTTP401
     String SIGN_IN_FAIL = "sing in fail";
