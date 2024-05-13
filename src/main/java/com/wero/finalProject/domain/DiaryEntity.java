@@ -3,7 +3,15 @@ package com.wero.finalProject.domain;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.wero.finalProject.dto.request.diary.DiaryRequestDto;
 import com.wero.finalProject.dto.request.diary.PatchDiaryRequestDto;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,7 +28,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity
-@Table(name="diary")
+@Table(name = "diary")
 public class DiaryEntity {
 
     @Id
@@ -36,15 +44,15 @@ public class DiaryEntity {
     @Column(name = "song", nullable = false)
     private String song;
 
-    @Column(name="bookmark_count")
+    @Column(name = "bookmark_count")
     private int bookMarkCount;
 
-    //like, songTitle
+    // like, songTitle
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonManagedReference
-    private UserEntity writer;//유저아이디(외래키)
+    private UserEntity writer;// 유저아이디(외래키)
 
     @Column(name = "modificate_date")
     private String modificate_date;
@@ -52,21 +60,22 @@ public class DiaryEntity {
     public DiaryEntity(DiaryRequestDto dto, UserEntity user) {
 
         this.diaryContent = dto.getDiaryContent();
-        this.song=dto.getSong();
-        this.emotion=dto.getEmotion();
-        this.writer=user;
-        this.bookMarkCount=0;
+        this.song = dto.getSong();
+        this.emotion = dto.getEmotion();
+        this.writer = user;
+        this.bookMarkCount = 0;
     }
 
     public void patchDiary(PatchDiaryRequestDto dto) {
         this.diaryContent = dto.getDiaryContent();
-        this.emotion=dto.getEmotion();
-        this.song=dto.getSong();
+        this.emotion = dto.getEmotion();
+        this.song = dto.getSong();
     }
 
     public void increaseBookMarkCount() {
         this.bookMarkCount++;
     }
+
     public void decreaseBookMarkCount() {
         this.bookMarkCount--;
     }

@@ -4,8 +4,14 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-#properties 제외하기
-src/main/resources/application.properties 
+
+# src/main/resources/application.yml 파일 무시
+src/main/resources/application.yml
+
+# src/main/resources 폴더는 무시하지 않음
+!src/main/resources/
+
+src/query.sql
 
 ### STS ###
 .apt_generated

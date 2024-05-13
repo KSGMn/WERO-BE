@@ -1,8 +1,9 @@
 package com.wero.finalProject.Repository;
 
-import com.wero.finalProject.domain.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.wero.finalProject.domain.UserEntity;
 
 /**
  * @작성자:오현암
@@ -13,9 +14,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, String> {
     boolean existsByUserId(String userId);
+
     UserEntity findByUserId(String userId);
 
     boolean existsByEmail(String email);
 
     boolean existsByNickName(String nickName);
+
+    UserEntity findByNickName(String nickName);
 }
