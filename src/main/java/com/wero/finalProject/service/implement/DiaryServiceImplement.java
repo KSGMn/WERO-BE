@@ -1,5 +1,9 @@
 package com.wero.finalProject.service.implement;
 
+//import com.wero.finalProject.Repository.BookMarkRepository;
+import com.wero.finalProject.Repository.DiaryRepository;
+import com.wero.finalProject.Repository.UserRepository;
+//import com.wero.finalProject.domain.BookMarkEntity;
 import com.wero.finalProject.Repository.DiaryRepository;
 import com.wero.finalProject.Repository.UserRepository;
 import com.wero.finalProject.domain.DiaryEntity;
@@ -30,6 +34,7 @@ public class DiaryServiceImplement implements DiaryService {
 
     private final UserRepository userRepository;
     private final DiaryRepository diaryRepository;
+//    private final BookMarkRepository bookMarkRepository;
 
     @Override
     public ResponseEntity<? super DiaryResponseDto> createDiary(DiaryRequestDto dto, String userId) {
@@ -119,4 +124,35 @@ public class DiaryServiceImplement implements DiaryService {
         return GetDiaryListResponseDto.success(diaryListEntities);//일기 엔티티들이 담긴 리스트를 전달
     }
 
+//    @Override
+//    public ResponseEntity<? super PutBookMarkResponseDto> putBookMark(Integer diaryId, String userId) {
+//
+//        try {
+//
+//            boolean existUser = userRepository.existsById(userId);
+//            if(!existUser) return  PutBookMarkResponseDto.notExistUser();
+//
+//            Optional<DiaryEntity> existDiary = diaryRepository.findById(diaryId);
+//            if(!existDiary.isPresent()) return  PutBookMarkResponseDto.notExistDiary();
+//            DiaryEntity patchedDiary = existDiary.get();
+//
+//            BookMarkEntity bookMarkEntity=bookMarkRepository.findByDiaryIdAndUserId(diaryId,userId);
+//            if(bookMarkEntity==null){
+//                bookMarkEntity=new BookMarkEntity(userId,diaryId);
+//                bookMarkRepository.save(bookMarkEntity);
+//                patchedDiary.increaseBookMarkCount();
+//            }
+//            else{
+//                bookMarkRepository.delete(bookMarkEntity);
+//                patchedDiary.decreaseBookMarkCount();
+//            }
+//
+//            diaryRepository.save(patchedDiary);
+//
+//        } catch (Exception exception) {
+//            exception.printStackTrace();
+//            return ResponseDto.dataBaseError();
+//        }
+//        return PutBookMarkResponseDto.success();
+//    }
 }

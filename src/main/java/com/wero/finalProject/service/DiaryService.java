@@ -23,6 +23,7 @@ public interface DiaryService {
 
     ResponseEntity<? super GetDiaryListResponseDto> getDiaryList();//일기 전체 조회
 
+//    ResponseEntity<? super PutBookMarkResponseDto> putBookMark(Integer diaryId, String userId);
 }
 
 
