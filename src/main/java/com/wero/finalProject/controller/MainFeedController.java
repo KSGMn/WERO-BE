@@ -69,16 +69,14 @@ public class MainFeedController {
     // 유저가 좋아요한 피드 목록 조회
     @GetMapping("/{userId}/likes")
     public ResponseEntity<List<FeedsResponseDto>> getFeedByUserIdAndIsLiked(@PathVariable String userId) {
-        // try {
-        // List<FeedsResponseDto> feeds =
-        // mainFeedService.getFeedByUserIdAndIsLiked(userId);
-        // return ResponseEntity.ok().body(feeds);
+        try {
+            List<FeedsResponseDto> feeds = mainFeedService.getFeedByUserIdAndIsLiked(userId);
+            return ResponseEntity.ok().body(feeds);
 
-        // } catch (Exception e) {
-        // return ResponseEntity.notFound().build();
-        // }
-        List<FeedsResponseDto> feeds = mainFeedService.getFeedByUserIdAndIsLiked(userId);
-        return ResponseEntity.ok().body(feeds);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
     // 메인 피드 생성

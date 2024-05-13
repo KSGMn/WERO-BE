@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wero.finalProject.Repository.SearchRepository;
-import com.wero.finalProject.Repository.UserRepository;
-import com.wero.finalProject.domain.DiaryEntity;
+import com.wero.finalProject.domain.MainFeedEntity;
 import com.wero.finalProject.dto.request.search.SearchRequestDto;
 
 /**
@@ -26,18 +25,17 @@ import com.wero.finalProject.dto.request.search.SearchRequestDto;
 public class SearchController {
 
         @Autowired
-        private SearchRepository searchDiaryRepository;
-        private UserRepository userRepository;
+        private SearchRepository searchRepository;
 
         // 일기 내용으로 검색
         @GetMapping("/content/{keyword}")
         public ResponseEntity<List<SearchRequestDto>> getDiariesByContent(@PathVariable String keyword) {
 
-                List<DiaryEntity> results = searchDiaryRepository.findByContentContaining(keyword);
+                List<MainFeedEntity> results = searchRepository.findByContentContaining(keyword);
 
                 List<SearchRequestDto> dtos = results.stream()
                                 .map(entity -> new SearchRequestDto(
-                                                entity.getDiary_id(),
+                                                entity.getMainfeedId(),
                                                 entity.getContent(),
                                                 entity.getCategory(),
                                                 entity.getWriter().getNickName()))
@@ -50,11 +48,11 @@ public class SearchController {
         @GetMapping("/category/{keyword}")
         public ResponseEntity<List<SearchRequestDto>> getDiariesByCategory(@PathVariable String keyword) {
 
-                List<DiaryEntity> results = searchDiaryRepository.findByCategoryContaining(keyword);
+                List<MainFeedEntity> results = searchRepository.findByCategoryContaining(keyword);
 
                 List<SearchRequestDto> dtos = results.stream()
                                 .map(entity -> new SearchRequestDto(
-                                                entity.getDiary_id(),
+                                                entity.getMainfeedId(),
                                                 entity.getContent(),
                                                 entity.getCategory(),
                                                 entity.getWriter().getNickName()))

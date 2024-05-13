@@ -53,10 +53,6 @@ public class MainFeedServiceImpl implements MainFeedService {
         List<MainFeedEntity> feeds = mainFeedRepository.findAll();
 
         try {
-            if (feeds.isEmpty()) {
-                throw new RuntimeException("Not found feeds");
-            }
-
             List<FeedsResponseDto> responseDtos = feeds.stream()
                     .map(feed -> {
                         Optional<LikeEntity> like = likeRepository
@@ -86,10 +82,6 @@ public class MainFeedServiceImpl implements MainFeedService {
         List<MainFeedEntity> feeds = mainFeedRepository.findByWriter_UserId(userId);
 
         try {
-            if (feeds.isEmpty()) {
-                throw new RuntimeException("Not found feeds");
-            }
-
             List<FeedsResponseDto> responseDtos = feeds.stream()
                     .map(feed -> {
                         Optional<LikeEntity> like = likeRepository
@@ -122,10 +114,6 @@ public class MainFeedServiceImpl implements MainFeedService {
         List<LikeEntity> likeEntities = likeRepository.findMainfeedIdByUserId_UserId(userId);
 
         try {
-            if (likeEntities.isEmpty()) {
-                throw new RuntimeException("Not found feeds");
-            }
-
             // 좋아요 한 피드 아이디를 담기 위해 빈 배열 생성
             List<Integer> mainfeedIds = new ArrayList<>();
 
