@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.wero.finalProject.dto.request.auth.RegisterRequestDto;
+import com.wero.finalProject.dto.request.user.UserUpdateEmailRequestDto;
 import com.wero.finalProject.dto.request.user.UserUpdateRequestDto;
 
 import jakarta.persistence.Column;
@@ -32,7 +33,7 @@ public class UserEntity {
     @Column(name = "userId", updatable = false)
     private String userId;
 
-    @Column(name = "email", updatable = false)
+    @Column(name = "email")
     private String email;
 
     @Column(name = "password", updatable = true)
@@ -78,6 +79,11 @@ public class UserEntity {
         this.password = dto.getPassword();
         this.gender = dto.getGender();
         this.nickName = dto.getNickName();
+    }
+
+    public void patchUserEmail(UserUpdateEmailRequestDto dto, String userId) {
+        this.userId = userId;
+        this.email = dto.getEmail();
     }
 
 }

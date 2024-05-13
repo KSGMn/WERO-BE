@@ -2,15 +2,19 @@ package com.wero.finalProject.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wero.finalProject.domain.UserEntity;
+import com.wero.finalProject.dto.request.user.UserDeleteRequestDto;
+import com.wero.finalProject.dto.request.user.UserPostPictureRequestDto;
+import com.wero.finalProject.dto.request.user.UserUpdateEmailRequestDto;
 import com.wero.finalProject.dto.request.user.UserUpdateRequestDto;
+import com.wero.finalProject.dto.response.user.UserDeleteResponseDto;
 import com.wero.finalProject.dto.response.user.UserUpdateResponseDto;
 import com.wero.finalProject.service.UserService;
 
@@ -40,10 +44,30 @@ public class UserController {
         return response;
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<UserEntity> getUserById(@PathVariable String userId) {
-        UserEntity user = userService.findUserById(userId);
-        return ResponseEntity.ok(user);
+    @PatchMapping("/update/email")
+    public ResponseEntity<? super UserUpdateResponseDto> updateEmail(
+            @RequestBody @Valid UserUpdateEmailRequestDto requestBody,
+            @AuthenticationPrincipal String userId) {
+        ResponseEntity<? super UserUpdateResponseDto> response = userService.userUpdateEmail(requestBody, userId);
+        return response;
     }
 
+    @PostMapping(value = "/update/prof")
+    public ResponseEntity<? super UserUpdateResponseDto> registerPic(
+            @ModelAttribute UserPostPictureRequestDto requestBody,
+            @AuthenticationPrincipal String userId) {
+        ResponseEntity<? super UserUpdateResponseDto> response = userService.userPicture(requestBody, userId);
+        return response;
+    }
+
+    @DeleteMapping(value = "/delete")
+    public ResponseEntity<? super UserDeleteResponseDto> delUser(@RequestBody @Valid UserDeleteRequestDto requestBody,
+            @AuthenticationPrincipal String userId) {
+        ResponseEntity<? super UserDeleteResponseDto> response = userService.userDelete(requestBody, userId);
+        return response;
+    }
+
+    // @PatchMapping(value ="/update/prof")
+    // public ResponseEntity<?super UserUpdateResponseDto> updatePic
+    // (@ModelAttribute UserPostPictureRequestDto requestBody)
 }

@@ -72,6 +72,10 @@ public class AuthServiceImpl implements AuthService {
             if (isExistId)
                 return EmailCertificationResponseDto.duplicatedId();
 
+            boolean isExistedEmail = userRepository.existsByEmail(email);
+            if (isExistedEmail)
+                return EmailCertificationResponseDto.duplicatedEmail();
+
             String certificationNumber = CertificationNumber.getCertificationNumber();
             boolean isSuccessed = emailProvider.sendCertificationMail(email, certificationNumber);
             if (!isSuccessed)
@@ -121,6 +125,15 @@ public class AuthServiceImpl implements AuthService {
                 return RegisterResponseDto.duplicatedId();
 
             String email = dto.getEmail();
+            boolean isExistedEmail = userRepository.existsByEmail(email);
+            if (isExistedEmail)
+                return EmailCertificationResponseDto.duplicatedEmail();
+
+            String nickName = dto.getNickName();
+            boolean isExistedNickName = userRepository.existsByNickName(nickName);
+            if (isExistedNickName)
+                return RegisterResponseDto.existNickName();
+
             String certificationNumber = dto.getCertificationNumber();
             Certification certification = certificationRepository.findByUserId(userId);
             boolean isMatched = certification.getEmail().equals(email)

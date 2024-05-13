@@ -36,6 +36,8 @@ public interface ResponseMessage {
     String DUPLICATE_EMAIL = "Duplicate Email";
     String DUPLICATE_NICKNAME = "Duplicate NickName";
     String UPDATE_FAIL = "Update Fail";
+    String NOT_EXIST_DIARY = "Not Exist Diary";
+    String DELETE_FAIL = "Delete Fail";
 
     // TODO: HTTP400 추가
     String CREATE_FAIL = "Create Fail";
