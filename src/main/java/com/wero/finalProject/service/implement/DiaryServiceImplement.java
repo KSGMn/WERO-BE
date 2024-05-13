@@ -1,5 +1,9 @@
 package com.wero.finalProject.service.implement;
 
+//import com.wero.finalProject.Repository.BookMarkRepository;
+import com.wero.finalProject.Repository.DiaryRepository;
+import com.wero.finalProject.Repository.UserRepository;
+//import com.wero.finalProject.domain.BookMarkEntity;
 import com.wero.finalProject.Repository.DiaryRepository;
 import com.wero.finalProject.Repository.UserRepository;
 import com.wero.finalProject.domain.DiaryEntity;
@@ -30,6 +34,7 @@ public class DiaryServiceImplement implements DiaryService {
 
     private final UserRepository userRepository;
     private final DiaryRepository diaryRepository;
+//    private final BookMarkRepository bookMarkRepository;
 
     @Override
     public ResponseEntity<? super DiaryResponseDto> createDiary(DiaryRequestDto dto, String userId) {
@@ -118,5 +123,6 @@ public class DiaryServiceImplement implements DiaryService {
         }
         return GetDiaryListResponseDto.success(diaryListEntities);//일기 엔티티들이 담긴 리스트를 전달
     }
+
 
 }
