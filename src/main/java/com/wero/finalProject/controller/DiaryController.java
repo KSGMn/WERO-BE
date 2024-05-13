@@ -2,10 +2,7 @@ package com.wero.finalProject.controller;
 
 import com.wero.finalProject.dto.request.diary.DiaryRequestDto;
 import com.wero.finalProject.dto.request.diary.PatchDiaryRequestDto;
-import com.wero.finalProject.dto.response.diary.DeleteDiaryResponseDto;
-import com.wero.finalProject.dto.response.diary.GetDiaryResponseDto;
-import com.wero.finalProject.dto.response.diary.DiaryResponseDto;
-import com.wero.finalProject.dto.response.diary.PatchDiaryResponseDto;
+import com.wero.finalProject.dto.response.diary.*;
 import com.wero.finalProject.service.DiaryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +39,7 @@ public class DiaryController {
 //        return response;
 //    }
 
-    @GetMapping("/{diaryId}")//get방식==>조회
+    @GetMapping("/{diaryId}")//get방식==>조회(아이디로)
     public ResponseEntity<? super GetDiaryResponseDto> getPost
             (@PathVariable Integer diaryId,//url경로에 있는 diaryId 받기
              @AuthenticationPrincipal String userId) {
@@ -69,7 +66,20 @@ public class DiaryController {
         return response;
     }
 
+    @GetMapping("/diaryList")//get방식==>전체 조회
+    public ResponseEntity<? super GetDiaryListResponseDto> getDiaryList(
+            @AuthenticationPrincipal String userId) {
+        ResponseEntity<? super GetDiaryListResponseDto> response= diaryService.getDiaryList();
+        return response;
+    }
 
-
+    @PutMapping("/{diaryId}/bookMark")
+    public ResponseEntity<? super PutBookMarkResponseDto> putBookMark(
+            @PathVariable("diaryId") Integer diaryId,
+            @AuthenticationPrincipal String userId
+    ){
+        ResponseEntity<? super PutBookMarkResponseDto> response= diaryService.putBookMark(diaryId,userId);
+        return response;
+    }
 
 }

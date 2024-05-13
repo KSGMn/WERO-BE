@@ -17,9 +17,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PatchDiaryRequestDto {
     @NotBlank
-    private String content;
+    private String diaryContent;
     @NotBlank
-    private String category;
+    private String emotion;
     @NotBlank
-    private String modificate_date;
+    private String song;
 }

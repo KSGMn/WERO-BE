@@ -23,9 +23,10 @@ import org.springframework.http.ResponseEntity;
 @Setter
 public class GetDiaryResponseDto extends ResponseDto {
 
-    private int diary_id;
-    private String content;
-    private String category;
+    private int diaryId;
+    private String diaryContent;
+    private String emotion;
+    private String song;
     private UserEntity writer;
 
 //    public GetPostResponseDto(int post_id,
@@ -41,9 +42,10 @@ public class GetDiaryResponseDto extends ResponseDto {
 
     private GetDiaryResponseDto(DiaryEntity diaryEntity){//엔티티를 받는 생성자
         super(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);//부모로부터 상속받은 프로퍼티들 채워주고
-        this.diary_id= diaryEntity.getDiary_id();//전달받은 엔티티의 아이디 받기
-        this.content= diaryEntity.getContent();//전달받은 엔티티의 콘텐츠 받기
-        this.category= diaryEntity.getCategory();//전달받은 엔티티의 카테고리 받기
+        this.diaryId= diaryEntity.getDiaryId();//전달받은 엔티티의 아이디 받기
+        this.diaryContent= diaryEntity.getDiaryContent();//전달받은 엔티티의 콘텐츠 받기
+        this.emotion= diaryEntity.getEmotion();//전달받은 엔티티의 감정 받기
+        this.song= diaryEntity.getSong();//전달받은 엔티티의 노래 받기
         this.writer= diaryEntity.getWriter();//전달받은 엔티티의 작성자 받기
     }
 

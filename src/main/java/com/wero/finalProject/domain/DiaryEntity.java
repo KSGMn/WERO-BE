@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.wero.finalProject.dto.request.diary.DiaryRequestDto;
 import com.wero.finalProject.dto.request.diary.PatchDiaryRequestDto;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ import lombok.NoArgsConstructor;
  **/
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity
 @Table(name="diary")
@@ -24,16 +25,19 @@ public class DiaryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int diary_id;
+    private int diaryId;
 
-    @Column(name = "content", nullable = false)
-    private String content;
+    @Column(name = "diary_content", nullable = false)
+    private String diaryContent;
 
-    @Column(name = "create_date", nullable = true)
-    private String create_date;
+    @Column(name = "emotion", nullable = true)
+    private String emotion;
 
-    @Column(name = "category", nullable = false)
-    private String category;
+    @Column(name = "song", nullable = false)
+    private String song;
+
+    @Column(name="bookmark_count")
+    private int bookMarkCount;
 
     //like, songTitle
 
@@ -47,14 +51,23 @@ public class DiaryEntity {
 
     public DiaryEntity(DiaryRequestDto dto, UserEntity user) {
 
-        this.content = dto.getContent();
-        this.category="category";
+        this.diaryContent = dto.getDiaryContent();
+        this.song=dto.getSong();
+        this.emotion=dto.getEmotion();
         this.writer=user;
-
+        this.bookMarkCount=0;
     }
 
     public void patchDiary(PatchDiaryRequestDto dto) {
-        this.content = dto.getContent();
-        this.category=dto.getCategory();
+        this.diaryContent = dto.getDiaryContent();
+        this.emotion=dto.getEmotion();
+        this.song=dto.getSong();
+    }
+
+    public void increaseBookMarkCount() {
+        this.bookMarkCount++;
+    }
+    public void decreaseBookMarkCount() {
+        this.bookMarkCount--;
     }
 }
