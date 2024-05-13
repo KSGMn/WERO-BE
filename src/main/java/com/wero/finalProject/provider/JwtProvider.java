@@ -6,7 +6,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
@@ -22,11 +22,11 @@ import lombok.Setter;
  * @기능:Jwt토큰_발급
  **/
 @Component
-@ConfigurationProperties(prefix = "jwt")
+// @ConfigurationProperties(prefix = "jwt")
 @Setter
 public class JwtProvider {
 
-    // @Value("${jwt.secret}")
+    @Value("${jwt.secret}")
     private String secretKey;
 
     public String create(String userId) {
