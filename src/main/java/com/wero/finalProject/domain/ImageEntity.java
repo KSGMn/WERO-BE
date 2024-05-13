@@ -23,11 +23,11 @@ public class ImageEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long i_id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="user_id")
     private UserEntity userId;
 
-    @Column(name = "image", length = 500, nullable = true)
+    @Column(name = "image")
     private String image;
 
     public ImageEntity(UserEntity userId , String image){
