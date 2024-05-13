@@ -13,7 +13,7 @@ import lombok.Getter;
  * @작성자:김선규
  * @작성날짜:2024/05/08
  * @파일명: UpdateFeedsResponsetDto
- * @기능: 피드 업데이트 요청 데이터 전달
+ * @기능: 피드 업데이트 응답 데이터 전달
  **/
 
 @Getter

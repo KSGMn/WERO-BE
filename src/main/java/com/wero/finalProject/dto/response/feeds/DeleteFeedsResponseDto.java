@@ -9,6 +9,12 @@ import com.wero.finalProject.dto.response.ResponseDto;
 
 import lombok.Getter;
 
+/**
+ * @작성자:김선규
+ * @작성날짜:2024/05/07
+ * @파일명: DeleteFeedsResponseDto
+ * @기능: 피드 삭제 응답 데이터 전달
+ **/
 @Getter
 public class DeleteFeedsResponseDto extends ResponseDto {
 
@@ -22,7 +28,7 @@ public class DeleteFeedsResponseDto extends ResponseDto {
     }
 
     public static ResponseEntity<ResponseDto> deleteFail() {
-        ResponseDto responseBody = new ResponseDto(ResponseCode.UPDATE_FAIL, ResponseMessage.UPDATE_FAIL);
+        ResponseDto responseBody = new ResponseDto(ResponseCode.DELET_FAIL, ResponseMessage.DELET_FAIL);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
 }

@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.wero.finalProject.dto.request.feeds.CreateFeedsRequestDto;
 import com.wero.finalProject.dto.request.feeds.UpdateFeedsRequestDto;
+import com.wero.finalProject.dto.response.ListResponseDto;
 import com.wero.finalProject.dto.response.ResponseDto;
 import com.wero.finalProject.dto.response.feeds.CreateFeedsResponseDto;
 import com.wero.finalProject.dto.response.feeds.DeleteFeedsResponseDto;
 import com.wero.finalProject.dto.response.feeds.FeedsResponseDto;
+import com.wero.finalProject.dto.response.feeds.LikeResponseDto;
+import com.wero.finalProject.dto.response.feeds.ListFeedResponseDto;
 import com.wero.finalProject.dto.response.feeds.UpdateFeedsResponseDto;
 import com.wero.finalProject.service.MainFeedService;
 
@@ -41,40 +44,39 @@ public class MainFeedController {
 
     // 모든 피드 조회
     @GetMapping("/{userId}")
-    public ResponseEntity<List<FeedsResponseDto>> getAllFeeds(@PathVariable String userId) {
+    public ResponseEntity<ListResponseDto<FeedsResponseDto>> getAllFeeds(@PathVariable String userId) {
 
         try {
             List<FeedsResponseDto> feeds = mainFeedService.getAllFeeds(userId);
-            return ResponseEntity.ok().body(feeds);
-
+            return ListFeedResponseDto.getFeedsSuccess(feeds);
         } catch (Exception e) {
-            return ResponseEntity.notFound().build();
+            return ListFeedResponseDto.getFeesFail();
         }
 
     }
 
     // 유저 피드 userId로 찾기
     @GetMapping("/{userId}/history")
-    public ResponseEntity<List<FeedsResponseDto>> getFeedByUserId(@PathVariable String userId) {
+    public ResponseEntity<ListResponseDto<FeedsResponseDto>> getFeedByUserId(@PathVariable String userId) {
 
         try {
             List<FeedsResponseDto> feeds = mainFeedService.getFeedByUserId(userId);
-            return ResponseEntity.ok().body(feeds);
+            return ListFeedResponseDto.getFeedsSuccess(feeds);
 
         } catch (Exception e) {
-            return ResponseEntity.notFound().build();
+            return ListFeedResponseDto.getFeesFail();
         }
     }
 
     // 유저가 좋아요한 피드 목록 조회
     @GetMapping("/{userId}/likes")
-    public ResponseEntity<List<FeedsResponseDto>> getFeedByUserIdAndIsLiked(@PathVariable String userId) {
+    public ResponseEntity<ListResponseDto<FeedsResponseDto>> getFeedByUserIdAndIsLiked(@PathVariable String userId) {
         try {
             List<FeedsResponseDto> feeds = mainFeedService.getFeedByUserIdAndIsLiked(userId);
-            return ResponseEntity.ok().body(feeds);
+            return ListFeedResponseDto.getFeedsSuccess(feeds);
 
         } catch (Exception e) {
-            return ResponseEntity.notFound().build();
+            return ListFeedResponseDto.getFeesFail();
         }
 
     }
@@ -126,11 +128,9 @@ public class MainFeedController {
         try {
             System.out.println("유저아이디: " + userId);
             mainFeedService.addLikeFeed(userId, id);
-            return DeleteFeedsResponseDto.delete();
-        } catch (IllegalArgumentException e) {
-            return DeleteFeedsResponseDto.deleteFail();
+            return LikeResponseDto.addLike();
         } catch (Exception e) {
-            return ResponseDto.dataBaseError();
+            return LikeResponseDto.addLikeFail();
         }
     }
 
@@ -139,11 +139,9 @@ public class MainFeedController {
     public ResponseEntity<?> deleteLikeFeed(@PathVariable String userId, @PathVariable Integer id) {
         try {
             mainFeedService.deleteLikeFeed(userId, id);
-            return DeleteFeedsResponseDto.delete();
-        } catch (IllegalArgumentException e) {
-            return DeleteFeedsResponseDto.deleteFail();
+            return LikeResponseDto.deleteLike();
         } catch (Exception e) {
-            return ResponseDto.dataBaseError();
+            return LikeResponseDto.deleteLikeFail();
         }
     }
 

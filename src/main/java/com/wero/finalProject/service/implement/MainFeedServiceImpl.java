@@ -50,9 +50,9 @@ public class MainFeedServiceImpl implements MainFeedService {
     // 메인 피드 전체 조회
     @Override
     public List<FeedsResponseDto> getAllFeeds(String userId) {
-        List<MainFeedEntity> feeds = mainFeedRepository.findAll();
 
         try {
+            List<MainFeedEntity> feeds = mainFeedRepository.findAll();
             List<FeedsResponseDto> responseDtos = feeds.stream()
                     .map(feed -> {
                         Optional<LikeEntity> like = likeRepository
@@ -222,7 +222,13 @@ public class MainFeedServiceImpl implements MainFeedService {
     @Override
     public LikeEntity addLikeFeed(String userId, Integer id) {
 
+        Optional<LikeEntity> like = likeRepository.findLikeIdByUserId_UserIdAndMainfeedId_MainfeedId(userId, id);
+
+        if (like.isPresent()) {
+            return like.get();
+        }
         try {
+
             UserEntity userReference = entityManager.getReference(UserEntity.class, userId);
             MainFeedEntity feedReference = entityManager.getReference(MainFeedEntity.class, id);
             LikeEntity likeFeed = LikeEntity.builder()
@@ -232,7 +238,7 @@ public class MainFeedServiceImpl implements MainFeedService {
                     .build();
             return likeRepository.save(likeFeed);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to delete feed", e);
+            throw new RuntimeException("Failed to add Like", e);
         }
     }
 
@@ -249,7 +255,7 @@ public class MainFeedServiceImpl implements MainFeedService {
             System.out.println(like);
             likeRepository.deleteById(like.get().getLikeId());
         } catch (Exception e) {
-            throw new RuntimeException("Failed to delete feed", e);
+            throw new RuntimeException("Failed to delete Like", e);
         }
     }
 

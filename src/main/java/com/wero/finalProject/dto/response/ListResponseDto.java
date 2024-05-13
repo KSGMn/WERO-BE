@@ -1,5 +1,7 @@
 package com.wero.finalProject.dto.response;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -9,22 +11,18 @@ import com.wero.finalProject.common.ResponseMessage;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-/**
- * @작성자:오현암
- * @작성날짜:2024/04/25
- * @파일명:ResponseDto.class
- * @기능:공통_응답_데이터_생성
- **/
 @Getter
 @AllArgsConstructor
-public class ResponseDto {
+public class ListResponseDto<T> {
 
     private String code;
     private String msg;
+    private List<T> data;
 
-    public ResponseDto() {
+    public ListResponseDto(List<T> data) {
         this.code = ResponseCode.SUCCESS;
         this.msg = ResponseMessage.SUCCESS;
+        this.data = data;
     }
 
     public static ResponseEntity<ResponseDto> dataBaseError() {
