@@ -73,13 +73,13 @@ public class DiaryController {
         return response;
     }
 
-//    @PutMapping("/{diaryId}/bookMark")
-//    public ResponseEntity<? super PutBookMarkResponseDto> putBookMark(
-//            @PathVariable("diaryId") Integer diaryId,
-//            @AuthenticationPrincipal String userId
-//    ){
-//        ResponseEntity<? super PutBookMarkResponseDto> response= diaryService.putBookMark(diaryId,userId);
-//        return response;
-//    }
+    @PutMapping("/{diaryId}/bookMark")
+    public ResponseEntity<? super PutBookMarkResponseDto> putBookMark(
+            @PathVariable("diaryId") Integer diaryId,
+            @AuthenticationPrincipal String userId
+    ){
+        ResponseEntity<? super PutBookMarkResponseDto> response= diaryService.putBookMark(diaryId,userId);
+        return response;
+    }
 
 }
