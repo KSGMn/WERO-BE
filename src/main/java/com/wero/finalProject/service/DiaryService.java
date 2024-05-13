@@ -20,10 +20,6 @@ public interface DiaryService {
     ResponseEntity<? super DeleteDiaryResponseDto> deleteDiary(Integer diaryId,String userId);//일기 삭제
 
     ResponseEntity<? super PatchDiaryResponseDto> patchDiary(PatchDiaryRequestDto dto, Integer diary_id, String userId);//일기 수정
-
-    ResponseEntity<? super GetDiaryListResponseDto> getDiaryList();//일기 전체 조회
-
-//    ResponseEntity<? super PutBookMarkResponseDto> putBookMark(Integer diaryId, String userId);
 }
 
 
