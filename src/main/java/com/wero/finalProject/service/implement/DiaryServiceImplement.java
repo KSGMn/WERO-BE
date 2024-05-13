@@ -4,6 +4,8 @@ package com.wero.finalProject.service.implement;
 import com.wero.finalProject.Repository.DiaryRepository;
 import com.wero.finalProject.Repository.UserRepository;
 //import com.wero.finalProject.domain.BookMarkEntity;
+import com.wero.finalProject.Repository.DiaryRepository;
+import com.wero.finalProject.Repository.UserRepository;
 import com.wero.finalProject.domain.DiaryEntity;
 import com.wero.finalProject.domain.UserEntity;
 import com.wero.finalProject.dto.request.diary.DiaryRequestDto;
