@@ -49,7 +49,8 @@ public class SecurityConfig {
         private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
         @Bean
-        protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception { // FilterChain
+        protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
+
                 httpSecurity
                                 .cors(cors -> cors
                                                 .configurationSource(corsConfigurationSource()))
@@ -58,26 +59,21 @@ public class SecurityConfig {
                                 .sessionManagement(sessionManagement -> sessionManagement
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                                 .authorizeHttpRequests(request -> request
-                                                .requestMatchers("/", "/api/v1/auth/**", "/api/v1/cs/**", "/uploads/**")
+                                                .requestMatchers("/", "/api/v1/auth/**", "/api/v1/cs/**", "/uploads/**",
+                                                                "/oauth2/**")
                                                 .permitAll()
                                                 .requestMatchers("/api/v1/user/**").hasRole("USER")
-                                                .requestMatchers("/api/v1/admin/**")
-                                                .hasRole("ADMIN")
-                                                .anyRequest()
-                                                .authenticated())
+                                                .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+                                                .anyRequest().authenticated())
+                                .oauth2Login(oauth2 -> oauth2
+                                                .authorizationEndpoint(
+                                                                endpoint -> endpoint.baseUri("/api/v1/auth/oauth2"))
+                                                .redirectionEndpoint(endpoint -> endpoint.baseUri("/oauth2/callback/*"))
+                                                .userInfoEndpoint(endpoint -> endpoint.userService(oAuth2UserService))
+                                                .successHandler(oAuth2SuccessHandler))
                                 .exceptionHandling(exceptionHandling -> exceptionHandling
                                                 .authenticationEntryPoint(new FailedAuthenticationEntryPoint()))
                                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
-                // TODO: Oauth2 소셜 로그인 yml 설정 추가후 주석 해제
-
-                // .oauth2Login(oauth2 -> oauth2
-                // .authorizationEndpoint(endpoint -> endpoint.baseUri("/api/v1/auth/oauth2"))
-                // //원하는 형태로 api 잡아도됨
-                // .redirectionEndpoint(endpoint -> endpoint.baseUri("/oauth2/callback/*"))
-                // .userInfoEndpoint(endpoint -> endpoint.userService(oAuth2UserService))
-                // .successHandler(oAuth2SuccessHandler)
-                // )
 
                 return httpSecurity.build();
         }

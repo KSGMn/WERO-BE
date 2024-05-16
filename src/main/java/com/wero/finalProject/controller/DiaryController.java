@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import com.wero.finalProject.dto.response.diary.DiaryResponseDto;
 import com.wero.finalProject.dto.response.diary.GetDiaryListResponseDto;
 import com.wero.finalProject.dto.response.diary.GetDiaryResponseDto;
 import com.wero.finalProject.dto.response.diary.PatchDiaryResponseDto;
+import com.wero.finalProject.dto.response.diary.PutBookMarkResponseDto;
 import com.wero.finalProject.service.DiaryService;
 
 import jakarta.validation.Valid;
@@ -85,14 +87,12 @@ public class DiaryController {
         return response;
     }
 
-    // @PutMapping("/{diaryId}/bookMark")
-    // public ResponseEntity<? super PutBookMarkResponseDto> putBookMark(
-    // @PathVariable("diaryId") Integer diaryId,
-    // @AuthenticationPrincipal String userId
-    // ){
-    // ResponseEntity<? super PutBookMarkResponseDto> response=
-    // diaryService.putBookMark(diaryId,userId);
-    // return response;
-    // }
+    @PutMapping("/{diaryId}/bookMark")
+    public ResponseEntity<? super PutBookMarkResponseDto> putBookMark(
+            @PathVariable("diaryId") Integer diaryId,
+            @AuthenticationPrincipal String userId) {
+        ResponseEntity<? super PutBookMarkResponseDto> response = diaryService.putBookMark(diaryId, userId);
+        return response;
+    }
 
 }
