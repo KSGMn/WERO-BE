@@ -35,18 +35,21 @@ public class OAuth2UserServiceImpl extends DefaultOAuth2UserService {
 //        }
         UserEntity userEntity = null;
         String userId = null;
+        String nickName = null;
         String email  = "email@email.com";
 
         if(oauth2ClientName.equals("kakao")){
             userId = "kakao_"+oAuth2User.getAttributes().get("id");
-            userEntity = new UserEntity(userId, "email@email.com", "kakao");
+            nickName =  "kakao_"+oAuth2User.getAttributes().get("id");
+            userEntity = new UserEntity(userId, nickName, "email@email.com", "kakao");
         }
 
         if(oauth2ClientName.equals("naver")){
             Map<String, String> responseMap = (Map<String, String>) oAuth2User.getAttributes().get("response");
             userId = "naver_"+responseMap.get("id").substring(0, 14);
+            nickName = "naver_"+responseMap.get("id").substring(0, 14);
             email = responseMap.get("email");
-            userEntity = new UserEntity(userId, email, "naver");
+            userEntity = new UserEntity(userId, nickName, email,  "naver");
         }
 
 //        if(oauth2ClientName.equals("google")){

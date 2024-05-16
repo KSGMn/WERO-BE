@@ -65,8 +65,9 @@ public class UserEntity {
         this.role = "ROLE_USER";
     }
 
-    public UserEntity(String userId, String email, String type) {
+    public UserEntity(String userId, String nickName, String email, String type) {
         this.userId = userId;
+        this.nickName = nickName;
         this.password = "password";
         this.email = email;
         this.type = type;
