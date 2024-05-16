@@ -1,11 +1,11 @@
 package com.wero.finalProject.handler;
 
 import com.wero.finalProject.provider.JwtProvider;
-import com.wero.finalProject.domain.CustomOauth2User;
+import com.wero.finalProject.domain.CustomOAuth2User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -19,15 +19,17 @@ import java.io.IOException;
  * @기능:OAuth2_인증_성공_처리
  **/
 @Component
+@RequiredArgsConstructor
 public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-    @Autowired
-    private JwtProvider jwtProvider;
+
+    private final JwtProvider jwtProvider;
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+    public void onAuthenticationSuccess(HttpServletRequest request,
+                                        HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
-        CustomOauth2User oauth2User =(CustomOauth2User)authentication.getPrincipal();
+        CustomOAuth2User oauth2User =(CustomOAuth2User)authentication.getPrincipal();
 
         String userId = oauth2User.getName();
         String token = jwtProvider.create(userId);
