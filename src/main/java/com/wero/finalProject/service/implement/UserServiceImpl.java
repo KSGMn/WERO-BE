@@ -102,6 +102,7 @@ public class UserServiceImpl implements UserService {
 
                 // 파일이름 인코딩
                 String encodedFileName = URLEncoder.encode(image.getOriginalFilename(), StandardCharsets.UTF_8);
+
                 // 파일이름 디코딩
                 String decodedFileName = URLDecoder.decode(encodedFileName, StandardCharsets.UTF_8.toString());
 

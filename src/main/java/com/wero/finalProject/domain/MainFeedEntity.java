@@ -43,8 +43,9 @@ public class MainFeedEntity {
     @Column(name = "content", nullable = false)
     private String content;
 
+    @Builder.Default
     @Column(name = "trackname", nullable = false)
-    private String trackName;
+    private String trackName = "";
 
     @Column(name = "image", nullable = true)
     private String image;
