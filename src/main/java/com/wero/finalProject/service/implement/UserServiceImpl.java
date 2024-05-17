@@ -9,7 +9,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -53,6 +52,15 @@ public class UserServiceImpl implements UserService {
             if (user == null)
                 return UserUpdateResponseDto.notExistUser();
 
+            String nickName = dto.getNickName();
+            boolean isExistedNickName = userRepository.existsByNickName(nickName);
+            if (isExistedNickName)
+                return UserUpdateResponseDto.duplicateNickName();
+
+            String email = dto.getEmail();
+            boolean isExistedEmail = userRepository.existsByEmail(email);
+            if(isExistedEmail) return UserUpdateResponseDto.duplicateEmail();
+
             String password = dto.getPassword();
             String encodedPassword = passwordEncoder.encode(password);
             dto.setPassword(encodedPassword);
@@ -75,6 +83,8 @@ public class UserServiceImpl implements UserService {
                 return UserUpdateResponseDto.notExistUser();
 
             String email = dto.getEmail();
+            boolean isExistEmail = userRepository.existsByEmail(email);
+            if(isExistEmail) return  UserUpdateResponseDto.duplicateEmail();
             dto.setEmail(email);
 
             user.patchUserEmail(dto, userId);
@@ -133,13 +143,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<? super UserDeleteResponseDto> userDelete(UserDeleteRequestDto dto, String userId) {
         try {
+            if (!dto.getUserId().equals(userId)) {
+                return UserDeleteResponseDto.notAuthorized();
+            }
+
             UserEntity user = userRepository.findByUserId(userId);
-            if (user == null)
-                return UserDeleteResponseDto.notExistUser();
+            if (user == null) return UserDeleteResponseDto.notExistUser();
 
             List<ImageEntity> userImages = imageRepository.findByUserId(user);
             imageRepository.deleteAll(userImages);
-
             userRepository.delete(user);
 
             return UserDeleteResponseDto.success();
