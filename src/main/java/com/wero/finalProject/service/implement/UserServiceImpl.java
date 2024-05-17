@@ -26,6 +26,7 @@ import com.wero.finalProject.dto.request.user.UserUpdateEmailRequestDto;
 import com.wero.finalProject.dto.request.user.UserUpdateRequestDto;
 import com.wero.finalProject.dto.response.ResponseDto;
 import com.wero.finalProject.dto.response.user.UserDeleteResponseDto;
+import com.wero.finalProject.dto.response.user.UserResponseDto;
 import com.wero.finalProject.dto.response.user.UserUpdateResponseDto;
 import com.wero.finalProject.service.UserService;
 
@@ -155,7 +156,20 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new RuntimeException("User not found");
         }
+
         return user;
+    }
+
+    @Override
+    public UserResponseDto findByUserId(String userId) {
+        UserEntity user = userRepository.findByUserId(userId);
+        if (user == null) {
+            throw new RuntimeException("User not found");
+        }
+
+        UserResponseDto responseDto = new UserResponseDto(userId, user.getEmail(), user.getNickName());
+
+        return responseDto;
     }
 
 }
