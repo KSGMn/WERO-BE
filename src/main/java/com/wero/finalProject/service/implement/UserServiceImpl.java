@@ -49,24 +49,27 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<? super UserUpdateResponseDto> userUpdate(UserUpdateRequestDto dto, String userId) {
         try {
             UserEntity user = userRepository.findByUserId(userId);
-            if (user == null)
-                return UserUpdateResponseDto.notExistUser();
 
             String nickName = dto.getNickName();
-            boolean isExistedNickName = userRepository.existsByNickName(nickName);
-            if (isExistedNickName)
-                return UserUpdateResponseDto.duplicateNickName();
-
             String email = dto.getEmail();
-            boolean isExistedEmail = userRepository.existsByEmail(email);
-            if(isExistedEmail) return UserUpdateResponseDto.duplicateEmail();
-
             String password = dto.getPassword();
             String encodedPassword = passwordEncoder.encode(password);
             dto.setPassword(encodedPassword);
 
-            user.patchUserEntity(dto, userId);
+            boolean isSameNickName = nickName.equals(user.getNickName());
+            boolean isSameEmail = email.equals(user.getEmail());
 
+            boolean isExistedNickName = !isSameNickName && userRepository.existsByNickName(nickName);
+            boolean isExistedEmail = !isSameEmail && userRepository.existsByEmail(email);
+
+            if (user == null)
+                return UserUpdateResponseDto.notExistUser();
+            if(isExistedEmail)
+                return UserUpdateResponseDto.duplicateEmail();
+            if (isExistedNickName)
+                return UserUpdateResponseDto.duplicateNickName();
+
+            user.patchUserEntity(dto, userId);
             userRepository.save(user);
             return UserUpdateResponseDto.success();
         } catch (Exception e) {
