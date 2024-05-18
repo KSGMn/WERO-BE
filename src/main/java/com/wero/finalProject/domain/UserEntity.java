@@ -7,6 +7,7 @@ import com.wero.finalProject.dto.request.auth.RegisterRequestDto;
 import com.wero.finalProject.dto.request.user.UserUpdateEmailRequestDto;
 import com.wero.finalProject.dto.request.user.UserUpdateRequestDto;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -48,7 +49,7 @@ public class UserEntity {
     @Column(name = "gender", updatable = true)
     private String gender;
 
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<LikeEntity> likes = new HashSet<>();
 
     // TODO: Enum화 시키기

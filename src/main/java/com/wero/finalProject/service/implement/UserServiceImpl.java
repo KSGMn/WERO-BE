@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -60,7 +61,8 @@ public class UserServiceImpl implements UserService {
 
             String email = dto.getEmail();
             boolean isExistedEmail = userRepository.existsByEmail(email);
-            if(isExistedEmail) return UserUpdateResponseDto.duplicateEmail();
+            if (isExistedEmail)
+                return UserUpdateResponseDto.duplicateEmail();
 
             String password = dto.getPassword();
             String encodedPassword = passwordEncoder.encode(password);
@@ -85,7 +87,8 @@ public class UserServiceImpl implements UserService {
 
             String email = dto.getEmail();
             boolean isExistEmail = userRepository.existsByEmail(email);
-            if(isExistEmail) return  UserUpdateResponseDto.duplicateEmail();
+            if (isExistEmail)
+                return UserUpdateResponseDto.duplicateEmail();
             dto.setEmail(email);
 
             user.patchUserEmail(dto, userId);
@@ -149,7 +152,8 @@ public class UserServiceImpl implements UserService {
             }
 
             UserEntity user = userRepository.findByUserId(userId);
-            if (user == null) return UserDeleteResponseDto.notExistUser();
+            if (user == null)
+                return UserDeleteResponseDto.notExistUser();
 
             List<ImageEntity> userImages = imageRepository.findByUserId(user);
             imageRepository.deleteAll(userImages);
@@ -179,7 +183,7 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("User not found");
         }
 
-        UserResponseDto responseDto = new UserResponseDto(userId, user.getEmail(), user.getNickName());
+        UserResponseDto responseDto = new UserResponseDto(userId, user.getEmail(), user.getNickName(), user.getType());
 
         return responseDto;
     }
