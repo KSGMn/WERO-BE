@@ -8,7 +8,7 @@ WE-RO
 Rest API형 서버로써 프론트단은 리액츠로 제작하였고 백엔드단은 스프링부트로 제작하였습니다.<br>
 
 ## 프로젝트의 전체적인 구조
-![delfood 서버 구조도](https://user-images.githubusercontent.com/46917538/74079907-fe3e8180-4a80-11ea-90fa-2abb60f7d361.png)
+![WE-RO_README파일 아키텍쳐 drawio](https://github.com/Path-Finder-Org/We-Ro-SNS/assets/104974710/b081aa81-c543-4ce6-afc1-481363c45c56)
 - github hook을 받아 Jenkins에서 CI/CD를 진행합니다.
 - 모든 서버는 Naver Cloud Platform에 올라가 있습니다.<br>
 - 구동중인 서버 : Main Delfood Server, Redis Server, MariaDB Server
