@@ -51,13 +51,13 @@ Github를 사용하여 브랜치를 관리합니다.<br>
 - Bitbucket Gitflow Workflow(https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)
 
 ### 테스트
-- Mockito Framework를 활용하여 고립된 테스트 코드를 작성
+- Postman을 활용하여 고립된 테스트 코드를 작성
 - Jenkins CI를 적용하여 테스트 자동화
-- 협업하는 동료의 소스코드에 서로 테스트코드를 작성하여 서로의 소스코드를 알 수 있도록 하고 있습니다.
+- 협업하는 동료의 소스코드에 서로 공유하여 서로의 소스코드를 알 수 있도록 하고 있습니다.
 <br><br>
 
 ### 성능 테스트
-NGrinder를 설치하여 테스트하고있습니다.<br>
+Postman을 설치하여 테스트하고있습니다.<br>
 
 
 ## 사용 기술 및 환경
