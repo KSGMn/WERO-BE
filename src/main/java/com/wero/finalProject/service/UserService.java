@@ -1,5 +1,7 @@
 package com.wero.finalProject.service;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 
 import com.wero.finalProject.domain.UserEntity;
@@ -29,4 +31,7 @@ public interface UserService {
     UserEntity findUserById(String userId);
 
     UserResponseDto findByUserId(String userId);
+
+    List<String> findUserPicture(String userId);
+
 }

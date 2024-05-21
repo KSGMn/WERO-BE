@@ -47,6 +47,9 @@ public class DiaryEntity {
     @Column(name = "bookmark_count")
     private int bookMarkCount;
 
+    @Column(name = "image", nullable = true)
+    private String image;
+
     // like, songTitle
 
     @ManyToOne
@@ -64,12 +67,14 @@ public class DiaryEntity {
         this.emotion = dto.getEmotion();
         this.writer = user;
         this.bookMarkCount = 0;
+        this.image = dto.getImage();
     }
 
     public void patchDiary(PatchDiaryRequestDto dto) {
         this.diaryContent = dto.getDiaryContent();
         this.emotion = dto.getEmotion();
         this.song = dto.getSong();
+        this.image = dto.getImage();
     }
 
     public void increaseBookMarkCount() {

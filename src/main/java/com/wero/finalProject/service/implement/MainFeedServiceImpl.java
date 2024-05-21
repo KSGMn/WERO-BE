@@ -53,6 +53,7 @@ public class MainFeedServiceImpl implements MainFeedService {
 
         try {
             List<MainFeedEntity> feeds = mainFeedRepository.findAll();
+            System.out.println("피드 사이즈" + feeds.size());
             List<FeedsResponseDto> responseDtos = feeds.stream()
                     .map(feed -> {
                         Optional<LikeEntity> like = likeRepository
@@ -189,6 +190,28 @@ public class MainFeedServiceImpl implements MainFeedService {
             return mainFeedRepository.save(feed);
         } catch (Exception e) {
             throw new RuntimeException("Failed to create feed", e);
+        }
+    }
+
+    // 여러 개의 피드 생성 메소드
+    public List<MainFeedEntity> createFeeds(String userId, List<MainFeedEntity> mainFeedEntities) {
+        try {
+            UserEntity user = userService.findUserById(userId);
+            for (int i = 0; i < mainFeedEntities.size(); i++) {
+                MainFeedEntity mainFeedEntity = mainFeedEntities.get(i);
+                MainFeedEntity feed = MainFeedEntity.builder()
+                        .content(mainFeedEntity.getContent() + (i + 1))
+                        .trackName(mainFeedEntity.getTrackName())
+                        .category(mainFeedEntity.getCategory())
+                        .image(mainFeedEntity.getImage())
+                        .createDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                        .writer(user)
+                        .build();
+                mainFeedRepository.save(feed);
+            }
+            return mainFeedEntities;
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to create feeds", e);
         }
     }
 

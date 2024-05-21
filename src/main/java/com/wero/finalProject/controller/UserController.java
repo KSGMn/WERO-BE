@@ -1,5 +1,7 @@
 package com.wero.finalProject.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -61,6 +63,12 @@ public class UserController {
             @AuthenticationPrincipal String userId) {
         ResponseEntity<? super UserUpdateResponseDto> response = userService.userPicture(requestBody, userId);
         return response;
+    }
+
+    @GetMapping(value = "/find/prof")
+    public ResponseEntity<List<String>> findPic(@AuthenticationPrincipal String userId) {
+        List<String> response = userService.findUserPicture(userId);
+        return ResponseEntity.ok().body(response);
     }
 
     @DeleteMapping(value = "/delete")

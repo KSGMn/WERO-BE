@@ -60,7 +60,7 @@ public class MainFeedEntity {
     @Column(name = "category", nullable = false)
     private String category;
 
-    @OneToMany(mappedBy = "mainfeedId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "mainfeedId", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private Set<LikeEntity> likes = new HashSet<>();
 

@@ -26,6 +26,7 @@ public class DiaryListItem {
     private String song;
     private String userId;
     private Integer isBookmarked;
+    private String image;
 
     public DiaryListItem(DiaryEntity diaryEntity) {// 일기 엔티티를 받아서
         this.diaryId = diaryEntity.getDiaryId();// 속성들에다가 넣어준다
@@ -34,6 +35,7 @@ public class DiaryListItem {
         this.song = diaryEntity.getSong();
         this.userId = diaryEntity.getWriter().getUserId();
         this.isBookmarked = diaryEntity.getBookMarkCount();
+        this.image = diaryEntity.getImage();
     }
 
     public static List<DiaryListItem> getList(List<DiaryEntity> diaryEntities) {// 일기 리스트를 받는다

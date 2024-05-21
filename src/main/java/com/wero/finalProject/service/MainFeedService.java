@@ -25,6 +25,8 @@ public interface MainFeedService {
 
     MainFeedEntity createFeed(String userId, MainFeedEntity mainFeed);
 
+    List<MainFeedEntity> createFeeds(String userId, List<MainFeedEntity> mainFeed);
+
     MainFeedEntity updateFeed(Integer id, MainFeedEntity mainFeed, String userId);
 
     void deleteFeed(Integer id);

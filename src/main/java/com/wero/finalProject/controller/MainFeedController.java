@@ -110,6 +110,20 @@ public class MainFeedController {
         }
     }
 
+    // 메인 피드 여러개 생성
+    @PostMapping("/{userId}/feeds")
+    public ResponseEntity<?> createFeeds(@RequestBody CreateFeedsRequestDto requestDto,
+            @PathVariable String userId) {
+        try {
+            mainFeedService.createFeeds(userId, requestDto.toEntities());
+            return CreateFeedsResponseDto.created();
+        } catch (IllegalArgumentException e) {
+            return CreateFeedsResponseDto.createFail();
+        } catch (Exception e) {
+            return ResponseDto.dataBaseError();
+        }
+    }
+
     // 메인 피드 수정
     @PutMapping("/{userId}/{id}/feed")
     public ResponseEntity<?> updateFeed(@RequestBody UpdateFeedsRequestDto requestDto, @PathVariable String userId,

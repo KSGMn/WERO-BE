@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -144,6 +145,19 @@ public class UserServiceImpl implements UserService {
             return ResponseDto.dataBaseError();
         }
 
+    }
+
+    @Override
+    public List<String> findUserPicture(String userId) {
+        try {
+            UserEntity user = userRepository.findByUserId(userId);
+            List<ImageEntity> userImages = imageRepository.findByUserId(user);
+            return userImages.stream()
+                    .map(ImageEntity::getImage)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     @Override
