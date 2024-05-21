@@ -10,9 +10,8 @@ Rest API형 서버로써 프론트단은 리액츠로 제작하였고 백엔드�
 ## 프로젝트의 전체적인 구조
 ![WE-RO_README파일 아키텍쳐 drawio](https://github.com/Path-Finder-Org/We-Ro-SNS/assets/104974710/b081aa81-c543-4ce6-afc1-481363c45c56)
 - github hook을 받아 Jenkins에서 CI/CD를 진행합니다.
-- 모든 서버는 Naver Cloud Platform에 올라가 있습니다.<br>
-- 구동중인 서버 : Main Delfood Server, Redis Server, MariaDB Server
-- public IP는 Main Server에만 할당되어 있습니다.
+- 모든 서버는 Amazon Web Services에 올라가 있습니다.<br>
+- 구동중인 서버 : Main We-Ro Server, React Server, MySQL Server
 
 
 ## 프로젝트의 주요 관심사
@@ -29,17 +28,14 @@ Rest API형 서버로써 프론트단은 리액츠로 제작하였고 백엔드�
 - JPA를 활용하여 쿼리문 최소화
 - MySQL을 활용
 - 서버와 클라이언트를 분리한 서버사이드 렌더링 활용
-- 비동기를 활용하여 빠른 시간 내에 외부 API 호출
 <br><br>
 <b>그 외</b><br>
-- Project Wiki를 참고해주세요!
+- 그 외에.....
 <br><br>
 
 ### 브랜치 관리 전략
-Git Flow를 사용하여 브랜치를 관리합니다.<br>
+Github를 사용하여 브랜치를 관리합니다.<br>
 모든 브랜치는 Pull Request에 리뷰를 진행한 후 merge를 진행합니다.<br>
-메인 브렌치인 Develop에는 아직 많은 내용이 merge되지 않았습니다. 현재 개발 진행사항을 확인하고 싶다면 PR를 확인해주세요.<br><br>
-DelFood PR : https://github.com/f-lab-edu/food-delivery/pulls
 <br>
 <br><br>
 ![image](https://user-images.githubusercontent.com/46917538/72450182-44475300-37fd-11ea-8a1b-ecce20fd6fcb.png)
@@ -65,7 +61,7 @@ NGrinder를 설치하여 테스트하고있습니다.<br>
 
 
 ## 사용 기술 및 환경
-Spring boot, Maven, Mybatis, Redis, Docker, MariaDB, Jenkins, Java8, Naver Cloud Platform
+Spring boot, Gradle, JPA, React, Docker, MySQL, Jenkins, Java17, Amazon Web Services
 <br>
 
 ## Wiki
@@ -74,7 +70,7 @@ Wiki에 기술 이슈에 대한 고민과 해결 방법을 포스팅한 개인 �
 <br>
 ## CI
 Jenkins : 서버 운영을 종료하였습니다.<br>
-Naver Cloud Platform(Cloud server)를 사용하고 있습니다.<br>
+Amazon Web Services를 사용하고 있습니다.<br>
 PR시마다 자동 Build 및 Test 적용<br>
 비로그인 상태로도 확인이 가능합니다.<br>
 
@@ -86,14 +82,14 @@ Push 완료시 Delfood 메인 서버에서 docker hub에 올라간 이미지를 
 
 <br>
 ## Database
-- MariaDB<br>
+- MySQL<br>
 cafe24 web hosting 서비스를 사용하고 있습니다.
 - Redis<br>
 docker 컨테이너를 사용하고 있습니다.
 <br>
 
 ## 화면 설계
-kakao oven - <https://ovenapp.io/view/OI44WSGwSZRSMcyiveGcSWGvw38YKizI/bco8b>   
+kakao oven - [<https://ovenapp.io/view/OI44WSGwSZRSMcyiveGcSWGvw38YKizI/bco8b>](https://ovenapp.io/view/SaTiTCEQyNfk5FdeOq1lDkJuGsNogCVE/)   
 
 ### 고객 화면 프로토타입
 ![image](https://user-images.githubusercontent.com/46917538/66744438-6b694e00-eeb7-11e9-82b7-246f569a74a6.png)
