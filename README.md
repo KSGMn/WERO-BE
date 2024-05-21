@@ -99,5 +99,6 @@ kakao oven - <https://ovenapp.io/view/SaTiTCEQyNfk5FdeOq1lDkJuGsNogCVE/>
 
 
 ## 프로젝트 DB ERD
-2019-11-08 수정 (쿠폰 스키마 추가)
-![배달의민족_20191108_33_53](https://user-images.githubusercontent.com/46917538/68458221-9429fc80-0245-11ea-9cc3-92f7a35fd534.png)
+2024-05-21 수정
+![image](https://github.com/Path-Finder-Org/We-Ro-SNS/assets/104974710/0eb3d0ad-0439-40c2-b47f-f26d3e563f13)
+
