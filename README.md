@@ -5,7 +5,7 @@
 WE-RO
 =============
 각박한 현대사회를 살아가는 이들을 위한 감성 SNS입니다<br>
-Rest API형 서버로써 프론트단은 리액츠로 제작하였고 백엔드단은 스프링부트로 제작하였습니다.<br>
+Rest API형 서버로써 프론트단은 리액트로 제작하였고 백엔드단은 스프링부트로 제작하였습니다.<br>
 
 ## 프로젝트의 전체적인 구조
 ![WE-RO_README파일 아키텍쳐 drawio](https://github.com/Path-Finder-Org/We-Ro-SNS/assets/104974710/b081aa81-c543-4ce6-afc1-481363c45c56)
