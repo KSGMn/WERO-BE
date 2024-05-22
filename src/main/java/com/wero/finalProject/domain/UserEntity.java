@@ -54,8 +54,6 @@ public class UserEntity {
     @Column(name = "restriction", updatable = true)
     private boolean restriction;
 
-
-
     public UserEntity(RegisterRequestDto dto) {
         this.userId = dto.getId();
         this.password = dto.getPassword();
