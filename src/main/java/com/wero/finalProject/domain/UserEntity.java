@@ -55,6 +55,11 @@ public class UserEntity {
     @Column(name = "role", updatable = false)
     private String role;
 
+    @Column(name = "restriction", updatable = true)
+    private boolean restriction;
+
+
+
     public UserEntity(RegisterRequestDto dto) {
         this.userId = dto.getId();
         this.password = dto.getPassword();
@@ -63,6 +68,7 @@ public class UserEntity {
         this.nickName = dto.getNickName();
         this.type = "app";
         this.role = "ROLE_USER";
+        this.restriction = false;
     }
 
     public UserEntity(String userId, String nickName, String email, String type) {
@@ -72,6 +78,7 @@ public class UserEntity {
         this.email = email;
         this.type = type;
         this.role = "ROLE_USER";
+        this.restriction = false;
     }
 
     public void patchUserEntity(UserUpdateRequestDto dto, String userId) {
