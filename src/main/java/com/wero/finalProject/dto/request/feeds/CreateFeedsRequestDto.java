@@ -33,7 +33,7 @@ public class CreateFeedsRequestDto {
 
     public List<MainFeedEntity> toEntities() {
         List<MainFeedEntity> entities = new ArrayList<>();
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 1000; i++) {
             MainFeedEntity entity = MainFeedEntity.builder()
                     .content(this.content)
                     .category(this.category)

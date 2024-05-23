@@ -8,14 +8,21 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.wero.finalProject.Repository.LikeRepository;
 import com.wero.finalProject.Repository.MainFeedRepository;
+import com.wero.finalProject.Repository.ReportRepository;
 import com.wero.finalProject.domain.LikeEntity;
 import com.wero.finalProject.domain.MainFeedEntity;
+import com.wero.finalProject.domain.ReportEntity;
 import com.wero.finalProject.domain.UserEntity;
 import com.wero.finalProject.dto.response.feeds.FeedsResponseDto;
 import com.wero.finalProject.service.MainFeedService;
@@ -44,15 +51,19 @@ public class MainFeedServiceImpl implements MainFeedService {
     @Autowired
     private LikeRepository likeRepository;
 
+    @Autowired
+    private ReportRepository reportRepository;
+
     @PersistenceContext
     private EntityManager entityManager;
 
     // 메인 피드 전체 조회
     @Override
-    public List<FeedsResponseDto> getAllFeeds(String userId) {
+    public List<FeedsResponseDto> getAllFeeds(String userId, int page, int size) {
 
         try {
-            List<MainFeedEntity> feeds = mainFeedRepository.findAll();
+            Page<MainFeedEntity> feedPage = mainFeedRepository.findAll(PageRequest.of(page, size));
+            List<MainFeedEntity> feeds = feedPage.getContent();
             System.out.println("피드 사이즈" + feeds.size());
             List<FeedsResponseDto> responseDtos = feeds.stream()
                     .map(feed -> {
@@ -105,8 +116,11 @@ public class MainFeedServiceImpl implements MainFeedService {
 
     // 유저 피드 userId로 찾기
     @Override
-    public List<FeedsResponseDto> getFeedByUserId(String userId) {
-        List<MainFeedEntity> feeds = mainFeedRepository.findByWriter_UserId(userId);
+    public List<FeedsResponseDto> getFeedByUserId(String userId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<MainFeedEntity> feedPage = mainFeedRepository.findByWriter_UserId(userId, pageable);
+        List<MainFeedEntity> feeds = feedPage.getContent();
+        // List<MainFeedEntity> feeds = mainFeedRepository.findByWriter_UserId(userId);
 
         try {
             List<FeedsResponseDto> responseDtos = feeds.stream()
@@ -256,23 +270,24 @@ public class MainFeedServiceImpl implements MainFeedService {
                 throw new EntityNotFoundException();
             }
 
-            List<LikeEntity> likeEntityList = likeRepository.findLikeIdByMainfeedId_MainfeedId(id);
+            // List<LikeEntity> likeEntityList =
+            // likeRepository.findLikeIdByMainfeedId_MainfeedId(id);
 
-            if (likeEntityList == null || likeEntityList.size() == 0) {
-                throw new EntityNotFoundException();
-            }
+            // if (likeEntityList == null || likeEntityList.size() == 0) {
+            // throw new EntityNotFoundException();
+            // }
 
-            List<Integer> likeEntityIds = new ArrayList<>();
+            // List<Integer> likeEntityIds = new ArrayList<>();
 
-            // LikeEntity에서 id를 추출하여 Integer타입의 리스트에 추가
-            for (LikeEntity likeEntity : likeEntityList) {
-                likeEntityIds.add(likeEntity.getLikeId());
-            }
+            // // LikeEntity에서 id를 추출하여 Integer타입의 리스트에 추가
+            // for (LikeEntity likeEntity : likeEntityList) {
+            // likeEntityIds.add(likeEntity.getLikeId());
+            // }
 
-            // LikeEntity 삭제
-            for (Integer likeId : likeEntityIds) {
-                likeRepository.deleteById(likeId);
-            }
+            // // LikeEntity 삭제
+            // for (Integer likeId : likeEntityIds) {
+            // likeRepository.deleteById(likeId);
+            // }
 
             mainFeedRepository.deleteById(id);
 
@@ -331,6 +346,33 @@ public class MainFeedServiceImpl implements MainFeedService {
             likeRepository.deleteById(like.get().getLikeId());
         } catch (Exception e) {
             throw new RuntimeException("Failed to delete Like", e);
+        }
+    }
+
+    // 신고 추가
+    @Override
+    public ReportEntity addReportFeed(String userId, Integer id) {
+
+        try {
+
+            ReportEntity alreadyReport = reportRepository.findByReporterIdAndMainfeedId_MainfeedId(userId, id);
+
+            if (alreadyReport != null) {
+                System.out.println("이거 아닌가?");
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Feed has already been reported");
+            }
+
+            MainFeedEntity feedReference = entityManager.getReference(MainFeedEntity.class, id);
+
+            ReportEntity report = ReportEntity.builder()
+                    .mainfeedId(feedReference)
+                    .reporterId(userId)
+                    .reportedTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                    .reportContent(feedReference.getContent())
+                    .build();
+            return reportRepository.save(report);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to add report", e);
         }
     }
 

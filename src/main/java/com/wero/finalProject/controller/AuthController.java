@@ -89,4 +89,5 @@ public class AuthController {
         // 로그아웃 성공 응답
         return ResponseEntity.ok("Logged out successfully");
     }
+
 }

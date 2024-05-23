@@ -199,7 +199,8 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("User not found");
         }
 
-        UserResponseDto responseDto = new UserResponseDto(userId, user.getEmail(), user.getNickName(), user.getType());
+        UserResponseDto responseDto = new UserResponseDto(userId, user.getEmail(), user.getNickName(), user.getType(),
+                user.getGender(), user.getPassword());
 
         return responseDto;
     }

@@ -3,6 +3,7 @@ package com.wero.finalProject.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wero.finalProject.dto.request.feeds.CreateFeedsRequestDto;
@@ -23,6 +25,7 @@ import com.wero.finalProject.dto.response.feeds.FeedsResponseDto;
 import com.wero.finalProject.dto.response.feeds.FindOneFeedsResponse;
 import com.wero.finalProject.dto.response.feeds.LikeResponseDto;
 import com.wero.finalProject.dto.response.feeds.ListFeedResponseDto;
+import com.wero.finalProject.dto.response.feeds.ReportResponseDto;
 import com.wero.finalProject.dto.response.feeds.UpdateFeedsResponseDto;
 import com.wero.finalProject.service.MainFeedService;
 
@@ -46,10 +49,12 @@ public class MainFeedController {
 
     // 모든 피드 조회
     @GetMapping("/{userId}")
-    public ResponseEntity<ListResponseDto<FeedsResponseDto>> getAllFeeds(@PathVariable String userId) {
+    public ResponseEntity<ListResponseDto<FeedsResponseDto>> getAllFeeds(@PathVariable String userId,
+            @RequestParam int page,
+            @RequestParam int size) {
 
         try {
-            List<FeedsResponseDto> feeds = mainFeedService.getAllFeeds(userId);
+            List<FeedsResponseDto> feeds = mainFeedService.getAllFeeds(userId, page, size);
             return ListFeedResponseDto.getFeedsSuccess(feeds);
         } catch (Exception e) {
             return ListFeedResponseDto.getFeesFail();
@@ -72,10 +77,12 @@ public class MainFeedController {
 
     // 유저 피드 userId로 찾기
     @GetMapping("/{userId}/history")
-    public ResponseEntity<ListResponseDto<FeedsResponseDto>> getFeedByUserId(@PathVariable String userId) {
+    public ResponseEntity<ListResponseDto<FeedsResponseDto>> getFeedByUserId(@PathVariable String userId,
+            @RequestParam int page,
+            @RequestParam int size) {
 
         try {
-            List<FeedsResponseDto> feeds = mainFeedService.getFeedByUserId(userId);
+            List<FeedsResponseDto> feeds = mainFeedService.getFeedByUserId(userId, page, size);
             return ListFeedResponseDto.getFeedsSuccess(feeds);
 
         } catch (Exception e) {
@@ -155,7 +162,6 @@ public class MainFeedController {
     @PostMapping("/{userId}/{id}/like")
     public ResponseEntity<?> addLikeFeed(@PathVariable String userId, @PathVariable Integer id) {
         try {
-            System.out.println("유저아이디: " + userId);
             mainFeedService.addLikeFeed(userId, id);
             return LikeResponseDto.addLike();
         } catch (Exception e) {
@@ -171,6 +177,17 @@ public class MainFeedController {
             return LikeResponseDto.deleteLike();
         } catch (Exception e) {
             return LikeResponseDto.deleteLikeFail();
+        }
+    }
+
+    // 메인 피드 신고 추가
+    @PostMapping("/{id}/report")
+    public ResponseEntity<?> addReportFeed(@AuthenticationPrincipal String userId, @PathVariable Integer id) {
+        try {
+            mainFeedService.addReportFeed(userId, id);
+            return ReportResponseDto.addReport();
+        } catch (Exception e) {
+            return ReportResponseDto.addReportFail();
         }
     }
 

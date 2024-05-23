@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -60,11 +61,19 @@ public class MainFeedEntity {
     @Column(name = "category", nullable = false)
     private String category;
 
-    @OneToMany(mappedBy = "mainfeedId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Column(name = "report_status", nullable = false)
+    @Builder.Default
+    private Boolean reportStatus = false;
+
+    @OneToMany(mappedBy = "mainfeedId", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private Set<LikeEntity> likes = new HashSet<>();
 
-    @ManyToOne
+    @OneToMany(mappedBy = "mainfeedId", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private Set<ReportEntity> reports = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonManagedReference
     private UserEntity writer;

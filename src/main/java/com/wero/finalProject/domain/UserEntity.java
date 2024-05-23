@@ -10,6 +10,7 @@ import com.wero.finalProject.dto.request.user.UserUpdateRequestDto;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -49,7 +50,10 @@ public class UserEntity {
     @Column(name = "gender", updatable = true)
     private String gender;
 
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<MainFeedEntity> mainFeeds = new HashSet<>();
+
+    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<LikeEntity> likes = new HashSet<>();
 
     // TODO: Enum화 시키기

@@ -50,6 +50,9 @@ public interface ResponseMessage {
     // TODO:403
     String NO_PERMISSION = "No Permission";
 
+    // TODO:409
+    String ALREADY_REPORTED = "already report";
+
     // TODO: HTTP500
     String DATABASE_ERROR = "database_error";
 
