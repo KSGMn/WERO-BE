@@ -74,5 +74,6 @@ kakao oven - <https://ovenapp.io/view/SaTiTCEQyNfk5FdeOq1lDkJuGsNogCVE/>
 
 ## 프로젝트 DB ERD
 2024-05-21 수정
-![image](https://github.com/Path-Finder-Org/We-Ro-SNS/assets/104974710/0eb3d0ad-0439-40c2-b47f-f26d3e563f13)
+![스크린샷 2024-05-23 140001](https://github.com/Path-Finder-Org/We-Ro-SNS/assets/104974710/8bb1dcc7-f59f-4b42-b92d-049fa0f4e783)
+
 
