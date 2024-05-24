@@ -19,7 +19,7 @@ jobs:
       - name: WERO SSH
         uses: appleboy/ssh-action@v1.0.3
         env:
-          APPLICATION_PROPERTIES: ${{ secrets.APPLICATION_PROPERTIES }}
+          APPLICATION_PROPERTIES: ${{ secrets.BE_APPLICATION_PROPERTIES }}
         with:
           host: ${{ secrets.EC2_BE_HOST }}
           username: ${{ secrets.EC2_BE_USERNAME }}
