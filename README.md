@@ -24,8 +24,7 @@ Rest API형 서버로써 프론트단은 리액트로 제작하였고 백엔드�
 - 노션에 코드 컨벤션을 명시하여 팀원 모두 규칙을 엄수하도록 하였습니다.
 - 링크 <https://www.notion.so/cf5968376cfc4478a3768e4d8a3a96d1>
 <br><br>
-<b>성능 최적화</b><br>
-- JPA트
+<b>성능 최적화</b><b축
 - Jenkins CI를 적용하여 테스트 자동화
 - 협업하는 동료의 소스코드에 서로 공유하여 서로의 소스코드를 알 수 있도록 하고 있습니다.
 <br><br>
@@ -38,9 +37,9 @@ Postman을 활용하여 테스트하고있습니다.<br>
 Spring boot, Gradle, JPA, React, Docker, MySQL, Jenkins, Java17, Amazon Web Services
 <br>
 
-## Wiki
+## Notion
 <https://www.notion.so/ec4700e35f214a2aa95e8ecf51b506ee><br>
-Wiki에 기술 이슈에 대한 고민과 해결 방법을 포스팅한 개인 블로그의 url이 포함되어있습니다.<br>
+Notion에 프로젝트에 사용된 기술, erd, api 명세등의 정보가 포함되어있습니다.<br>
 <br>
 ## CI
 Jenkins : 서버 운영을 종료하였습니다.<br>
