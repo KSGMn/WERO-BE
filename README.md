@@ -39,7 +39,7 @@ Spring boot, Gradle, JPA, React, Docker, MySQL, Jenkins, Java17, Amazon Web Serv
 <br>
 
 ## Wiki
-<https://github.com/f-lab-edu/food-delivery/wiki><br>
+<https://www.notion.so/ec4700e35f214a2aa95e8ecf51b506ee><br>
 Wiki에 기술 이슈에 대한 고민과 해결 방법을 포스팅한 개인 블로그의 url이 포함되어있습니다.<br>
 <br>
 ## CI
