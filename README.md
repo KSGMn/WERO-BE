@@ -22,7 +22,7 @@ Rest API형 서버로써 프론트단은 리액트로 제작하였고 백엔드�
 <b>코드 컨벤션</b><br>
 - Google code Style을 준수
 - 노션에 코드 컨벤션을 명시하여 팀원 모두 규칙을 엄수하도록 하였습니다.
-- 링크 [https://google.github.io/styleguide/javaguide.html](https://www.notion.so/cf5968376cfc4478a3768e4d8a3a96d1?p=3976ca47a3914d86a0309d0a3bc5110a&pm=c)
+- 링크 <https://www.notion.so/cf5968376cfc4478a3768e4d8a3a96d1>
 <br><br>
 <b>성능 최적화</b><br>
 - JPA트
