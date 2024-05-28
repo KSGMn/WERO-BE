@@ -15,7 +15,7 @@ Rest API형 서버로써 프론트단은 리액트로 제작하였고 백엔드�
 
 
 ## 프로젝트의 주요 관심사
-&nbsp;&nbsp;&nbsp;&nbsp;<b>공통사항</b><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>공통사항</b><br>
 - 지속적인 성능 개선
 - 지저분한 코드에 대한 리팩토링
 <br><br>
