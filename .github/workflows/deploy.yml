@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Githun Repository 파일 불러오기
-        uses: actions/checkout@v4
+        uses: actions/checkout@4
 
       - name: JDK 17 setup
         uses: actions/setup-java@v4
@@ -23,17 +23,6 @@ jobs:
 
       - name: test & build
         run: ./gradlew clean build
-        env:
-          KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
-          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
-          NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
-          NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
-          MYSQL_URL: ${{ secrets.MYSQL_URL }}
-          MYSQL_USERNAME: ${{ secrets.MYSQL_USERNAME }}
-          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-          MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
-          MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
       - name: AWS Resouce에 접근할 수 있게 AWS credentials 설정
         uses: aws-actions/configure-aws-credentials@v4
