@@ -22,7 +22,7 @@ jobs:
         run: echo "${{ secrets.BE_APPLICATION_PROPERTIES }}" > ./src/main/resources/application.yml
 
       - name: test & build
-        run: ./graldew clean build
+        run: ./gradle clean build
 
       - name: AWS Resouce에 접근할 수 있게 AWS credentials 설정
         uses: aws-actions/configure-aws-credentials@v4
