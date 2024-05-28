@@ -22,4 +22,6 @@ public class PatchDiaryRequestDto {
     private String emotion;
     @NotBlank
     private String song;
+
+    private String image;
 }
