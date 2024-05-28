@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Githun Repository 파일 불러오기
-        uses: actions/checkout@4
+        uses: actions/checkout@v4
 
       - name: JDK 17 setup
         uses: actions/setup-java@v4
