@@ -64,10 +64,10 @@ docker 컨테이너를 사용하고 있습니다.
 ## 화면 설계
 kakao oven - <https://ovenapp.io/view/SaTiTCEQyNfk5FdeOq1lDkJuGsNogCVE/>
 
-### S/W 화면 실사
+### S/W 화면 실사 1
 ![리드미 - 화면 실사 (1)](https://github.com/Path-Finder-Org/We-Ro-SNS/assets/104974710/b0c5b327-4567-44fa-8e0a-47fddf03131a)
 
-### S/W 화면 실사
+### S/W 화면 실사 2
 ![리드미 - 회면실사2](https://github.com/Path-Finder-Org/We-Ro-SNS/assets/104974710/a6d343da-bbcf-47c0-b386-5a0122641d9a)
 
 ## 프로젝트 DB ERD
