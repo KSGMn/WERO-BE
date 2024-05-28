@@ -60,6 +60,9 @@ public class UserEntity {
     @Column(name = "role", updatable = false)
     private String role;
 
+    @Column(name = "restriction", updatable = true)
+    private boolean restriction;
+
     public UserEntity(RegisterRequestDto dto) {
         this.userId = dto.getId();
         this.password = dto.getPassword();
@@ -68,6 +71,7 @@ public class UserEntity {
         this.nickName = dto.getNickName();
         this.type = "app";
         this.role = "ROLE_USER";
+        this.restriction = false;
     }
 
     public UserEntity(String userId, String nickName, String email, String type) {
@@ -77,6 +81,7 @@ public class UserEntity {
         this.email = email;
         this.type = type;
         this.role = "ROLE_USER";
+        this.restriction = false;
     }
 
     public void patchUserEntity(UserUpdateRequestDto dto, String userId) {
@@ -90,6 +95,38 @@ public class UserEntity {
     public void patchUserEmail(UserUpdateEmailRequestDto dto, String userId) {
         this.userId = userId;
         this.email = dto.getEmail();
+    }
+
+    public void suspensionUserEntity(Boolean isRestriction) {
+        this.restriction = isRestriction;
+    }
+
+    public UserSuspensionDto toSuspensionDto() {
+        return new UserSuspensionDto(this.userId, this.email, this.restriction);
+    }
+
+    public static class UserSuspensionDto {
+        private String userId;
+        private String email;
+        private boolean restriction;
+
+        public UserSuspensionDto(String userId, String email, boolean restriction) {
+            this.userId = userId;
+            this.email = email;
+            this.restriction = restriction;
+        }
+
+        public String getUserId() {
+            return userId;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public boolean isRestriction() {
+            return restriction;
+        }
     }
 
 }

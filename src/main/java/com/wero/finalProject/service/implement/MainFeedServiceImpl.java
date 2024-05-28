@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -57,14 +58,42 @@ public class MainFeedServiceImpl implements MainFeedService {
     @PersistenceContext
     private EntityManager entityManager;
 
+    // 비회원 메인 피드 전체 조회
+    @Override
+    public List<FeedsResponseDto> nonMembergetAllFeeds(int page, int size) {
+
+        try {
+            Page<MainFeedEntity> feedPage = mainFeedRepository
+                    .findAll(PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createDate")));
+            List<MainFeedEntity> feeds = feedPage.getContent();
+            List<FeedsResponseDto> responseDtos = feeds.stream()
+                    .map(feed -> {
+                        return new FeedsResponseDto(
+                                feed.getMainfeedId(),
+                                feed.getContent(),
+                                feed.getTrackName(),
+                                feed.getImage(),
+                                feed.getCreateDate(),
+                                feed.getModificateDate(),
+                                feed.getCategory(),
+                                false,
+                                feed.getWriter().getUserId());
+                    })
+                    .collect(Collectors.toList());
+            return responseDtos;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     // 메인 피드 전체 조회
     @Override
     public List<FeedsResponseDto> getAllFeeds(String userId, int page, int size) {
 
         try {
-            Page<MainFeedEntity> feedPage = mainFeedRepository.findAll(PageRequest.of(page, size));
+            Page<MainFeedEntity> feedPage = mainFeedRepository
+                    .findAll(PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createDate")));
             List<MainFeedEntity> feeds = feedPage.getContent();
-            System.out.println("피드 사이즈" + feeds.size());
             List<FeedsResponseDto> responseDtos = feeds.stream()
                     .map(feed -> {
                         Optional<LikeEntity> like = likeRepository
@@ -117,7 +146,7 @@ public class MainFeedServiceImpl implements MainFeedService {
     // 유저 피드 userId로 찾기
     @Override
     public List<FeedsResponseDto> getFeedByUserId(String userId, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createDate"));
         Page<MainFeedEntity> feedPage = mainFeedRepository.findByWriter_UserId(userId, pageable);
         List<MainFeedEntity> feeds = feedPage.getContent();
         // List<MainFeedEntity> feeds = mainFeedRepository.findByWriter_UserId(userId);
@@ -270,25 +299,6 @@ public class MainFeedServiceImpl implements MainFeedService {
                 throw new EntityNotFoundException();
             }
 
-            // List<LikeEntity> likeEntityList =
-            // likeRepository.findLikeIdByMainfeedId_MainfeedId(id);
-
-            // if (likeEntityList == null || likeEntityList.size() == 0) {
-            // throw new EntityNotFoundException();
-            // }
-
-            // List<Integer> likeEntityIds = new ArrayList<>();
-
-            // // LikeEntity에서 id를 추출하여 Integer타입의 리스트에 추가
-            // for (LikeEntity likeEntity : likeEntityList) {
-            // likeEntityIds.add(likeEntity.getLikeId());
-            // }
-
-            // // LikeEntity 삭제
-            // for (Integer likeId : likeEntityIds) {
-            // likeRepository.deleteById(likeId);
-            // }
-
             mainFeedRepository.deleteById(id);
 
         } catch (Exception e) {
@@ -358,7 +368,6 @@ public class MainFeedServiceImpl implements MainFeedService {
             ReportEntity alreadyReport = reportRepository.findByReporterIdAndMainfeedId_MainfeedId(userId, id);
 
             if (alreadyReport != null) {
-                System.out.println("이거 아닌가?");
                 throw new ResponseStatusException(HttpStatus.CONFLICT, "Feed has already been reported");
             }
 
@@ -367,6 +376,7 @@ public class MainFeedServiceImpl implements MainFeedService {
             ReportEntity report = ReportEntity.builder()
                     .mainfeedId(feedReference)
                     .reporterId(userId)
+                    .mainfeedUserId(feedReference.getWriter().getUserId())
                     .reportedTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                     .reportContent(feedReference.getContent())
                     .build();

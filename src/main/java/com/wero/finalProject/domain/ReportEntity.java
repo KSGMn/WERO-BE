@@ -38,6 +38,9 @@ public class ReportEntity {
     @JoinColumn(name = "mainfeed_id", nullable = false)
     private MainFeedEntity mainfeedId;
 
+    @Column(name = "mainfeed_user_id", nullable = false)
+    private String mainfeedUserId;
+
     @Column(name = "reporter_id", nullable = false)
     private String reporterId;
 

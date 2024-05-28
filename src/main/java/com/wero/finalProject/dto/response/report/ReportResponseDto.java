@@ -15,14 +15,18 @@ public class ReportResponseDto {
 
     private Integer reportId;
     private Integer mainfeedId;
+    private String mainfeedUserId;
     private String reportContent;
     private String reportedTime;
 
-    public ReportResponseDto(Integer reportId, Integer mainfeedId, String reportContent, String reportedTime) {
+    public ReportResponseDto(Integer reportId, Integer mainfeedId, String mainfeedUserId, String reportContent,
+            String reportedTime) {
         this.reportId = reportId;
         this.mainfeedId = mainfeedId;
+        this.mainfeedUserId = mainfeedUserId;
         this.reportContent = reportContent;
         this.reportedTime = reportedTime;
+
     }
 
 }

@@ -19,5 +19,6 @@ public interface ReportRepository extends JpaRepository<ReportEntity, Integer> {
 
     ReportEntity findByReporterIdAndMainfeedId_MainfeedId(String reporterId, Integer mainfeedId);
 
-    Page<ReportEntity> findAllByOrderByReportedTimeAsc(Pageable pageable);;
+    Page<ReportEntity> findAllByOrderByReportedTimeAsc(Pageable pageable);
+
 }

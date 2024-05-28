@@ -16,6 +16,8 @@ import com.wero.finalProject.dto.response.feeds.FeedsResponseDto;
 
 public interface MainFeedService {
 
+    List<FeedsResponseDto> nonMembergetAllFeeds(int page, int size);
+
     List<FeedsResponseDto> getAllFeeds(String userId, int page, int size);
 
     FeedsResponseDto getOneFeeds(String userId, Integer id);

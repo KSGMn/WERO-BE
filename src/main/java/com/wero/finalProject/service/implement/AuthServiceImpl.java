@@ -161,10 +161,13 @@ public class AuthServiceImpl implements AuthService {
         String token = null;
         String userId = dto.getId();
         try {
-
             UserEntity userEntity = userRepository.findByUserId(userId);
             if (userEntity == null)
-                SignInResponseDto.signInFail();
+                return SignInResponseDto.signInFail();
+
+            boolean restriction = userEntity.isRestriction();
+            if (restriction)
+                return SignInResponseDto.restrictedUser();
 
             String password = dto.getPassword();
             String encodedPassword = userEntity.getPassword();
@@ -177,6 +180,7 @@ public class AuthServiceImpl implements AuthService {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseDto.dataBaseError();
+
         }
         return SignInResponseDto.success(token, userId);
     }

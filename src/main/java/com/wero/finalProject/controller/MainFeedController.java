@@ -47,9 +47,24 @@ public class MainFeedController {
 
     }
 
+    // 비회원 모든 피드 조회
+    @GetMapping("/non-member")
+    public ResponseEntity<ListResponseDto<FeedsResponseDto>> nonMembergetAllFeeds(
+            @RequestParam int page,
+            @RequestParam int size) {
+
+        try {
+            List<FeedsResponseDto> feeds = mainFeedService.nonMembergetAllFeeds(page, size);
+            return ListFeedResponseDto.getFeedsSuccess(feeds);
+        } catch (Exception e) {
+            return ListFeedResponseDto.getFeesFail();
+        }
+
+    }
+
     // 모든 피드 조회
-    @GetMapping("/{userId}")
-    public ResponseEntity<ListResponseDto<FeedsResponseDto>> getAllFeeds(@PathVariable String userId,
+    @GetMapping("")
+    public ResponseEntity<ListResponseDto<FeedsResponseDto>> getAllFeeds(@AuthenticationPrincipal String userId,
             @RequestParam int page,
             @RequestParam int size) {
 
@@ -63,8 +78,9 @@ public class MainFeedController {
     }
 
     // 피드 하나 조회
-    @GetMapping("/{userId}/{id}")
-    public ResponseEntity<FindOneResponseDto> getOneFeeds(@PathVariable String userId, @PathVariable Integer id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<FindOneResponseDto> getOneFeeds(@AuthenticationPrincipal String userId,
+            @PathVariable Integer id) {
 
         try {
             FeedsResponseDto feeds = mainFeedService.getOneFeeds(userId, id);
@@ -76,8 +92,8 @@ public class MainFeedController {
     }
 
     // 유저 피드 userId로 찾기
-    @GetMapping("/{userId}/history")
-    public ResponseEntity<ListResponseDto<FeedsResponseDto>> getFeedByUserId(@PathVariable String userId,
+    @GetMapping("/history")
+    public ResponseEntity<ListResponseDto<FeedsResponseDto>> getFeedByUserId(@AuthenticationPrincipal String userId,
             @RequestParam int page,
             @RequestParam int size) {
 
@@ -91,8 +107,9 @@ public class MainFeedController {
     }
 
     // 유저가 좋아요한 피드 목록 조회
-    @GetMapping("/{userId}/likes")
-    public ResponseEntity<ListResponseDto<FeedsResponseDto>> getFeedByUserIdAndIsLiked(@PathVariable String userId) {
+    @GetMapping("/likes")
+    public ResponseEntity<ListResponseDto<FeedsResponseDto>> getFeedByUserIdAndIsLiked(
+            @AuthenticationPrincipal String userId) {
         try {
             List<FeedsResponseDto> feeds = mainFeedService.getFeedByUserIdAndIsLiked(userId);
             return ListFeedResponseDto.getFeedsSuccess(feeds);
@@ -104,9 +121,9 @@ public class MainFeedController {
     }
 
     // 메인 피드 생성
-    @PostMapping("/{userId}/feed")
+    @PostMapping("/feed")
     public ResponseEntity<?> createFeed(@RequestBody CreateFeedsRequestDto requestDto,
-            @PathVariable String userId) {
+            @AuthenticationPrincipal String userId) {
         try {
             mainFeedService.createFeed(userId, requestDto.toEntity());
             return CreateFeedsResponseDto.created();
@@ -118,9 +135,9 @@ public class MainFeedController {
     }
 
     // 메인 피드 여러개 생성
-    @PostMapping("/{userId}/feeds")
+    @PostMapping("/feeds")
     public ResponseEntity<?> createFeeds(@RequestBody CreateFeedsRequestDto requestDto,
-            @PathVariable String userId) {
+            @AuthenticationPrincipal String userId) {
         try {
             mainFeedService.createFeeds(userId, requestDto.toEntities());
             return CreateFeedsResponseDto.created();
@@ -132,8 +149,9 @@ public class MainFeedController {
     }
 
     // 메인 피드 수정
-    @PutMapping("/{userId}/{id}/feed")
-    public ResponseEntity<?> updateFeed(@RequestBody UpdateFeedsRequestDto requestDto, @PathVariable String userId,
+    @PutMapping("/{id}/feed")
+    public ResponseEntity<?> updateFeed(@RequestBody UpdateFeedsRequestDto requestDto,
+            @AuthenticationPrincipal String userId,
             @PathVariable Integer id) {
         try {
             mainFeedService.updateFeed(id, requestDto.toEntity(), userId);
@@ -146,8 +164,8 @@ public class MainFeedController {
     }
 
     // 메인 피드 삭제
-    @DeleteMapping("/{userId}/{id}")
-    public ResponseEntity<?> deleteFeed(@PathVariable String userId, @PathVariable Integer id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteFeed(@AuthenticationPrincipal String userId, @PathVariable Integer id) {
         try {
             mainFeedService.deleteFeed(id);
             return DeleteFeedsResponseDto.delete();
@@ -159,8 +177,8 @@ public class MainFeedController {
     }
 
     // 메인 피드 좋아요 추가
-    @PostMapping("/{userId}/{id}/like")
-    public ResponseEntity<?> addLikeFeed(@PathVariable String userId, @PathVariable Integer id) {
+    @PostMapping("/{id}/like")
+    public ResponseEntity<?> addLikeFeed(@AuthenticationPrincipal String userId, @PathVariable Integer id) {
         try {
             mainFeedService.addLikeFeed(userId, id);
             return LikeResponseDto.addLike();
@@ -170,8 +188,8 @@ public class MainFeedController {
     }
 
     // 메인 피드 좋아요 삭제
-    @DeleteMapping("/{userId}/{id}/like")
-    public ResponseEntity<?> deleteLikeFeed(@PathVariable String userId, @PathVariable Integer id) {
+    @DeleteMapping("/{id}/like")
+    public ResponseEntity<?> deleteLikeFeed(@AuthenticationPrincipal String userId, @PathVariable Integer id) {
         try {
             mainFeedService.deleteLikeFeed(userId, id);
             return LikeResponseDto.deleteLike();
