@@ -24,7 +24,7 @@ Rest API형 서버로써 프론트단은 리액트로 제작하였고 백엔드�
 - 노션에 코드 컨벤션을 명시하여 팀원 모두 규칙을 엄수하도록 하였습니다.
 - 링크 <https://www.notion.so/cf5968376cfc4478a3768e4d8a3a96d1>
 <br><br>
-<b>성능 최적화</b><b축
+<b>성능 최적화</b>
 - Jenkins CI를 적용하여 테스트 자동화
 - 협업하는 동료의 소스코드에 서로 공유하여 서로의 소스코드를 알 수 있도록 하고 있습니다.
 <br><br>
@@ -64,12 +64,11 @@ docker 컨테이너를 사용하고 있습니다.
 ## 화면 설계
 kakao oven - <https://ovenapp.io/view/SaTiTCEQyNfk5FdeOq1lDkJuGsNogCVE/>
 
-### 고객 화면 프로토타입
+### S/W 화면 실사
 ![리드미 - 화면 실사 (1)](https://github.com/Path-Finder-Org/We-Ro-SNS/assets/104974710/b0c5b327-4567-44fa-8e0a-47fddf03131a)
 
-### 사장님 화면 프로토타입
-![화면정의서_사장님](https://user-images.githubusercontent.com/46917538/68458111-4f9e6100-0245-11ea-9118-0ca891eab044.png)
-
+### S/W 화면 실사
+![리드미 - 회면실사2](https://github.com/Path-Finder-Org/We-Ro-SNS/assets/104974710/a6d343da-bbcf-47c0-b386-5a0122641d9a)
 
 ## 프로젝트 DB ERD
 2024-05-23 수정
