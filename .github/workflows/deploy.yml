@@ -19,7 +19,12 @@ jobs:
           java-version: 17
 
       - name: application.yml 파일 생성
-        run: echo "${{ secrets.APPLICATION_PROPERTIES }}" > ./src/main/resources/application.properties
+      - run: touch ./src/main/resources/application.properties
+      - run: echo "${{secrets.APPLICATION_PROPERTIES}}" > ./src/main/resources/application.properties
+      - uses: actions/upload-artifact@v2
+        with:
+          name: application.properties
+          path: ./src/main/resources/application.properties
 
       - name: test & build
         run: ./gradlew clean build
