@@ -17,9 +17,6 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-          
-      - name: application.yml 파일 생성
-        run: echo "${{ secrets.BE_APPLICATION_PROPERTIES }}" > ./src/main/resources/application.yml
 
       - name: test & build
         run: ./gradlew clean build
