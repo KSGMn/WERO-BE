@@ -73,6 +73,9 @@ jobs:
             token-validity-in-seconds: 86400
           " > ./src/main/resources/application.yml
 
+      - name: application.yml 파일 확인
+        run: cat ./src/main/resources/application.yml
+
       - name: test & build
         run: ./gradlew clean build
 
