@@ -39,7 +39,7 @@ jobs:
         run: docker build -t wero-server .
 
       - name: Docker Image Tag
-        run: docker tag wero-server ${{ steps.login-ecr.registry }}/wero-server:latest
+        run: docker tag wero-server ${{ steps.login-ecr.outputs.registry }}/wero-server:latest
 
       - name: ECR Docker Image Push
         run: docker push ${{ steps.login-ecr.outputs.registry }}/wero-server:latest
