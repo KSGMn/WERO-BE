@@ -18,9 +18,12 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: application.yml 파일 생성
+        run: echo "${{ secrets.APPLICATION_PROPERTIES }}" > ./src/main/resources/application.yml
+        
       - name: test & build
         run: ./gradlew clean build
-
+     
       - name: AWS Resouce에 접근할 수 있게 AWS credentials 설정
         uses: aws-actions/configure-aws-credentials@v4
         with:
