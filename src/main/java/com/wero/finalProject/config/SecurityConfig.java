@@ -88,6 +88,7 @@ public class SecurityConfig {
         protected CorsConfigurationSource corsConfigurationSource() {
 
                 CorsConfiguration corsConfiguration = new CorsConfiguration();
+                corsConfiguration.addAllowedOrigin("https://werosns.life");
                 corsConfiguration.addAllowedMethod("*");
                 corsConfiguration.addAllowedHeader("*");
                 corsConfiguration.setAllowCredentials(true);
