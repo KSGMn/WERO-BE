@@ -40,6 +40,18 @@ public class JwtProvider {
         return jwt;
     }
 
+    public String refreshCreate(String userId) {
+
+        Date expiredDate = Date.from(Instant.now().plus(7, ChronoUnit.DAYS)); // 현재시간 기준 먼저
+        Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+
+        String jwt = Jwts.builder()
+                .signWith(key, SignatureAlgorithm.HS256)
+                .setSubject(userId).setIssuedAt(new Date()).setExpiration(expiredDate)
+                .compact();
+        return jwt;
+    }
+
     // TODO: jwt 검증
     public String validate(String jwt) {
         Claims claims = null;
@@ -57,5 +69,23 @@ public class JwtProvider {
             return null;
         }
         return claims.getSubject();
+    }
+
+    public Boolean validateRefreshToken(String jwt) {
+        Claims claims = null;
+        Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+
+        try {
+            claims = Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(jwt)
+                    .getBody();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return !claims.getExpiration().before(new Date());
     }
 }
