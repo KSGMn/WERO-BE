@@ -62,7 +62,8 @@ public class SecurityConfig {
                                                                 "/oauth2/**")
                                                 .permitAll()
                                                 .requestMatchers("/api/v1/user/feeds/non-member",
-                                                                "/api/v1/user/search/non-member/**")
+                                                                "/api/v1/user/search/non-member/**",
+                                                                "/api/v1/auth/refresh")
                                                 .permitAll()
                                                 .requestMatchers("/api/v1/user/**").hasAnyRole("USER", "ADMIN")
                                                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
