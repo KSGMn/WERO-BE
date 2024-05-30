@@ -13,12 +13,14 @@ import com.wero.finalProject.domain.UserEntity;
 import com.wero.finalProject.dto.request.auth.CheckCertificationRequestDto;
 import com.wero.finalProject.dto.request.auth.EmailCertificationRequestDto;
 import com.wero.finalProject.dto.request.auth.IdCheckRequestDto;
+import com.wero.finalProject.dto.request.auth.RefreshTokenRequestDto;
 import com.wero.finalProject.dto.request.auth.RegisterRequestDto;
 import com.wero.finalProject.dto.request.auth.SignInRequestDto;
 import com.wero.finalProject.dto.response.ResponseDto;
 import com.wero.finalProject.dto.response.auth.CheckCertificationResponseDto;
 import com.wero.finalProject.dto.response.auth.EmailCertificationResponseDto;
 import com.wero.finalProject.dto.response.auth.IdCheckResponseDto;
+import com.wero.finalProject.dto.response.auth.RefreshTokenResponseDto;
 import com.wero.finalProject.dto.response.auth.RegisterResponseDto;
 import com.wero.finalProject.dto.response.auth.SignInResponseDto;
 import com.wero.finalProject.provider.EmailProvider;
@@ -159,6 +161,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto) {
         String token = null;
+        String refreshToken = null;
         String userId = dto.getId();
         try {
             UserEntity userEntity = userRepository.findByUserId(userId);
@@ -176,13 +179,36 @@ public class AuthServiceImpl implements AuthService {
                 return SignInResponseDto.signInFail();
 
             token = jwtProvider.create(userId);
+            refreshToken = jwtProvider.refreshCreate(userId);
 
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseDto.dataBaseError();
 
         }
-        return SignInResponseDto.success(token, userId);
+        return SignInResponseDto.success(token, userId, refreshToken);
+    }
+
+    @Override
+    public ResponseEntity<?> refreshToken(RefreshTokenRequestDto refreshTokenRequest) {
+
+        String newAccessToken = null;
+
+        try {
+            String refreshToken = refreshTokenRequest.getRefreshToken();
+
+            if (jwtProvider.validateRefreshToken(refreshToken)) {
+                String userId = jwtProvider.validate(refreshToken);
+                newAccessToken = jwtProvider.create(userId);
+            }
+
+            return RefreshTokenResponseDto.success(newAccessToken);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return RefreshTokenResponseDto.fail();
+
+        }
+
     }
 
 }
