@@ -9,7 +9,7 @@ Rest API형 서버로써 프론트단은 리액트로 제작하였고 백엔드�
 
 ## 프로젝트의 전체적인 구조
 ![Sitemap Whiteboard in Green Purple Basic Style (2)](https://github.com/Path-Finder-Org/We-Ro-SNS/assets/104974710/3f1777d7-7ab3-4ebb-99bf-31f36b172a0e)
-- github hook을 받아 Jenkins에서 CI/CD를 진행합니다.
+- GitHub Action을 사용하여 CI/CD를 진행합니다.
 - 모든 서버는 Amazon Web Services에 올라가 있습니다.<br>
 - 구동중인 서버 : Main We-Ro Server, React Server, MySQL Server
 
