@@ -31,6 +31,7 @@ public class JwtProvider {
     public String create(String userId) {
 
         Date expiredDate = Date.from(Instant.now().plus(1, ChronoUnit.HOURS)); // 현재시간 기준 먼저
+
         Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
 
         String jwt = Jwts.builder()
@@ -43,6 +44,7 @@ public class JwtProvider {
     public String refreshCreate(String userId) {
 
         Date expiredDate = Date.from(Instant.now().plus(7, ChronoUnit.DAYS)); // 현재시간 기준 먼저
+
         Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
 
         String jwt = Jwts.builder()
