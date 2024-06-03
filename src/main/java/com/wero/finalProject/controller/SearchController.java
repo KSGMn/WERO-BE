@@ -44,21 +44,6 @@ public class SearchController {
                 }
         }
 
-        // 비회원 일기 내용으로 검색
-        @GetMapping("/non-member/content/{keyword}")
-        public ResponseEntity<ListResponseDto<FeedsResponseDto>> nonMemberGetFeedsByContent(
-                        @PathVariable String keyword,
-                        @RequestParam int page,
-                        @RequestParam int size) {
-
-                try {
-                        List<FeedsResponseDto> dtos = searchService.nonMemberGetFeedsByContent(keyword, page, size);
-                        return ListFeedResponseDto.getFeedsSuccess(dtos);
-                } catch (Exception e) {
-                        return ListFeedResponseDto.getFeesFail();
-                }
-        }
-
         // 일기 카테고리로 검색
         @GetMapping("/category/{keyword}")
         public ResponseEntity<ListResponseDto<FeedsResponseDto>> getFeedsByCategory(
@@ -68,21 +53,6 @@ public class SearchController {
 
                 try {
                         List<FeedsResponseDto> dtos = searchService.getFeedsByCategory(userId, keyword, page, size);
-                        return ListFeedResponseDto.getFeedsSuccess(dtos);
-                } catch (Exception e) {
-                        return ListFeedResponseDto.getFeesFail();
-                }
-        }
-
-        // 비회원 일기 카테고리로 검색
-        @GetMapping("/non-member/category/{keyword}")
-        public ResponseEntity<ListResponseDto<FeedsResponseDto>> nonMemberGetFeedsByCategory(
-                        @PathVariable String keyword,
-                        @RequestParam int page,
-                        @RequestParam int size) {
-
-                try {
-                        List<FeedsResponseDto> dtos = searchService.nonMemberGetFeedsByCategory(keyword, page, size);
                         return ListFeedResponseDto.getFeedsSuccess(dtos);
                 } catch (Exception e) {
                         return ListFeedResponseDto.getFeesFail();

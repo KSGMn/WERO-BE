@@ -59,12 +59,9 @@ public class SecurityConfig {
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                                 .authorizeHttpRequests(request -> request
                                                 .requestMatchers("/", "/api/v1/auth/**", "/api/v1/cs/**", "/uploads/**",
-                                                                "/oauth2/**")
+                                                                "/oauth2/**", "/api/v1/nonuser/**")
                                                 .permitAll()
-                                                .requestMatchers("/api/v1/user/feeds/non-member",
-                                                                "/api/v1/user/search/non-member/**",
-                                                                "/api/v1/auth/refresh")
-                                                .permitAll()
+
                                                 .requestMatchers("/api/v1/user/**").hasAnyRole("USER", "ADMIN")
                                                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                                                 .anyRequest().authenticated())

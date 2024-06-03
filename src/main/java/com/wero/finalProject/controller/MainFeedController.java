@@ -47,21 +47,6 @@ public class MainFeedController {
 
     }
 
-    // 비회원 모든 피드 조회
-    @GetMapping("/non-member")
-    public ResponseEntity<ListResponseDto<FeedsResponseDto>> nonMembergetAllFeeds(
-            @RequestParam int page,
-            @RequestParam int size) {
-
-        try {
-            List<FeedsResponseDto> feeds = mainFeedService.nonMembergetAllFeeds(page, size);
-            return ListFeedResponseDto.getFeedsSuccess(feeds);
-        } catch (Exception e) {
-            return ListFeedResponseDto.getFeesFail();
-        }
-
-    }
-
     // 모든 피드 조회
     @GetMapping("")
     public ResponseEntity<ListResponseDto<FeedsResponseDto>> getAllFeeds(@AuthenticationPrincipal String userId,
