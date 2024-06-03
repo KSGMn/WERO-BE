@@ -32,6 +32,7 @@ import com.wero.finalProject.service.UserService;
  **/
 
 @RestController
+@RequestMapping("/api/v1/admin")
 public class AdminController {
 
     private final AdminService adminService;
@@ -54,8 +55,8 @@ public class AdminController {
     // 신고된 피드 조회
     @GetMapping("/reports")
     public ResponseEntity<ListResponseDto<ReportResponseDto>> getDistinctReports(@AuthenticationPrincipal String user,
-            @RequestParam int page,
-            @RequestParam int size) {
+                                                                                 @RequestParam int page,
+                                                                                 @RequestParam int size) {
         try {
             List<ReportResponseDto> reports = adminService.getDistinctReportsByMainFeed(user, page, size);
 
