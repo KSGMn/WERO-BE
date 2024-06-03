@@ -81,7 +81,7 @@ public class AdminController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<?> userSuspension(@AuthenticationPrincipal String user, @PathVariable String userId) {
+    public ResponseEntity<?> userSuspension(@AuthenticationPrincipal String user, @RequestParam String userId) {
         return adminService.userSuspension(user, userId);
     }
 
