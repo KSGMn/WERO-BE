@@ -60,6 +60,7 @@ public class SecurityConfig{
                                 .authorizeHttpRequests(request -> request
                                                 .requestMatchers("/", "/api/v1/auth/**", "/api/v1/cs/**", "/uploads/**", "/oauth2/**", "api/v1/nonuser/**").permitAll()
                                                 .requestMatchers("/api/v1/user/**").hasRole("USER")
+                                                .requestMatchers("/api/v1/user/**").hasRole("ADMIN")  
                                                 .requestMatchers("/", "/api/v1/auth/**", "/api/v1/cs/**", "/uploads/**",
                                                                 "/oauth2/**", "/api/v1/nonuser/**")
                                                 .permitAll()
