@@ -32,7 +32,7 @@ import com.wero.finalProject.service.UserService;
  **/
 
 @RestController
-@RequestMapping("/api/v1/admin")
+@RequestMapping("/api/v1/user")
 public class AdminController {
 
     private final AdminService adminService;
@@ -85,13 +85,13 @@ public class AdminController {
     }
 
     // 정지된 유저 리스트 사이즈
-    @GetMapping("/user/suspension/size")
+    @GetMapping("/suspension/size")
     public Integer getUserSuspensionSize(@AuthenticationPrincipal String userId) {
         return adminService.getUserSuspensionSize();
     }
 
     // 정지 유저 조회
-    @GetMapping("/user/suspension")
+    @GetMapping("/suspension")
     public ResponseEntity<ListResponseDto<UserEntity.UserSuspensionDto>> getUserSuspension(@AuthenticationPrincipal String userId, @RequestParam int page,
             @RequestParam int size) {
 
