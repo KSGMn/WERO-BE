@@ -48,7 +48,7 @@ public class AdminController {
 
     // 신고된 피드 크기 조회
     @GetMapping("/reports/size")
-    public Integer getDistinctReportsByMainFeedSize() {
+    public Integer getDistinctReportsByMainFeedSize(@AuthenticationPrincipal String userId) {
         return adminService.getDistinctReportsByMainFeedSize();
     }
 
@@ -86,7 +86,7 @@ public class AdminController {
 
     // 정지된 유저 리스트 사이즈
     @GetMapping("/user/suspension/size")
-    public Integer getUserSuspensionSize() {
+    public Integer getUserSuspensionSize(@AuthenticationPrincipal String userId) {
         return adminService.getUserSuspensionSize();
     }
 
