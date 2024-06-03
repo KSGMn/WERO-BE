@@ -88,7 +88,7 @@ public class SecurityConfig{
                 UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
                 // source.registerCorsConfiguration("/api/v1/**", corsConfiguration);
                 // source.registerCorsConfiguration("/api/v1/admin/**", corsConfiguration);
-                source.registerCorsConfiguration("/**", corsConfiguration);
+                // source.registerCorsConfiguration("/**", corsConfiguration);
                 return source;
         }
 
