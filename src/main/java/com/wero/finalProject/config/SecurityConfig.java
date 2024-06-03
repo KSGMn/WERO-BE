@@ -87,6 +87,7 @@ public class SecurityConfig{
                 corsConfiguration.setAllowCredentials(true);
                 UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
                 // source.registerCorsConfiguration("/api/v1/**", corsConfiguration);
+                source.registerCorsConfiguration("/api/v1/admin/**", corsConfiguration);
                 source.registerCorsConfiguration("/**", corsConfiguration);
                 return source;
         }
