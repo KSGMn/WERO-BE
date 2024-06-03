@@ -77,20 +77,20 @@ public class SecurityConfig{
                 return httpSecurity.build();
         }
 
-        @Bean
-        protected CorsConfigurationSource corsConfigurationSource() {
+        // @Bean
+        // protected CorsConfigurationSource corsConfigurationSource() {
 
-                CorsConfiguration corsConfiguration = new CorsConfiguration();
-                corsConfiguration.addAllowedOrigin("https://werosns.life");
-                corsConfiguration.addAllowedMethod("*");
-                corsConfiguration.addAllowedHeader("*");
-                corsConfiguration.setAllowCredentials(true);
-                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-                // source.registerCorsConfiguration("/api/v1/**", corsConfiguration);
-                source.registerCorsConfiguration("/api/v1/admin/**", corsConfiguration);
-                source.registerCorsConfiguration("/**", corsConfiguration);
-                return source;
-        }
+        //         CorsConfiguration corsConfiguration = new CorsConfiguration();
+        //         corsConfiguration.addAllowedOrigin("https://werosns.life");
+        //         corsConfiguration.addAllowedMethod("*");
+        //         corsConfiguration.addAllowedHeader("*");
+        //         corsConfiguration.setAllowCredentials(true);
+        //         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        //         // source.registerCorsConfiguration("/api/v1/**", corsConfiguration);
+        //         source.registerCorsConfiguration("/api/v1/admin/**", corsConfiguration);
+        //         source.registerCorsConfiguration("/**", corsConfiguration);
+        //         return source;
+        // }
 
         @Configuration
         public class WebConfig implements WebMvcConfigurer {
