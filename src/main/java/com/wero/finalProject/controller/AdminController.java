@@ -32,7 +32,6 @@ import com.wero.finalProject.service.UserService;
  **/
 
 @RestController
-@RequestMapping("/api/v1/user")
 public class AdminController {
 
     private final AdminService adminService;
@@ -47,13 +46,13 @@ public class AdminController {
     }
 
     // 신고된 피드 크기 조회
-    @GetMapping("/reports/size")
+    @GetMapping("/api/v1/admin/reports/size")
     public Integer getDistinctReportsByMainFeedSize(@AuthenticationPrincipal String userId) {
         return adminService.getDistinctReportsByMainFeedSize();
     }
 
     // 신고된 피드 조회
-    @GetMapping("/reports")
+    @GetMapping("/api/v1/admin/reports")
     public ResponseEntity<ListResponseDto<ReportResponseDto>> getDistinctReports(@AuthenticationPrincipal String userId, @RequestParam int page,
             @RequestParam int size) {
         try {
@@ -67,7 +66,7 @@ public class AdminController {
     }
 
     // 신고 피드 삭제
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/api/v1/admin/{id}")
     public ResponseEntity<?> deleteReport(@AuthenticationPrincipal String user, @PathVariable Integer id) {
         try {
             mainFeedService.deleteFeed(id);
@@ -79,19 +78,19 @@ public class AdminController {
         }
     }
 
-    @PutMapping("/{userId}")
+    @PutMapping("/api/v1/admin/{userId}")
     public ResponseEntity<?> userSuspension(@AuthenticationPrincipal String user, @PathVariable String userId) {
         return adminService.userSuspension(userId);
     }
 
     // 정지된 유저 리스트 사이즈
-    @GetMapping("/suspension/size")
+    @GetMapping("/api/v1/user/suspension/size")
     public Integer getUserSuspensionSize(@AuthenticationPrincipal String userId) {
         return adminService.getUserSuspensionSize();
     }
 
     // 정지 유저 조회
-    @GetMapping("/suspension")
+    @GetMapping("/api/v1/user/suspension")
     public ResponseEntity<ListResponseDto<UserEntity.UserSuspensionDto>> getUserSuspension(@AuthenticationPrincipal String userId, @RequestParam int page,
             @RequestParam int size) {
 
@@ -104,13 +103,13 @@ public class AdminController {
         }
     }
 
-    @GetMapping(value = "/find/prof")
+    @GetMapping(value = "/api/v1/admin/find/prof")
     public ResponseEntity<List<String>> findPic(@AuthenticationPrincipal String userId) {
         List<String> response = userService.findUserPicture(userId);
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/profile")
+    @GetMapping("/api/v1/admin/profile")
     public ResponseEntity<?> getUser(@AuthenticationPrincipal String userId) {
         try {
             UserResponseDto response = userService.findByUserId(userId);
