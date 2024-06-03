@@ -3,6 +3,7 @@ package com.wero.finalProject.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,8 +18,11 @@ import com.wero.finalProject.dto.response.ResponseDto;
 import com.wero.finalProject.dto.response.feeds.DeleteFeedsResponseDto;
 import com.wero.finalProject.dto.response.feeds.ListFeedResponseDto;
 import com.wero.finalProject.dto.response.report.ReportResponseDto;
+import com.wero.finalProject.dto.response.user.FindUserResponseDto;
+import com.wero.finalProject.dto.response.user.UserResponseDto;
 import com.wero.finalProject.service.AdminService;
 import com.wero.finalProject.service.MainFeedService;
+import com.wero.finalProject.service.UserService;
 
 /**
  * @작성자:김선규
@@ -33,10 +37,12 @@ public class AdminController {
 
     private final AdminService adminService;
     private final MainFeedService mainFeedService;
+    private final UserService userService;
 
-    public AdminController(AdminService adminService, MainFeedService mainFeedService) {
+    public AdminController(AdminService adminService, MainFeedService mainFeedService, UserService userService) {
         this.adminService = adminService;
         this.mainFeedService = mainFeedService;
+        this.userService = userService;
 
     }
 
@@ -95,6 +101,24 @@ public class AdminController {
             return ListFeedResponseDto.getFeedsSuccess(supensionUsers);
         } catch (Exception e) {
             return ListFeedResponseDto.getFeesFail();
+        }
+    }
+
+    @GetMapping(value = "/find/prof")
+    public ResponseEntity<List<String>> findPic(@AuthenticationPrincipal String userId) {
+        List<String> response = userService.findUserPicture(userId);
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<?> getUser(@AuthenticationPrincipal String userId) {
+        try {
+            UserResponseDto response = userService.findByUserId(userId);
+
+            return FindUserResponseDto.getUserSuccess(response);
+
+        } catch (Exception e) {
+            return FindUserResponseDto.getUserFail();
         }
     }
 
