@@ -46,14 +46,14 @@ public class AdminController {
     }
 
     // 신고된 피드 크기 조회
-    @GetMapping("/api/v1/admin/reports/size")
-    public Integer getDistinctReportsByMainFeedSize(@AuthenticationPrincipal String userId) {
+    @GetMapping("/reports/size")
+    public Integer getDistinctReportsByMainFeedSize() {
         return adminService.getDistinctReportsByMainFeedSize();
     }
 
     // 신고된 피드 조회
-    @GetMapping("/api/v1/admin/reports")
-    public ResponseEntity<ListResponseDto<ReportResponseDto>> getDistinctReports(@AuthenticationPrincipal String userId, @RequestParam int page,
+    @GetMapping("/reports")
+    public ResponseEntity<ListResponseDto<ReportResponseDto>> getDistinctReports(@RequestParam int page,
             @RequestParam int size) {
         try {
             List<ReportResponseDto> reports = adminService.getDistinctReportsByMainFeed(page, size);
@@ -66,8 +66,8 @@ public class AdminController {
     }
 
     // 신고 피드 삭제
-    @DeleteMapping("/api/v1/admin/{id}")
-    public ResponseEntity<?> deleteReport(@AuthenticationPrincipal String user, @PathVariable Integer id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteReport(@PathVariable Integer id) {
         try {
             mainFeedService.deleteFeed(id);
             return DeleteFeedsResponseDto.delete();
@@ -78,20 +78,20 @@ public class AdminController {
         }
     }
 
-    @PutMapping("/api/v1/admin/{userId}")
-    public ResponseEntity<?> userSuspension(@AuthenticationPrincipal String user, @PathVariable String userId) {
+    @PutMapping("/{userId}")
+    public ResponseEntity<?> userSuspension(@PathVariable String userId) {
         return adminService.userSuspension(userId);
     }
 
     // 정지된 유저 리스트 사이즈
-    @GetMapping("/api/v1/user/suspension/size")
-    public Integer getUserSuspensionSize(@AuthenticationPrincipal String userId) {
+    @GetMapping("/user/suspension/size")
+    public Integer getUserSuspensionSize() {
         return adminService.getUserSuspensionSize();
     }
 
     // 정지 유저 조회
-    @GetMapping("/api/v1/user/suspension")
-    public ResponseEntity<ListResponseDto<UserEntity.UserSuspensionDto>> getUserSuspension(@AuthenticationPrincipal String userId, @RequestParam int page,
+    @GetMapping("/user/suspension")
+    public ResponseEntity<ListResponseDto<UserEntity.UserSuspensionDto>> getUserSuspension(@RequestParam int page,
             @RequestParam int size) {
 
         try {
@@ -103,13 +103,13 @@ public class AdminController {
         }
     }
 
-    @GetMapping(value = "/api/v1/admin/find/prof")
+    @GetMapping(value = "/find/prof")
     public ResponseEntity<List<String>> findPic(@AuthenticationPrincipal String userId) {
         List<String> response = userService.findUserPicture(userId);
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/api/v1/admin/profile")
+    @GetMapping("/profile")
     public ResponseEntity<?> getUser(@AuthenticationPrincipal String userId) {
         try {
             UserResponseDto response = userService.findByUserId(userId);
