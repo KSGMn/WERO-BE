@@ -54,7 +54,7 @@ public class AdminController {
 
     // 신고된 피드 조회
     @GetMapping("/reports")
-    public ResponseEntity<ListResponseDto<ReportResponseDto>> getDistinctReports(@RequestParam int page,
+    public ResponseEntity<ListResponseDto<ReportResponseDto>> getDistinctReports(@AuthenticationPrincipal String userId, @RequestParam int page,
             @RequestParam int size) {
         try {
             List<ReportResponseDto> reports = adminService.getDistinctReportsByMainFeed(page, size);
@@ -68,7 +68,7 @@ public class AdminController {
 
     // 신고 피드 삭제
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteReport(@PathVariable Integer id) {
+    public ResponseEntity<?> deleteReport(@AuthenticationPrincipal String user, @PathVariable Integer id) {
         try {
             mainFeedService.deleteFeed(id);
             return DeleteFeedsResponseDto.delete();
@@ -80,7 +80,7 @@ public class AdminController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<?> userSuspension(@PathVariable String userId) {
+    public ResponseEntity<?> userSuspension(@AuthenticationPrincipal String user, @PathVariable String userId) {
         return adminService.userSuspension(userId);
     }
 
@@ -92,7 +92,7 @@ public class AdminController {
 
     // 정지 유저 조회
     @GetMapping("/user/suspension")
-    public ResponseEntity<ListResponseDto<UserEntity.UserSuspensionDto>> getUserSuspension(@RequestParam int page,
+    public ResponseEntity<ListResponseDto<UserEntity.UserSuspensionDto>> getUserSuspension(@AuthenticationPrincipal String userId, @RequestParam int page,
             @RequestParam int size) {
 
         try {
