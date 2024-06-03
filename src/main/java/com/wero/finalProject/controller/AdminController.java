@@ -47,16 +47,17 @@ public class AdminController {
 
     // 신고된 피드 크기 조회
     @GetMapping("/reports/size")
-    public Integer getDistinctReportsByMainFeedSize() {
-        return adminService.getDistinctReportsByMainFeedSize();
+    public Integer getDistinctReportsByMainFeedSize(@AuthenticationPrincipal String user) {
+        return adminService.getDistinctReportsByMainFeedSize(user);
     }
 
     // 신고된 피드 조회
     @GetMapping("/reports")
-    public ResponseEntity<ListResponseDto<ReportResponseDto>> getDistinctReports(@RequestParam int page,
+    public ResponseEntity<ListResponseDto<ReportResponseDto>> getDistinctReports(@AuthenticationPrincipal String user,
+            @RequestParam int page,
             @RequestParam int size) {
         try {
-            List<ReportResponseDto> reports = adminService.getDistinctReportsByMainFeed(page, size);
+            List<ReportResponseDto> reports = adminService.getDistinctReportsByMainFeed(user, page, size);
 
             return ListFeedResponseDto.getFeedsSuccess(reports);
         } catch (Exception e) {
@@ -79,23 +80,24 @@ public class AdminController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<?> userSuspension(@PathVariable String userId) {
-        return adminService.userSuspension(userId);
+    public ResponseEntity<?> userSuspension(@AuthenticationPrincipal String user, @PathVariable String userId) {
+        return adminService.userSuspension(user, userId);
     }
 
     // 정지된 유저 리스트 사이즈
     @GetMapping("/user/suspension/size")
-    public Integer getUserSuspensionSize() {
-        return adminService.getUserSuspensionSize();
+    public Integer getUserSuspensionSize(@AuthenticationPrincipal String user) {
+        return adminService.getUserSuspensionSize(user);
     }
 
     // 정지 유저 조회
     @GetMapping("/user/suspension")
-    public ResponseEntity<ListResponseDto<UserEntity.UserSuspensionDto>> getUserSuspension(@RequestParam int page,
+    public ResponseEntity<ListResponseDto<UserEntity.UserSuspensionDto>> getUserSuspension(
+            @AuthenticationPrincipal String user, @RequestParam int page,
             @RequestParam int size) {
 
         try {
-            List<UserEntity.UserSuspensionDto> supensionUsers = adminService.getUserSuspension(page, size);
+            List<UserEntity.UserSuspensionDto> supensionUsers = adminService.getUserSuspension(user, page, size);
 
             return ListFeedResponseDto.getFeedsSuccess(supensionUsers);
         } catch (Exception e) {
